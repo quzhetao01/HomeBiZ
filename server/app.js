@@ -6,6 +6,14 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const session = require("express-session");
 
+const uri = "mongodb+srv://quzhetao2001:qhtkYYpELIyB1H0A@homebiz.wu3cek0.mongodb.net/?retryWrites=true&w=majority";
+try {
+    mongoose.connect(uri);
+    console.log("Connected to MongoDB Database");
+  } catch (error) {
+    console.log(error);
+  }
+
 app.use(express.urlencoded({extended: true}));
 
 app.listen(5000, () => {
