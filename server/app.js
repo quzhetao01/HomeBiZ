@@ -35,53 +35,24 @@ const accountSchema = new mongoose.Schema({
 accountSchema.plugin(passportLocalMongoose); 
 accountSchema.plugin(findOrCreate);
 
-const Account = mongoose.model("Account, accountSchema");
+const Account = mongoose.model("Account", accountSchema);
 passport.use(Account.createStrategy());
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id); 
-});
-
-// used to deserialize the user
-passport.deserializeUser(function(id, done) {
-  Account.findById(id, function(err, user) {
-      done(err, user);
-  });
-});
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 
-app.get('/success', function(req, res) {
-  // console.log(req);
-  res.set('Cache-Control', 'no-store');
-  if (req.isAuthenticated()) {
-      res.render('successLogin');
-  }
-  else {
-      res.redirect('/');
-  }
-})
-
-
-app.get('/login', function(req, res) {
-  res.render('login');
-});
-
-
-app.post('/login', passport.authenticate('local'), function(req, res) {
+app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 
+(req, res) => {
   res.redirect('/success');
 });
 
 
-app.get('/register', function(req, res) {
-  res.render('register');
-});
-
-
-app.post('/register', function(req, res) {
+app.post('/register', (req, res) => {
   Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
       if (err) {
-          console.log(err);
-          return res.redirect('/register');
+          console.log(err.message);
+          return res.send({user: null, error: err.message});
       }
 
       passport.authenticate('local')(req, res, function () {
@@ -90,6 +61,21 @@ app.post('/register', function(req, res) {
   });
 });
 
+app.get('/failureLogin', (req, res) => {
+  res.status(401).send({user: null, error: "Wrong username or password"});
+})
+
+
+app.get('/success', (req, res) => {
+  // console.log(req);
+  res.set('Cache-Control', 'no-store');
+  if (req.isAuthenticated()) {
+      res.send({user: req.user, error: null});
+  }
+  else {
+      res.send({user: null, error: "Something went wrong"});
+  }
+})
 
 app.listen(5000, () => {
     console.log("Listening on port 5000")
