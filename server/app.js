@@ -1,13 +1,19 @@
 require("dotenv").config();
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const mongoose = require("mongoose");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const session = require("express-session");
 const findOrCreate = require("mongoose-findorcreate");
 
-app.use(express.urlencoded({extended: true}));
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}))
+// app.use(express.urlencoded({extended: true}));
+app.use(express.json())
 // configuring session middleware
 app.use(require('express-session')({
   secret: process.env.SESSION_SECRET,
@@ -38,8 +44,19 @@ accountSchema.plugin(findOrCreate);
 const Account = mongoose.model("Account", accountSchema);
 passport.use(Account.createStrategy());
 
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
+// passport.serializeUser(Account.serializeUser());
+// passport.deserializeUser(Account.deserializeUser());
+passport.serializeUser(function(user, cb) {
+  process.nextTick(function() {
+    cb(null, { id: user.id, username: user.username });
+  });
+});
+
+passport.deserializeUser((user, cb) => {
+  process.nextTick(function() {
+    return cb(null, user);
+  });
+});
 
 
 app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 
@@ -49,13 +66,15 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLog
 
 
 app.post('/register', (req, res) => {
+  console.log('register');
+  console.log(req.body);
   Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
       if (err) {
           console.log(err.message);
           return res.send({user: null, error: err.message});
       }
-
       passport.authenticate('local')(req, res, function () {
+        console.log("success");
           res.redirect('/success');
       });
   });
@@ -67,7 +86,7 @@ app.get('/failureLogin', (req, res) => {
 
 
 app.get('/success', (req, res) => {
-  // console.log(req);
+  console.log(req.isAuthenticated(), req.user);
   res.set('Cache-Control', 'no-store');
   if (req.isAuthenticated()) {
       res.send({user: req.user, error: null});

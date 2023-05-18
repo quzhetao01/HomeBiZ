@@ -1,0 +1,31 @@
+.input {
+    margin: 10px;
+}
+
+.loginCard {
+    width: 30%;
+    height: 50%;
+    top: 50%;
+    text-align: center;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, .25);
+}
+
+.parent {
+    /* display: flex;
+    justify-content: center;
+    margin-top: 15rem; */
+    position: absolute;
+    background-color: red;
+    top: 50%;
+    left: 50%;
+    transform: (-50%, -50%);;
+}
+
+.loginBtn {
+    background-image: linear-gradient(90deg, rgba(255,0,172,1) 12%, rgba(255,102,0,1) 32%, rgba(255,140,0,1) 53%, rgba(255,80,0,1) 57%, rgba(255,98,0,1) 80%, rgba(255,170,0,0.8913690476190477) 97%);
+}
+
+.right {
+    background: rgb(255,0,172);
+    background: linear-gradient(45deg, rgba(255,0,172,1) 12%, rgba(255,102,0,1) 32%, rgba(255,140,0,1) 53%, rgba(255,0,0,1) 57%, rgba(255,98,0,1) 80%, rgba(255,170,0,0.8913690476190477) 97%);
+}
