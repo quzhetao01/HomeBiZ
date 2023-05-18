@@ -12,13 +12,13 @@ const Register = () => {
     const navigate = useNavigate();
 
     const handleRegister = () => {
-        console.log(username, password);
         instance.post("/register", {"username": username, "password": password})
             .then(res => {
                 console.log(res);
                 // user is present
                 if (res.data.user) {
-                    navigate("/login");
+                    setError(""); //reset error message jic
+                    navigate("/login", {state: {justRegistered: true}});
                 } else {
                     setError(res.data.error);
                 }
@@ -56,7 +56,7 @@ const Register = () => {
                         Register
                         </button>
                   </div>
-                  <p className="text-danger">{`${error}. Please try again.` }</p>
+                  {error !== "" && <p className="text-danger">{`${error}. Please try again.` }</p>}
 
                 </form>
 

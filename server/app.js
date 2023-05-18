@@ -81,6 +81,7 @@ app.post('/register', (req, res) => {
 });
 
 app.get('/failureLogin', (req, res) => {
+  console.log("failureLogin");
   res.status(401).send({user: null, error: "Wrong username or password"});
 })
 
