@@ -12,7 +12,7 @@ app.use(cors({
   origin: "http://localhost:3000",
   credentials: true
 }))
-// app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 // configuring session middleware
 app.use(require('express-session')({
@@ -34,14 +34,24 @@ try {
 
 
 const accountSchema = new mongoose.Schema({
-  username: String,
-  password: String
+  username: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
+
+
+
 
 accountSchema.plugin(passportLocalMongoose); 
 accountSchema.plugin(findOrCreate);
 
 const Account = mongoose.model("Account", accountSchema);
+
 passport.use(Account.createStrategy());
 
 // passport.serializeUser(Account.serializeUser());
@@ -97,6 +107,16 @@ app.get('/success', (req, res) => {
   }
 })
 
-app.listen(5000, () => {
-    console.log("Listening on port 5000")
+app.get('/test', (req, res) => {
+  console.log(req.user);
+  console.log(req.isAuthenticated());
+  res.json(1);
+  // res.send(req.user);
+})
+
+const listingRouter = require("./routes/listings")
+app.use("/listing", listingRouter);
+
+app.listen(8000, () => {
+    console.log("Listening on port 8000")
 })
