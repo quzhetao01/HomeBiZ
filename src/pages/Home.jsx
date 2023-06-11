@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import { useNavigate } from "react-router";
 import instance from "../axios.config";
 
 
@@ -10,8 +11,11 @@ const Home = () => {
             })
     });
 
+    const navigate = useNavigate();
+
     return <div style={{backgroundColor: "red"}}>
         <p>Home</p>
+        <button onClick={() => navigate("/createListing")}>Add Page</button>
     </div>
 }
 

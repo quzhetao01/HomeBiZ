@@ -11,6 +11,7 @@ import {
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import CreateListing from './pages/createListing';
 
 //layouts
 import RootLayout from './layouts/RootLayout';
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path='login' element={<Login />} />
       <Route path='register' element={<Register />}/>
+      <Route path='createListing' element={<CreateListing/>}/>
     </Route>
   )
 

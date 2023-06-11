@@ -9,6 +9,6 @@ const serviceSchema = new mongoose.Schema({
     price: String,
 });
 
-const Service = mongoose.model("ServiceListing", serviceSchema);
+const Service = mongoose.model("Service", serviceSchema);
 
 module.exports = {serviceSchema: serviceSchema, Service: Service};

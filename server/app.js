@@ -110,8 +110,8 @@ app.get('/success', (req, res) => {
 app.get('/test', (req, res) => {
   console.log(req.user);
   console.log(req.isAuthenticated());
-  res.json(1);
-  // res.send(req.user);
+  // res.json(1);
+  res.send(req.user);
 })
 
 const listingRouter = require("./routes/listings")

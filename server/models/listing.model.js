@@ -6,9 +6,11 @@ const listingSchema = new mongoose.Schema({
     title: String,
     description: String,
     displayImage: String,
-    descriptionImage: String,
+    descriptionImages: Array,
     contact: String,
+    contactMethod: String,
     email: String,
+    category: String,
     menu: [{
         type: Schema.Types.ObjectId,
         ref: "Service"
