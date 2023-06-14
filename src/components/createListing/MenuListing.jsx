@@ -3,9 +3,11 @@ import createListingCSS from "../../styles/createListing.module.css"
 
 const MenuListing = (props) => {
     return <div className={`p-5 mb-3 ${createListingCSS.listingDiv}`}>
-        <p>{props.name}</p>
-        <img src={props.image} alt="" width={160} height={90}/>
-        <p>{props.price}</p>
+        <div style={{fontSize: 20}}>
+            <p>Service Product: {props.name}</p>
+            <p>Price:{props.price}</p>
+        </div>
+        {props.image && <img src={props.image} alt="" width={160} height={90}/>}
         {/* <table className="table">
                 <thead>
                     <tr>

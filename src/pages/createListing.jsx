@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import instance from '../axios.config';
+import Button from '@mui/material/Button'
 // components
 import Title from '../components/createListing/Title';
 import Description from '../components/createListing/Description';
@@ -11,28 +12,30 @@ import Contact from '../components/createListing/Contact';
 
 //others
 import categories from "../helper/category";
+import { useNavigate } from 'react-router-dom';
 
 const CreateListing = () => {
 
     // useEffect(() => {
     //     const testData = {
-    //         title: "test",
-    //         description: "test description",
-    //         displayImage: "test image",
-    //         descriptionImage: "test description image",
-    //         category: "test category",
-    //         contact: "test contact",
-    //         email: "test email",
+    //         title: "test2",
+    //         description: "test2 description",
+    //         displayImage: "test2 image",
+    //         descriptionImage: ["test2 description image","test"],
+    //         category: "test2 category",
+    //         contact: "test2 contact",
+    //         contactMethod: "",
+    //         email: "test2 email",
     //         menu: [
     //             {
-    //                 title: "testMenu",
-    //                 image: "test image",
-    //                 price: "test price",
+    //                 title: "test2Menu",
+    //                 image: "test2 image",
+    //                 price: "test2 price",
     //             },
     //             {
     //                 title: "testMenu2",
-    //                 image: "test image2",
-    //                 price: "test priceEXPENSIVE",
+    //                 image: "test3 image2",
+    //                 price: "test3 priceEXPENSIVE",
     //             }
     //         ]
     //     }
@@ -53,6 +56,7 @@ const CreateListing = () => {
         menu: []
     });
     const [showMenu, setShowMenu] = useState(false);
+    const navigate = useNavigate();
 
     const getListing = () => {
         // instance.get("/listing")
@@ -92,6 +96,13 @@ const CreateListing = () => {
                     }
                 })
             }
+        } else {
+            setListing(prev => {
+                return {
+                    ...prev,
+                    ["displayImage"]: ""
+                }
+            })
         }
     }
 
@@ -111,6 +122,13 @@ const CreateListing = () => {
                     })
                 }
             }
+        } else {
+            setListing(prev => {
+                return {
+                    ...prev,
+                    ["descriptionImages"]: []
+                }
+            })
         }
     }
     
@@ -152,6 +170,14 @@ const CreateListing = () => {
         }) 
     }
 
+    const handleSubmit = e => {
+        instance.post("/listing", listing)
+            .then(res => {
+                console.log(res);
+                navigate("/");
+        })
+    }
+
     return <div>
         <div className="row justify-content-evenly mt-5">
             <div className="card col-5 p-3" >
@@ -175,8 +201,10 @@ const CreateListing = () => {
             <div className="card p-3 col-5 mb-3">
                 <FileUpload multiple={true} handleUpload={handleDescImages} title={"Select other photos to show users your product or service"}/>
                 <Carousel images={listing.descriptionImages}></Carousel>
-                <button onClick={() => setShowMenu(true)} type="button" className="mb-3 btn btn-primary">Create menu</button>
+                <Button style={{width: "50%"}} variant="contained" onClick={() => setShowMenu(true)}>Create menu</Button>
                 <Contact listing={listing} handleNumber={handleNumber} handleMethod={handleMethod} handleEmail={handleEmail}/>
+                <Button style={{width: "50%"}} variant="contained" onClick={handleSubmit}>Submit listing</Button>
+
             </div>
         </div>
         <button onClick={getListing}>getListing</button>

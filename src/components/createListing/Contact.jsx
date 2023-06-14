@@ -7,7 +7,7 @@ const Contact = (props) => {
             <div className="mb-3 p-2 row">
                 <label className="col-sm-2 col-form-label">Number</label>
                 <div className="col-sm-10">
-                <input type="number" placeholder="number" className="form-control" value={props.listing.contact} onChange={(e) => props.handleNumber(e.target.value)}/>
+                <input type="number" placeholder="Number" className="form-control" value={props.listing.contact} onChange={(e) => props.handleNumber(e.target.value)}/>
                 </div>
                 <div class="form-check form-check-inline" onChange={e => props.handleMethod(e.target.value)}>
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1"/>
@@ -21,7 +21,7 @@ const Contact = (props) => {
             <div className="mb-3 p-2 row">
                 <label className="col-sm-2 col-form-label">Email</label>
                 <div className="col-sm-10">
-                <input placeholder="email" className="form-control" value={props.listingemail} onChange={(e) => props.handleEmail(e.target.value)}/>
+                <input placeholder="Email" className="form-control" value={props.listingemail} onChange={(e) => props.handleEmail(e.target.value)}/>
                 </div>
             </div>
 

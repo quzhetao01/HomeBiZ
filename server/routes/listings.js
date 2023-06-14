@@ -9,21 +9,26 @@ const getAllListings = async (req, res, next) => {
 }
 
 const createListing = async (req, res, next) => {
+    console.log(req.body);
     const listing = req.body;
     const menu = [];
+    try {
 
-    for (let service in listing.menu) {
-        const newService = new Service(listing.menu[service]);
-        const saved = await newService.save();
-        menu.push(saved._id)
+        for (let service in listing.menu) {
+            const newService = new Service(listing.menu[service]);
+            const saved = await newService.save();
+            menu.push(saved._id)
+        }
+        listing.menu = menu;
+
+        // const newService = new Service(listing.menu[0]);
+        // const ans = await newService.save();
+        const newListing = new Listing(listing);
+        const ans = await newListing.save();
+        res.send(ans);
+    } catch (err) {
+        console.log(err);
     }
-    listing.menu = menu;
-
-    // const newService = new Service(listing.menu[0]);
-    // const ans = await newService.save();
-    const newListing = new Listing(listing);
-    const ans = await newListing.save();
-    res.send(ans);
 }
 
 const getListingById = async (req, res, next) => {
