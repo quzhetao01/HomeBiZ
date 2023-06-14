@@ -16,34 +16,6 @@ import { useNavigate } from 'react-router-dom';
 
 const CreateListing = () => {
 
-    // useEffect(() => {
-    //     const testData = {
-    //         title: "test2",
-    //         description: "test2 description",
-    //         displayImage: "test2 image",
-    //         descriptionImage: ["test2 description image","test"],
-    //         category: "test2 category",
-    //         contact: "test2 contact",
-    //         contactMethod: "",
-    //         email: "test2 email",
-    //         menu: [
-    //             {
-    //                 title: "test2Menu",
-    //                 image: "test2 image",
-    //                 price: "test2 price",
-    //             },
-    //             {
-    //                 title: "testMenu2",
-    //                 image: "test3 image2",
-    //                 price: "test3 priceEXPENSIVE",
-    //             }
-    //         ]
-    //     }
-    //     instance.post("/listing", testData)
-    //         .then(res => {
-    //             console.log(res);
-    //         })
-    // })
     const [listing, setListing] = useState({
         title: "",
         description: "",
@@ -57,15 +29,6 @@ const CreateListing = () => {
     });
     const [showMenu, setShowMenu] = useState(false);
     const navigate = useNavigate();
-
-    const getListing = () => {
-        // instance.get("/listing")
-        // .then(res => {
-        //     console.log(res);
-        // })
-        // console.log(listing.descriptionImages)
-        console.log(listing);
-    }
 
     const handleTitle = (title) => {
         setListing((prev) => {
