@@ -74,7 +74,6 @@ const CreateListing = () => {
             console.log(event.target.files);
             for (let i = 0; i < event.target.files.length; i++) {
                 const reader = new FileReader();
-                // console.log(typeof event.target.files[index]);
                 reader.readAsDataURL(event.target.files[i])
                 reader.onload = () => {
                     setListing((prev) => {
