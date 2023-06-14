@@ -207,7 +207,6 @@ const CreateListing = () => {
 
             </div>
         </div>
-        <button onClick={getListing}>getListing</button>
         <CreateMenu 
             isOpen={showMenu}
             onRequestClose={() => setShowMenu(false)}
