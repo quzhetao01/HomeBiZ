@@ -1,0 +1,30 @@
+/* Navbar container */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+  
+/* Logo style */
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+  
+/* Navigation links style */
+.links {
+    display: flex;
+}
+  
+.links a {
+    margin-right: 10px;
+    color: #333;
+    text-decoration: none;
+}
+  
+.links a:hover {
+    color: #666;
+}
