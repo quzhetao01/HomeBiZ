@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 // components
 import Title from '../components/createListing/Title';
 import Description from '../components/createListing/Description';
+import Location from '../components/createListing/Location';
 import FileUpload from '../components/createListing/FileUpload';
 import Carousel from '../components/createListing/Carousel';
 import SelectCategory from '../components/createListing/SelectCategory';
@@ -19,6 +20,8 @@ const CreateListing = () => {
     const [listing, setListing] = useState({
         title: "",
         description: "",
+        township: "",
+        location: "",
         displayImage: "",
         descriptionImages: [],
         contact: "",
@@ -43,6 +46,24 @@ const CreateListing = () => {
             return {
                 ...prev, 
                 ["description"]: desc
+            }
+        })
+    }
+
+    const handleTownship = (town) => {
+        setListing((prev) => {
+            return {
+                ...prev, 
+                ["township"]: town
+            }
+        })
+    }
+
+    const handleLocation = (loc) => {
+        setListing((prev) => {
+            return {
+                ...prev, 
+                ["location"]: loc
             }
         })
     }
@@ -146,6 +167,8 @@ const CreateListing = () => {
                 <h3>Create your listing here</h3>
                     <Title handleChange={handleTitle} value={listing.title}/>
                     <Description handleChange={handleDescription} value={listing.description}/>
+                    <Location handleChange={handleTownship} value={listing.township} label="Township" placeholder="Input your township here if applicable. Eg. Bedok"/>
+                    <Location handleChange={handleLocation} value={listing.location} label="Address" placeholder="Address if applicable"/>
                     <div className="row my-5">
 
                         <div className="col-4">

@@ -1,0 +1,15 @@
+.serviceImg {
+    margin-top: -15px;
+    color: blue;
+    text-decoration: underline;
+}
+
+.serviceImg:hover {
+    cursor: pointer;
+}
+
+.modal {
+    background-color: blue;
+    display: inline;
+    border: none
+}

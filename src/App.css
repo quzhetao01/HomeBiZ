@@ -42,3 +42,5 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+@import "~react-image-gallery/styles/css/image-gallery.css"

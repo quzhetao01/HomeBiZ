@@ -11,7 +11,8 @@ import {
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import CreateListing from './pages/createListing';
+import CreateListing from './pages/CreateListing';
+import ViewListing from './pages/ViewListing';
 
 //layouts
 import RootLayout from './layouts/RootLayout';
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route path='login' element={<Login />} />
       <Route path='register' element={<Register />}/>
       <Route path='createListing' element={<CreateListing/>}/>
+      <Route path="viewListing" element={<ViewListing />}/>
     </Route>
   )
 

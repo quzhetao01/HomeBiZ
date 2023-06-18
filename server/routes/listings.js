@@ -32,7 +32,7 @@ const createListing = async (req, res, next) => {
 }
 
 const getListingById = async (req, res, next) => {
-    const listing = await Listing.findById(req.params.id);
+    const listing = await Listing.findById(req.params.id).populate("menu");
     res.send(listing);
 }
 
