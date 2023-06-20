@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RegisterCSS from "../styles/Register.module.css";
 import LoginInput from '../components/LoginInput';
 import instance from '../axios.config';
+import getUser from '../helper/user';
 
 
 const Register = () => {
@@ -10,6 +11,13 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+      const user = getUser();
+      if (user !== null) {
+        navigate("/");
+      }
+    }, [])
 
     const handleRegister = () => {
         instance.post("/register", {"username": username, "password": password})

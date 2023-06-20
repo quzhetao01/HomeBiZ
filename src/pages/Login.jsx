@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import RegisterCSS from "../styles/Register.module.css";
 import LoginInput from '../components/LoginInput';
 import instance from '../axios.config';
+import getUser from '../helper/user';
 
 
 const Login = () => {
@@ -17,6 +18,10 @@ const Login = () => {
     useEffect(() => {
       if (location.state) {
         setIsNewUser(location.state.justRegistered);
+      }
+      const user = getUser();
+      if (user !== null) {
+        navigate("/");
       }
     }, [])
 
@@ -74,6 +79,7 @@ const Login = () => {
                   </div>
                   {isNewUser && <p>Welcome to HomeBiZ! Please login with your newly registered account.</p>}
                   {error !== "" && <p className="text-danger">{`${error}. Please try again.` }</p>}
+                  <p>Don't have an account? <span className={RegisterCSS.registerRedirect} onClick={() => navigate("/register")}>Register here</span></p>
                 </form>
 
               </div>

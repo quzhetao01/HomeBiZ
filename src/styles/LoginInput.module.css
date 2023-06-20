@@ -1,3 +1,13 @@
 ::placeholder {
     /* color: red !important; */
 }
+
+.registerRedirect {
+    text-decoration: underline;
+    color: blue;
+}
+
+.registerRedirect:hover {
+    color: lightblue;
+    cursor: pointer;
+}

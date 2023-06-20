@@ -4,14 +4,19 @@ import instance from "../axios.config";
 
 
 const Home = () => {
+    const navigate = useNavigate();
     useEffect(() => {
         instance.get('/test')
             .then((res) => {
                 console.log(res);
             })
-    });
+            .catch(err => {
+                if (err.response.data === "Not authenticated") {
+                    navigate("/login");
+                }
+            });
+    }, []);
 
-    const navigate = useNavigate();
 
     return <div style={{backgroundColor: "red"}}>
         <p>Home</p>
