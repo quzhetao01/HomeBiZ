@@ -5,6 +5,9 @@ const Schema = mongoose.Schema;
 const listingSchema = new mongoose.Schema({
     title: String,
     description: String,
+    township: String,
+    location: String,
+    listing: String,
     displayImage: String,
     descriptionImages: Array,
     contact: String,
