@@ -5,7 +5,7 @@ const reviewSchema = new Schema({
     rating: Number,
     description: String,
     created_by_id: {
-        types: Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User"
     }
     

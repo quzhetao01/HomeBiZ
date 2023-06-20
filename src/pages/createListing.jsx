@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import instance from '../axios.config';
-import Button from '@mui/material/Button'
+import getUser from '../helper/user';
 // components
+import Button from '@mui/material/Button'
 import Title from '../components/createListing/Title';
 import Description from '../components/createListing/Description';
 import Location from '../components/createListing/Location';
@@ -16,6 +17,16 @@ import categories from "../helper/category";
 import { useNavigate } from 'react-router-dom';
 
 const CreateListing = () => {
+
+    useEffect(() => {
+        getUser().then((user) => {
+        
+            console.log(user);
+            if (user === null) {
+              navigate("/login");
+            }
+          })
+    }, []);
 
     const [listing, setListing] = useState({
         title: "",
