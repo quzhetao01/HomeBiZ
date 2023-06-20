@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const serviceSchema = require('./service.model').serviceSchema;
 const Schema = mongoose.Schema;
 
-const listingSchema = new mongoose.Schema({
+const listingSchema = Schema({
     title: String,
     description: String,
     township: String,
@@ -18,10 +17,15 @@ const listingSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: "Service"
     }],
+    reviews: [{ 
+      type: Schema.Types.ObjectId, 
+      ref: "Review" 
+    }],
     user: {
       type: Schema.Types.ObjectId,
       ref: "User"
-    }
+    },
+
   });
 
 const Listing = mongoose.model('Listing', listingSchema);

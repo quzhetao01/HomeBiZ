@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Listing = require("../models/listing.model.js").Listing;
 const Service = require("../models/service.model.js").Service;
+const Review = require("../models/review.model.js").Review;
 
 const getAllListings = async (req, res, next) => {
     const found = await Listing.find({}).populate("menu");
