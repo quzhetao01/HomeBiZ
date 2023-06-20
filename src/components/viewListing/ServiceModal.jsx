@@ -19,10 +19,8 @@ const ServiceModal = (props) => {
     bodyOpenClassame={viewListingCSS.modal}
     style={{
         overlay: {
-          zIndex: 1,
+          zIndex: 10,
           margin: "auto",
-          // width: "100%",
-          // height: "100%",
           backgroundColor: "rgba(0,0,0,0.4)",
         },
         content: {
@@ -31,10 +29,11 @@ const ServiceModal = (props) => {
           width: `50%`,
           margin: "auto",
           border: "#393E46",
+          padding: 0,
         },
       }}>
-        <div className="d-flex justify-content-around align-items-center">
-            <img ref={imgRef} src={props.image} alt="" />
+        <div className={viewListingCSS.imageContainer}>
+            <img className={viewListingCSS.image} ref={imgRef} src={props.image} alt="" />
             {/* {i} */}
         </div>
     </Modal>

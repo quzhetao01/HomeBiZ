@@ -6,6 +6,7 @@ import Modal from "react-modal";
 
 import Menu from "../components/viewListing/Menu";
 import ServiceModal from "../components/viewListing/ServiceModal";
+import Review from "../components/viewListing/Review";
 import ImageGallery from 'react-image-gallery';
 
 const images = [
@@ -89,8 +90,8 @@ const ViewListing = () => {
             <div style={{display: "flex", fontSize: 20}}>
                 <div>
 
-                <AiFillStar></AiFillStar> 5.00 - 20 reviews - 
-                <span style={{textDecoration: "underline"}}>{listing.township}</span>, <span style={{textDecoration: "underline"}}>{listing.location}</span>
+                <AiFillStar></AiFillStar> 5.00 - 20 reviews -   
+                <span style={{textDecoration: "underline"}}>{listing.township}</span>, <span style={{textDecoration: "underline"}}> {listing.location}</span>
                 </div>
                 <div  className="ms-auto">
                 <h3>{listing.category}</h3>
@@ -105,7 +106,7 @@ const ViewListing = () => {
                 </div>
                 <hr />
                 <div className="mt-5">
-                    <Menu menu={listing.menu} setServiceImage={setServiceImage}/>
+                <Review />
 
                 </div>
             </div>
@@ -121,9 +122,8 @@ const ViewListing = () => {
                         <span>Email: </span><span>{listing.email}</span>
                     </div>
                 </div>
-                <div className="card p-4">
-                    <h3 className="mb-3">Reviews</h3>
-                </div>
+                <Menu menu={listing.menu} setServiceImage={setServiceImage}/>
+                
                 
             </div>
         </div> 

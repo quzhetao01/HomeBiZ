@@ -38,10 +38,10 @@ const accountSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  password: {
-    type: String,
-    required: true,
-  },
+  // password: {
+  //   type: String,
+  //   required: true,
+  // },
 });
 
 
@@ -78,7 +78,7 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLog
 app.post('/register', (req, res) => {
   console.log('register');
   console.log(req.body);
-  Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+  Account.register(new Account({ username : req.body.username}), req.body.password, function(err, account) {
       if (err) {
           console.log(err.message);
           return res.send({user: null, error: err.message});
@@ -107,11 +107,18 @@ app.get('/success', (req, res) => {
   }
 })
 
+app.get("/user", (req, res) => {
+  if(req.isAuthenticated()) {
+    res.send(req.user);
+  } else {
+    res.send(null);
+  }
+})
+
 app.get('/test', (req, res) => {
-  console.log(req.user);
-  console.log(req.isAuthenticated());
-  // res.json(1);
-  res.send(req.user);
+  if (!req.isAuthenticated()) {
+    res.status(401).send("Not authenticated");
+  }
 })
 
 const listingRouter = require("./routes/listings")
