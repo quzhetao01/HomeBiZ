@@ -11,6 +11,7 @@ const getAllListings = async (req, res, next) => {
 const createListing = async (req, res, next) => {
     console.log(req.body);
     const listing = req.body;
+    listing.user = req.user.id;
     const menu = [];
     try {
 

@@ -13,10 +13,13 @@ const Register = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-      const user = getUser();
-      if (user !== null) {
-        navigate("/");
-      }
+      getUser().then((user) => {
+        
+        console.log(user);
+        if (user !== null) {
+          navigate("/");
+        }
+      })
     }, [])
 
     const handleRegister = () => {

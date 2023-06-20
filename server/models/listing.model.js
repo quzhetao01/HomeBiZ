@@ -17,7 +17,11 @@ const listingSchema = new mongoose.Schema({
     menu: [{
         type: Schema.Types.ObjectId,
         ref: "Service"
-    }]
+    }],
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    }
   });
 
 const Listing = mongoose.model('Listing', listingSchema);

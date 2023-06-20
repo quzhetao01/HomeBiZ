@@ -33,7 +33,7 @@ try {
 
 
 
-const accountSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -47,15 +47,14 @@ const accountSchema = new mongoose.Schema({
 
 
 
-accountSchema.plugin(passportLocalMongoose); 
-accountSchema.plugin(findOrCreate);
+userSchema.plugin(passportLocalMongoose); 
+userSchema.plugin(findOrCreate);
 
-const Account = mongoose.model("Account", accountSchema);
+const User = mongoose.model("User", userSchema);
 
-passport.use(Account.createStrategy());
+passport.use(User.createStrategy());
 
-// passport.serializeUser(Account.serializeUser());
-// passport.deserializeUser(Account.deserializeUser());
+
 passport.serializeUser(function(user, cb) {
   process.nextTick(function() {
     cb(null, { id: user.id, username: user.username });
@@ -78,7 +77,7 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLog
 app.post('/register', (req, res) => {
   console.log('register');
   console.log(req.body);
-  Account.register(new Account({ username : req.body.username}), req.body.password, function(err, account) {
+  User.register(new User({ username : req.body.username}), req.body.password, function(err, user) {
       if (err) {
           console.log(err.message);
           return res.send({user: null, error: err.message});
