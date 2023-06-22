@@ -19,24 +19,25 @@ const Login = () => {
       if (location.state) {
         setIsNewUser(location.state.justRegistered);
       }
-      const user = getUser();
-      if (user !== null) {
-        navigate("/");
-      }
+      getUser().then(user => {
+        if (user) {
+          navigate("/");
+        }
+      })
+
     }, [])
 
     const handleLogin = () => {
-        console.log(username, password);
         instance.post("/login", {"username": username, "password": password})
             .then(res => {
                 console.log(res);
                 // user is present
-                if (res.data.user) {
+                // if (res.data.user) {
                     navigate("/");
-                } else {
-                    setIsNewUser(false);
-                    setError(res.data.error);
-                }
+                // } else {
+                //     setIsNewUser(false);
+                //     setError(res.data.error);
+                // }
             })
             .catch(err => {
               if(err.response.status === 401) {

@@ -106,6 +106,13 @@ app.get('/success', (req, res) => {
   }
 })
 
+app.post('/logout', function(req, res, next){
+  req.logout(function(err) {
+    if (err) { res.send("Error logging out") }
+      res.send("Sucessfully logged out")
+  });
+});
+
 app.get("/user", (req, res) => {
   if(req.isAuthenticated()) {
     res.send(req.user);
@@ -121,7 +128,9 @@ app.get('/test', (req, res) => {
 })
 
 const listingRouter = require("./routes/listings")
+const reviewRouter = require("./routes/review");
 app.use("/listing", listingRouter);
+app.use("/review", reviewRouter);
 
 app.listen(8000, () => {
     console.log("Listening on port 8000")

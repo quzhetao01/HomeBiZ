@@ -22,7 +22,7 @@ const CreateListing = () => {
         getUser().then((user) => {
         
             console.log(user);
-            if (user === null) {
+            if (!user) {
               navigate("/login");
             }
           })
@@ -43,7 +43,6 @@ const CreateListing = () => {
     });
     const [showMenu, setShowMenu] = useState(false);
     const navigate = useNavigate();
-
     const handleTitle = (title) => {
         setListing((prev) => {
             return {

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router";
 import instance from "../axios.config";
 import PopulateListings from "../components/populateListings/PopulateListings";
 import ListingPreview from "../components/populateListings/ListingPreview";
+import getUser from "../helper/user";
 
 
 const Home = () => {
@@ -11,15 +12,11 @@ const Home = () => {
     const [listings, setListings] = useState(null);
 
     useEffect(() => {
-        instance.get('/test')
-            .then((res) => {
-                console.log(res);
-            })
-            .catch(err => {
-                if (err.response.data === "Not authenticated") {
-                    navigate("/login");
-                }
-            });
+        getUser().then(user => {
+            if (!user) {
+                navigate("/login");
+            }
+        })
     }, []);
 
     useEffect(() => {

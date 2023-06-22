@@ -5,7 +5,7 @@ const Service = require("../models/service.model.js").Service;
 const Review = require("../models/review.model.js").Review;
 
 const getAllListings = async (req, res, next) => {
-    const found = await Listing.find({}).populate("menu");
+    const found = await Listing.find({}).populate("reviews");
     res.send(found);
 }
 
@@ -34,12 +34,24 @@ const createListing = async (req, res, next) => {
 }
 
 const getListingById = async (req, res, next) => {
-    const listing = await Listing.findById(req.params.id).populate("menu");
+    const listing = await Listing.findById(req.params.id).populate("menu").populate("reviews").populate("user");
     res.send(listing);
 }
 
 const editListing = async (req, res, next) => {
-    const updatedListing = req.body;
+
+    console.log("hi", req.query)
+    if (req.query.review) {
+        console.log("here")
+        const listing = await Listing.findById(req.params.id);
+        const review = req.body;
+        review.user = req.user.id;
+        const newReview = new Review(review);
+        const saved = await newReview.save();
+        listing.reviews.push(saved._id);
+        const ans = await listing.save();
+        res.send(ans);
+    }
 }
 
 router.route('/')
@@ -47,5 +59,6 @@ router.route('/')
     .post(createListing);
 
 router.route('/:id')
-    .get(getListingById);
+    .get(getListingById)
+    .patch(editListing);
 module.exports = router;
