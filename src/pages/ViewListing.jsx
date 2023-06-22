@@ -56,7 +56,7 @@ const ViewListing = () => {
     });
     const [serviceImage, setServiceImage] = useState("");
 
-    
+
 
     useEffect(() => {
         console.log(location);
@@ -93,7 +93,7 @@ const ViewListing = () => {
                 <AiFillStar></AiFillStar> 5.00 - 20 reviews -   
                 <span style={{textDecoration: "underline"}}>{listing.township}</span>, <span style={{textDecoration: "underline"}}> {listing.location}</span>
                 </div>
-                <div  className="ms-auto">
+                <div className="ms-auto">
                 <h3>{listing.category}</h3>
 
                 </div>

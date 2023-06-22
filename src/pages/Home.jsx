@@ -1,10 +1,14 @@
-import React, {useEffect} from "react";
-import { useNavigate } from "react-router";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router";
 import instance from "../axios.config";
+import ListingPreview from "../components/ListingPreview";
 
 
 const Home = () => {
     const navigate = useNavigate();
+
+    const [listings, setListings] = useState(null);
+
     useEffect(() => {
         instance.get('/test')
             .then((res) => {
@@ -17,11 +21,20 @@ const Home = () => {
             });
     }, []);
 
+    useEffect(() => {
+        instance.get('/listing')
+        .then(res => {
+            console.log('useEffect listings ran');
+            console.log(res.data);
+            setListings(res.data);
+        }).catch(err => console.log(err));
+    }, []);
 
     return <div>
-        <button onClick={() => navigate("/createListing")}>Add Page</button>
-        <button onClick={() => navigate("/viewListing", {state: {id: "6491735389ca6cf70b305438"}}) }>View Listing Page</button>
-
+        <div>
+            {listings && <ListingPreview title={listings[1].title} reviews={listings[1].reviews} 
+                                         location={listings[1].township} images={listings[1].descriptionImages} link={listings[1]._id} />}
+        </div>
     </div>
 }
 

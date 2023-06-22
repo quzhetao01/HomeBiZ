@@ -11,6 +11,7 @@ const Navbar = () => {
                 </NavLink>
             </div>
             <div className={NavbarCSS.links}>
+                <NavLink to='/createListing'>Create Listing</NavLink>
                 <NavLink to='/'>View My Business</NavLink>
                 <NavLink to='/login'>Logout</NavLink>
             </div>
