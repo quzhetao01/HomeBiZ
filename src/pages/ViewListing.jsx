@@ -8,6 +8,7 @@ import Menu from "../components/viewListing/Menu";
 import ServiceModal from "../components/viewListing/ServiceModal";
 import Review from "../components/viewListing/Review";
 import ImageGallery from 'react-image-gallery';
+import {FaWhatsappSquare, FaTelegram} from "react-icons/fa"
 
 const images = [
   {
@@ -53,9 +54,14 @@ const ViewListing = () => {
         contactMethod: "",
         email: "",
         category: "",
-        menu: []
+        menu: [],
+        reviews: [],
+        user: ""
     });
+    const [reviews, setReviews] = useState([]);
+    const [submittingReview, setSubmittingReview] = useState(false);
     const [serviceImage, setServiceImage] = useState("");
+
 
     
 
@@ -68,13 +74,29 @@ const ViewListing = () => {
         } else {
 
             instance.get(`/listing/${id}`)
-            .then(res => {
-                console.log(res);
-                setListing(res.data)
-            })
-            .catch(err => console.log(err));
+                .then(res => {
+                    console.log(res);
+                    setListing(res.data)
+                })
+                .catch(err => console.log(err));
+
+            
         }
-    }, [location]);
+    }, [location, submittingReview]);
+
+    // useEffect(() => {
+    //     const id = location.state ? location.state.id : null;
+    //     if (id == null) {
+    //         navigate('/');
+    //     } else {
+    //         instance.get(`/review/${id}`)
+    //                 .then(res => {
+    //                     console.log(res);
+    //                     setReviews(res.data)
+    //                 })
+    //                 .catch(err => console.log(err));
+    //     }
+    // }, [submittingReview])
 
     useEffect(() => {
         setImages([listing.displayImage, ...listing.descriptionImages].map(img => {
@@ -106,7 +128,7 @@ const ViewListing = () => {
                 </div>
                 {/* <hr /> */}
                 <div className="mt-5">
-                <Review id={listing._id}/>
+                <Review id={listing._id} reviews={listing.reviews} setSubmittingReview={setSubmittingReview}/>
 
                 </div>
             </div>
@@ -116,7 +138,10 @@ const ViewListing = () => {
                     <h3 className="mb-3">Contact Us!</h3>
                     <p>{"Business Owner(s): "} Zhetao and Stephen</p>
                     <div className="d-flex justify-content-between pe-5">
-                        <span>Mobile Number: </span><span>{listing.contact} via {listing.contactMethod == 1 ? "Whatsapp" : 2 ? "Telegram" : ""}</span>
+                        <span>Mobile Number: </span><span>{listing.contact} via {listing.contactMethod == 1 
+                                    ? <FaWhatsappSquare onClick={() => window.location.href = "https://google.com"} color="green" />  
+                                    : 2 ? <FaTelegram onClick={() => window.location.href = "https://google.com"} color="blue" />
+                                    : ""}</span>
                     </div>
                     <div className="d-flex justify-content-between pe-5">
                         <span>Email: </span><span>{listing.email}</span>

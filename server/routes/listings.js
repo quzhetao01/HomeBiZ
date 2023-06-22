@@ -5,7 +5,7 @@ const Service = require("../models/service.model.js").Service;
 const Review = require("../models/review.model.js").Review;
 
 const getAllListings = async (req, res, next) => {
-    const found = await Listing.find({}).populate("menu");
+    const found = await Listing.find({}).populate("reviews");
     res.send(found);
 }
 
@@ -34,7 +34,7 @@ const createListing = async (req, res, next) => {
 }
 
 const getListingById = async (req, res, next) => {
-    const listing = await Listing.findById(req.params.id).populate("menu");
+    const listing = await Listing.findById(req.params.id).populate("menu").populate("reviews").populate("user");
     res.send(listing);
 }
 

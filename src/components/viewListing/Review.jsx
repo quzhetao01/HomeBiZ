@@ -20,10 +20,11 @@ const Review = (props) => {
     },[])
 
     return <div className="card p-4 mb-5">
-                <AddReview listing_id={props.id} typing={typing} setTyping={setTyping} reviewRef={reviewRef}/>
+                <AddReview listing_id={props.id} typing={typing} setTyping={setTyping} reviewRef={reviewRef} setSubmittingReview={props.setSubmittingReview}/>
             <div className="">
-                <SingleReview />
-                <SingleReview />
+                {props.reviews.map((review) => <SingleReview review={review}/>)}
+                {/* <SingleReview />
+                <SingleReview /> */}
             </div>
         </div>
 }

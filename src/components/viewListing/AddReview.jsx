@@ -3,6 +3,7 @@ import StarRatings from "react-star-ratings";
 import instance from "../../axios.config";
 import { useNavigate } from "react-router-dom";
 
+
 const AddReview = (props) => {
     const [rating, setRating] = useState(5);
     const [description, setDescription] = useState("");
@@ -18,6 +19,8 @@ const AddReview = (props) => {
         instance.patch(`/listing/${props.listing_id}?review=true`, review)
             .then(res => {
                 console.log(res.data);
+                setDescription("");
+                props.setSubmittingReview(prev => !prev);
                         
             })
             .catch(err => console.log(err))

@@ -31,12 +31,12 @@ const Login = () => {
             .then(res => {
                 console.log(res);
                 // user is present
-                if (res.data.user) {
+                // if (res.data.user) {
                     navigate("/");
-                } else {
-                    setIsNewUser(false);
-                    setError(res.data.error);
-                }
+                // } else {
+                //     setIsNewUser(false);
+                //     setError(res.data.error);
+                // }
             })
             .catch(err => {
               if(err.response.status === 401) {
