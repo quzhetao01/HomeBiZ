@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import instance from "../axios.config";
+import instance from "../../axios.config";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 //import ImageGallery from 'react-image-gallery';
@@ -13,10 +13,9 @@ const ListingPreview = ({ title, reviews, location, images, link }) => {
         navigate("/viewListing", {state: {id: `${link}`}});
     }
 
-
     return (
-        <div className='card col-2' onClick={handleClick}>
-            <img src={ images[0] } alt="thumbnail" height='350px'/>
+        <div className='card' style={{width: '600px'}} onClick={handleClick}>
+            <img src={ images[0] } className="card-img-top" alt="thumbnail" height='250px'/>
             <div className='d-flex'>
                 <div className='p-1 flex-grow-1'>
                     <h6>{title}</h6>
