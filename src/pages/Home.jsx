@@ -20,7 +20,7 @@ const Home = () => {
 
     return <div>
         <button onClick={() => navigate("/createListing")}>Add Page</button>
-        <button onClick={() => navigate("/viewListing", {state: {id: "6491735389ca6cf70b305438"}}) }>View Listing Page</button>
+        <button onClick={() => navigate("/viewListing", {state: {id: "64916970ef2179e218e9eadd"}}) }>View Listing Page</button>
 
     </div>
 }

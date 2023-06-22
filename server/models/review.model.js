@@ -7,7 +7,11 @@ const reviewSchema = new Schema({
     created_by_id: {
         type: Schema.Types.ObjectId,
         ref: "User"
-    }
+    },
+    listing: {
+        type: Schema.Types.ObjectId,
+        ref: "Listing"
+    },
     
 });
 

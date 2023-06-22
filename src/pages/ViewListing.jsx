@@ -42,6 +42,7 @@ const ViewListing = () => {
         // },
       ]);
     const [listing, setListing] = useState({
+        _id: "",
         title: "",
         description: "",
         township: "",
@@ -89,7 +90,6 @@ const ViewListing = () => {
             <h1 className="mb-3">{listing.title}</h1> 
             <div style={{display: "flex", fontSize: 20}}>
                 <div>
-
                 <AiFillStar></AiFillStar> 5.00 - 20 reviews -   
                 <span style={{textDecoration: "underline"}}>{listing.township}</span>, <span style={{textDecoration: "underline"}}> {listing.location}</span>
                 </div>
@@ -104,9 +104,9 @@ const ViewListing = () => {
                 <div className="mb-4">
                     <ImageGallery originalHeight={"10px"} originalWidth={"50%"} items={images} />
                 </div>
-                <hr />
+                {/* <hr /> */}
                 <div className="mt-5">
-                <Review />
+                <Review id={listing._id}/>
 
                 </div>
             </div>

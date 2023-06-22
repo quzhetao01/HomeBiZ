@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const serviceSchema = new mongoose.Schema({
     title: {
@@ -7,6 +8,10 @@ const serviceSchema = new mongoose.Schema({
     },
     image: String,
     price: String,
+    listing: {
+        type: Schema.Types.ObjectId,
+        ref: "Listing"
+      },
 });
 
 const Service = mongoose.model("Service", serviceSchema);

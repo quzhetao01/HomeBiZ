@@ -1,12 +1,31 @@
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
+import SingleReview from "./SingleReview";
+import AddReview from "./AddReview";
 
 const Review = (props) => {
-    return <div className="card p-4">
-    <h3 className="mb-3">Reviews</h3>
-    <div className="mt-5">
-        hello
-    </div>
-</div>
+    const [typing, setTyping] = useState(false);
+    const reviewRef = useRef(null);
+
+    const handleClickOutside = (event) => {
+        if (reviewRef.current && !reviewRef.current.contains(event.target)) {
+            setTyping(false);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    },[])
+
+    return <div className="card p-4 mb-5">
+                <AddReview listing_id={props.id} typing={typing} setTyping={setTyping} reviewRef={reviewRef}/>
+            <div className="">
+                <SingleReview />
+                <SingleReview />
+            </div>
+        </div>
 }
 
 export default Review;

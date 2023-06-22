@@ -39,7 +39,19 @@ const getListingById = async (req, res, next) => {
 }
 
 const editListing = async (req, res, next) => {
-    const updatedListing = req.body;
+
+    console.log("hi", req.query)
+    if (req.query.review) {
+        console.log("here")
+        const listing = await Listing.findById(req.params.id);
+        const review = req.body;
+        review.user = req.user.id;
+        const newReview = new Review(review);
+        const saved = await newReview.save();
+        listing.reviews.push(saved._id);
+        const ans = await listing.save();
+        res.send(ans);
+    }
 }
 
 router.route('/')
@@ -47,5 +59,6 @@ router.route('/')
     .post(createListing);
 
 router.route('/:id')
-    .get(getListingById);
+    .get(getListingById)
+    .patch(editListing);
 module.exports = router;
