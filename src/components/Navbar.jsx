@@ -1,8 +1,18 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import NavbarCSS from "../styles/Navbar.module.css";
+import instance from '../axios.config';
 
 const Navbar = () => {
+
+    const handleLogout = () => {
+        console.log('logout');
+        instance.post("/logout")
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err));
+    }
     return (
         <nav>
             <div className={NavbarCSS.logo}>
@@ -12,7 +22,7 @@ const Navbar = () => {
             </div>
             <div className={NavbarCSS.links}>
                 <NavLink to='/'>View My Business</NavLink>
-                <NavLink to='/login'>Logout</NavLink>
+                <NavLink to='/login' onClick={handleLogout}>Logout</NavLink>
             </div>
         </nav>
       );

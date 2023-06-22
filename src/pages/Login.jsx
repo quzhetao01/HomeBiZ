@@ -19,14 +19,15 @@ const Login = () => {
       if (location.state) {
         setIsNewUser(location.state.justRegistered);
       }
-      const user = getUser();
-      if (user !== null) {
-        navigate("/");
-      }
+      getUser().then(user => {
+        if (user) {
+          navigate("/");
+        }
+      })
+
     }, [])
 
     const handleLogin = () => {
-        console.log(username, password);
         instance.post("/login", {"username": username, "password": password})
             .then(res => {
                 console.log(res);

@@ -106,6 +106,13 @@ app.get('/success', (req, res) => {
   }
 })
 
+app.post('/logout', function(req, res, next){
+  req.logout(function(err) {
+    if (err) { res.send("Error logging out") }
+      res.send("Sucessfully logged out")
+  });
+});
+
 app.get("/user", (req, res) => {
   if(req.isAuthenticated()) {
     res.send(req.user);

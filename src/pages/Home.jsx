@@ -1,20 +1,17 @@
 import React, {useEffect} from "react";
 import { useNavigate } from "react-router";
 import instance from "../axios.config";
+import getUser from "../helper/user";
 
 
 const Home = () => {
     const navigate = useNavigate();
     useEffect(() => {
-        instance.get('/test')
-            .then((res) => {
-                console.log(res);
-            })
-            .catch(err => {
-                if (err.response.data === "Not authenticated") {
-                    navigate("/login");
-                }
-            });
+        getUser().then(user => {
+            if (!user) {
+                navigate("/login");
+            }
+        })
     }, []);
 
 

@@ -22,7 +22,7 @@ const CreateListing = () => {
         getUser().then((user) => {
         
             console.log(user);
-            if (user === null) {
+            if (!user) {
               navigate("/login");
             }
           })
