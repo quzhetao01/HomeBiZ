@@ -10,10 +10,10 @@ const PopulateListings = (props) => {
     
     return ( 
         <div>
-            <div className='p-2 ms-5'>
+            <div className='mb-3'>
                 <h1>Explore These Businesses</h1>
             </div>
-            <div className='d-flex justify-content-evenly overflow-x-auto'>
+            <div className={PopulateListingsCSS.listingContainer}>
                 {listings.map((item, index) => {
                         return <ListingPreview key={index} title={item.title} reviews={item.reviews} 
                                 location={item.township} images={item.descriptionImages} link={item._id} /> }

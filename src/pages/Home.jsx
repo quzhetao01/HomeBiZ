@@ -28,7 +28,7 @@ const Home = () => {
     }, []);
 
     return <div>
-        <div className='default-listings'>
+        <div className='default-listings p-5'>
             {listings && <PopulateListings listings={listings}/>}
         </div>
     </div>

@@ -1,1 +1,9 @@
 /* nothing here */
+.listingContainer {
+    display: flex;
+    overflow-x: auto;
+}
+
+.listing {
+    flex: 0 0 auto;
+}

@@ -29,6 +29,7 @@
     "react-icons": "^4.9.0",
     "react-image-gallery": "^1.2.12",
     "react-modal": "^3.16.1",
+    "react-photo-gallery": "^8.0.0",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
     "react-star-ratings": "^2.3.0",

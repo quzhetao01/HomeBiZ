@@ -27,3 +27,9 @@
     height: 100%;
     object-fit: cover;
 }
+
+.thumbnail {
+    justify-self: center;
+    width: 100;
+    height: 100;
+}

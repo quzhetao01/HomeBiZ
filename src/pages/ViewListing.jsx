@@ -9,6 +9,7 @@ import ServiceModal from "../components/viewListing/ServiceModal";
 import Review from "../components/viewListing/Review";
 import ImageGallery from 'react-image-gallery';
 import {FaWhatsappSquare, FaTelegram} from "react-icons/fa"
+import viewListingCSS from "../styles/viewListing.module.css"
 
 const images = [
   {
@@ -102,7 +103,10 @@ const ViewListing = () => {
         setImages([listing.displayImage, ...listing.descriptionImages].map(img => {
             return {
                 original: img,
-                thumbnail: img
+                thumbnail: img,
+                originalHeight: 500,
+                originalWidth: 500,
+                thumbnailClass: viewListingCSS.thumbnail
             };
         }))
     }, [listing])
@@ -124,7 +128,7 @@ const ViewListing = () => {
         <div className="row d-flex justify-content-between">
             <div className="col-7">
                 <div className="mb-4">
-                    <ImageGallery originalHeight={"10px"} originalWidth={"50%"} items={images} />
+                    <ImageGallery items={images} />
                 </div>
                 {/* <hr /> */}
                 <div className="mt-5">

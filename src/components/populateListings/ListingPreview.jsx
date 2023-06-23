@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import instance from "../../axios.config";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import PopulateListingsCSS from '../../styles/PopulateListings.module.css'
+
 //import ImageGallery from 'react-image-gallery';
 
 
@@ -14,7 +16,7 @@ const ListingPreview = ({ title, reviews, location, images, link }) => {
     }
 
     return (
-        <div className='card' style={{width: '600px'}} onClick={handleClick}>
+        <div className={`card mx-1 ${PopulateListingsCSS.listing}`} style={{ width: '350px'}} onClick={handleClick}>
             <img src={ images[0] } className="card-img-top" alt="thumbnail" height='250px'/>
             <div className='d-flex'>
                 <div className='p-1 flex-grow-1'>
