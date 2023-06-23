@@ -12,8 +12,8 @@ app.use(cors({
   origin: "http://localhost:3000",
   credentials: true
 }))
-app.use(express.urlencoded({extended: true, limit:"50mb"}));
-app.use(express.json({limit: '50mb'}))
+app.use(express.urlencoded({extended: true, limit:"500mb"}));
+app.use(express.json({limit: '500mb'}))
 // configuring session middleware
 app.use(require('express-session')({
   secret: process.env.SESSION_SECRET,
@@ -38,6 +38,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  }
   // password: {
   //   type: String,
   //   required: true,
@@ -77,7 +83,8 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLog
 app.post('/register', (req, res) => {
   console.log('register');
   console.log(req.body);
-  User.register(new User({ username : req.body.username}), req.body.password, function(err, user) {
+  User.register(new User({ username : req.body.username, firstName: req.body.firstName, lastName: req.body.lastName}),
+    req.body.password, function(err, user) {
       if (err) {
           console.log(err.message);
           return res.send({user: null, error: err.message});

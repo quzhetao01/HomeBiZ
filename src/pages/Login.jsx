@@ -18,12 +18,14 @@ const Login = () => {
     useEffect(() => {
       if (location.state) {
         setIsNewUser(location.state.justRegistered);
+      } else {
+
+        getUser().then(user => {
+          if (user) {
+            navigate("/");
+          }
+        })
       }
-      getUser().then(user => {
-        if (user) {
-          navigate("/");
-        }
-      })
 
     }, [])
 
