@@ -15,18 +15,31 @@ const ListingPreview = ({ title, reviews, location, images, link }) => {
         navigate("/viewListing", {state: {id: `${link}`}});
     }
 
+    const averageRating = () => {
+        let avg = 0;
+        for (let i = 0; i < reviews.length; i++) {
+            console.log(reviews[i])
+            avg += reviews[i].rating;
+        }
+        avg = avg / reviews.length;
+
+        return (typeof avg === 'number' && isFinite(avg)) ? avg : '--';
+    }
+    
+
     return (
-        <div className={`card mx-1 ${PopulateListingsCSS.listing}`} style={{ width: '350px'}} onClick={handleClick}>
-            <img src={ images[0] } className="card-img-top" alt="thumbnail" height='250px'/>
-            <div className='d-flex'>
-                <div className='p-1 flex-grow-1'>
+        <div className={`card border-light mx-3 ${PopulateListingsCSS.listing}`} onClick={handleClick}>
+            
+            <img src={ images[0] } className={`${PopulateListingsCSS.image}`} alt="thumbnail"/>
+            <div className='d-flex mt-2'>
+                <div className='mt-2 flex-grow-1'>
                     <h6>{title}</h6>
                 </div>
                 <div className="p-1">
-                    <AiFillStar></AiFillStar>4.95    
+                    <AiFillStar></AiFillStar>{averageRating()}  
                 </div>   
             </div>
-            <div className='p-1'>
+            <div className={PopulateListingsCSS.location}>
                 {location}
             </div>
         </div>
