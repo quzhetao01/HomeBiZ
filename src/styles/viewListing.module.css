@@ -28,8 +28,8 @@
     object-fit: cover;
 }
 
-.thumbnail {
-    justify-self: center;
-    width: 100;
-    height: 100;
+.imageContainer {
+    display: flex;
+    overflow-x: auto;
+    height: "150px"
 }

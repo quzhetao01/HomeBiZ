@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import instance from "../axios.config";
 import { AiFillStar } from "react-icons/ai";
 import Modal from "react-modal";
-
+import Gallery from "react-photo-gallery";
 import Menu from "../components/viewListing/Menu";
 import ServiceModal from "../components/viewListing/ServiceModal";
 import Review from "../components/viewListing/Review";
@@ -101,13 +101,27 @@ const ViewListing = () => {
 
     useEffect(() => {
         setImages([listing.displayImage, ...listing.descriptionImages].map(img => {
-            return {
-                original: img,
-                thumbnail: img,
-                originalHeight: 500,
-                originalWidth: 500,
-                thumbnailClass: viewListingCSS.thumbnail
-            };
+            // return {
+            //     original: img,
+            //     thumbnail: img,
+            //     originalHeight: 500,
+            //     originalWidth: 500,
+            //     thumbnailClass: viewListingCSS.thumbnail
+            // };
+            const image = new Image();
+            image.src = img;
+            let width = 0;
+            let height = 0;
+            image.onload = () => {
+                width = Math.floor(image.width / 1000);
+                height = Math.floor(image.height / 1000);
+
+            }
+            return ({
+                src: img,
+                width: 1.5,
+                height: 3.5
+            })
         }))
     }, [listing])
 
@@ -127,8 +141,9 @@ const ViewListing = () => {
         </div>
         <div className="row d-flex justify-content-between">
             <div className="col-7">
-                <div className="mb-4">
-                    <ImageGallery items={images} />
+                <div className={`mb-4 ${viewListingCSS.imageContainer}`}>
+                    {/* <ImageGallery items={images} /> */}
+                    <Gallery photos={images}/>
                 </div>
                 {/* <hr /> */}
                 <div className="mt-5">
