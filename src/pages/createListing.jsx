@@ -283,11 +283,11 @@ const CreateListing = () => {
         // })
     }
 
-    return <div style={{ minHeight: "100vh", paddingTop: "5rem", backgroundColor: "#FFBC80"}}>
+    return <div style={{ minHeight: "100vh", paddingTop: "6.5rem", backgroundColor: "white"}}>
         <div>
         <div className="row justify-content-evenly pt-5" >
-            <div className={`card col-5 p-3 ${styles.card}`} style={{}}>
-                <h3>Create your listing here</h3>
+            <div className={`card col-5 p-5 ${styles.card}`}>
+                <h3 className="mb-3">Create your listing here</h3>
                     <Title handleChange={handleTitle} value={listing.title}/>
                     <Description handleChange={handleDescription} value={listing.description}/>
                     <Location handleChange={handleTownship} value={listing.township} label="Township" placeholder="Input your township here if applicable. Eg. Bedok"/>
@@ -306,13 +306,18 @@ const CreateListing = () => {
                     <SelectCategory handleCategory={handleCategory} categories={categories}></SelectCategory>
                 
             </div>
-            <div className={`card p-3 col-5 mb-3 ${styles.card}` }>
+            <div className={`card p-5 col-5 ${styles.card} d-flex justify-content-around`}>
+            <h3 className="">Further details</h3>
                 {/* <FileUpload multiple={true} handleUpload={handleDescImages} title={"Select other photos to show users your product or service"}/> */}
                 <MultipleFileUpload handleUpload={handleDescImages}/>
+                <hr />
                 
-                <Button style={{width: "50%"}} variant="contained" onClick={() => setShowMenu(true)}>Create menu</Button>
+                <Button className="align-self-center" style={{width: "50%", backgroundColor: "#FF9F45"}} variant="contained" onClick={() => setShowMenu(true)}>
+                    Showcase your menu
+                </Button>
+                <hr />
                 <Contact listing={listing} handleNumber={handleNumber} handleMethod={handleMethod} handleEmail={handleEmail}/>
-                <Button style={{width: "50%"}} variant="contained" onClick={handleSubmit}>Submit listing</Button>
+                <Button className="align-self-center" style={{width: "50%", backgroundColor: "#FF9F45"}} variant="contained" onClick={handleSubmit}>Submit listing</Button>
 
             </div>
         </div>

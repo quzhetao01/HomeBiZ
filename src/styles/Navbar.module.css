@@ -18,13 +18,13 @@ nav {
 }
   
 .links a {
-    margin-right: 10px;
-    color: #333;
+    margin-right: 2.5rem;
+    color: white;
     text-decoration: none;
 }
   
 .links a:hover {
-    color: #666;
+    color: #AAA;
   }
   
 .links a::after {
@@ -40,7 +40,7 @@ nav {
 }
 
 .navbar {
-    background-color: #FC4F4F;
+    background-color: #F76E11;
     display: flex;
     position: fixed;
     align-items: center;
@@ -48,6 +48,6 @@ nav {
     /* border: 1px black solid; */
     z-index: 999;
     box-shadow: 0 20px 60px 0 rgba(0, 0, 0, .2);
-    height: 5rem;
+    height: 6.5rem;
     width: 100%
 }

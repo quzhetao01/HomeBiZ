@@ -11,8 +11,8 @@ const ContactDetails = ({listing}) => {
                 <div className="d-flex justify-content-between pe-5">
                     <span>Mobile Number: </span>
                     <span>{listing.contact} via {listing.contactMethod == 1 
-                                ? <FaWhatsappSquare onClick={() => window.location.href = "https://google.com"} color="green" />  
-                                : 2 ? <FaTelegram onClick={() => window.location.href = "https://google.com"} color="blue" />
+                                ? <a><FaWhatsappSquare onClick={() => window.open(`https://wa.me/+65${listing.contact}`, '_blank')} color="green" /></a> 
+                                : 2 ? <FaTelegram onClick={() => window.open(`https://t.me/+65${listing.contact}`, '_blank')} color="blue" />
                                 : ""}</span>
                 </div>
                 <div className="d-flex justify-content-between pe-5">

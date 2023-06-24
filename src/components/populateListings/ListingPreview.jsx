@@ -8,9 +8,16 @@ import PopulateListingsCSS from '../../styles/PopulateListings.module.css'
 //import ImageGallery from 'react-image-gallery';
 
 
-const ListingPreview = ({ title, reviews, location, images, link }) => {
+const ListingPreview = ({ title, reviews, location, image, link }) => {
     
     const navigate = useNavigate();
+    const [img, setImg] = useState("");
+
+    // let img = "";
+
+    instance.get(`/images/${image}`).then(res => {
+        setImg(res.data);
+    })
 
     const handleClick = () => {
         navigate("/viewListing", {state: {id: `${link}`}});
@@ -30,7 +37,7 @@ const ListingPreview = ({ title, reviews, location, images, link }) => {
     return (
         <div className={`card border-light me-4 ${PopulateListingsCSS.listing}`} onClick={handleClick}>
             
-            <img src={ images[0] } className={`${PopulateListingsCSS.image}`} alt="thumbnail"/>
+            <img src={img} className={`${PopulateListingsCSS.image}`} alt="thumbnail"/>
             <div className='d-flex mt-2 px-2'>
                 <div className='mt-2 flex-grow-1'>
                     <h6>{title}</h6>

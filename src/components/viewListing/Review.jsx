@@ -23,8 +23,6 @@ const Review = (props) => {
                 <AddReview listing_id={props.id} typing={typing} setTyping={setTyping} reviewRef={reviewRef} setSubmittingReview={props.setSubmittingReview}/>
             <div className="">
                 {props.reviews.map((review) => <SingleReview review={review}/>)}
-                {/* <SingleReview />
-                <SingleReview /> */}
             </div>
         </div>
 }

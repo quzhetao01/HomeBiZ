@@ -16,7 +16,7 @@ const PopulateListings = (props) => {
             <div className={PopulateListingsCSS.listingContainer}>
                 {listings.map((item, index) => {
                         return <ListingPreview key={index} title={item.title} reviews={item.reviews} 
-                                location={item.township} images={item.descriptionImages} link={item._id} /> }
+                                location={item.township} image={item.displayImage} link={item._id} /> }
                 )}
             </div>
         </div>
