@@ -18,12 +18,12 @@ const Navbar = () => {
     }
     return (
         <div className={NavbarCSS.navbar}>  
-            <div className="ms-5">
+            <div className="mx-5 p-5">
                 <NavLink to='/'>
                     <img src='http://localhost:3000/homebiz-logo.png' alt="HomeBiZ logo" width={100} height={90}/>
                 </NavLink>
             </div>
-            <div className={NavbarCSS.links}>
+            <div className={`${NavbarCSS.links} pe-5`}>
                 <NavLink to='/createListing'>Create Listing</NavLink>
                 <NavLink to='/'>View My Business</NavLink>
                 <NavLink to='/login' onClick={handleLogout}>Logout</NavLink>

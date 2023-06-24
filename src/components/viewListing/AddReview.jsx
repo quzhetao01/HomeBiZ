@@ -48,7 +48,7 @@ const AddReview = (props) => {
 
                     
                     <div className="d-flex justify-content-end">
-                        <button className="btn btn-primary" onClick={handleSubmit}>
+                        <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn" onClick={handleSubmit}>
                             Submit Review
                         </button>
                     </div>
