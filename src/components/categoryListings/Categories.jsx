@@ -14,7 +14,9 @@ const Categories = () => {
     return (
         <div className='d-flex'>
                     {categories.map((item, index) => 
-                        <button key={index} className={HomeCSS.cat} onClick={() => handleClick(item)}>{item}</button>
+                        <button key={index} className={HomeCSS.button} onClick={() => handleClick(item)}>
+                            <span>{item}</span>
+                        </button>
                     )}
         </div>
       );

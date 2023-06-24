@@ -6,14 +6,14 @@ import CategoryListingsCSS from '../styles/CategoryListings.module.css'
 import Banner from '../components/categoryListings/Banner';
 import Title from '../components/categoryListings/Title';
 import Searchbar from '../components/Searchbar';
-import MainListings from '../components/categoryListings/MainListings';
+import PopulateListings from '../components/populateListings/PopulateListings';
 
 const CategoryListings = () => {
    
     const location = useLocation();
     const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [listings, setListings] = useState('');
+    const [listings, setListings] = useState(null);
     
     useEffect(() => {
         console.log(location);
@@ -42,8 +42,10 @@ const CategoryListings = () => {
             <Searchbar />
             <Title category={selectedCategory} />
             <Banner category={selectedCategory} />
-            <MainListings listings={listings} />
-            
+            <div> 
+                {listings && <PopulateListings listings={listings}/>}
+            </div>
+           
         </div>
       );
 }

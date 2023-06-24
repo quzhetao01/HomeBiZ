@@ -57,7 +57,7 @@ const Login = () => {
         setPassword(event.target.value);
     }
 
-   return <section className="h-100 gradient-form">
+   return <section className="h-100 gradient-form" style={{paddingTop:'6.5rem'}}>
   <div className="container py-5 h-100">
     <div className="row d-flex justify-content-center align-items-center h-100 py-5">
       <div className="col-xl-10">
