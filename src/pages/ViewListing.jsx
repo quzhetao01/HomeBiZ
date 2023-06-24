@@ -77,7 +77,7 @@ const ViewListing = () => {
             instance.get(`/listing/${id}`)
                 .then(res => {
                     console.log(res);
-                    setListing(res.data)
+                    setListing(res.data);
                 })
                 .catch(err => console.log(err));
 
