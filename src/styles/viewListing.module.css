@@ -31,5 +31,5 @@
 .imageContainer {
     display: flex;
     overflow-x: auto;
-    height: "150px"
+    /* height: "150px" */
 }

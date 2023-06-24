@@ -33,7 +33,7 @@ const CreateListing = () => {
         description: "",
         township: "",
         location: "",
-        displayImage: "",
+        displayImage: null,
         descriptionImages: [],
         contact: "",
         contactMethod: "",
@@ -41,6 +41,10 @@ const CreateListing = () => {
         category: "",
         menu: []
     });
+    const [totalImages, setTotalImages] = useState(1);
+    const [processedImages, setProcessedImages] = useState(0);
+    const [displayImage, setDisplayImage] = useState("");
+    const [descriptionImages, setDescriptionImages] = useState([]);
     const [showMenu, setShowMenu] = useState(false);
     const navigate = useNavigate();
     const handleTitle = (title) => {
@@ -79,42 +83,52 @@ const CreateListing = () => {
     }
 
     const handleTitleImage = (event) => {
+        console.log(event.target);
+        setListing((prev) => {
+                    return {
+                       ...prev, 
+                        ["displayImage"]: event.target.files[0]
+                    }
+                })
         if (event.target.files && event.target.files.length > 0 ) {
             const reader = new FileReader();
             reader.readAsDataURL(event.target.files[0])
             reader.onload = () => {
-                setListing((prev) => {
-                    return {
-                        ...prev,
-                        ["displayImage"]: reader.result
-                    }
-                })
+                setDisplayImage(reader.result);
             }
         } else {
             setListing(prev => {
                 return {
                     ...prev,
-                    ["displayImage"]: ""
+                    ["displayImage"]: null
                 }
             })
+            setDisplayImage("");
         }
     }
 
     const handleDescImages = (event) => {
         if (event.target.files && event.target.files.length > 0 ) {
+            // console.log(event.target.files);
+            // for (let i = 0; i < event.target.files.length; i++) {
+            //     const reader = new FileReader();
+            //     reader.readAsDataURL(event.target.files[i])
+            //     reader.onload = () => {
+            //         setListing((prev) => {
+            //             return {
+            //                 ...prev,
+            //                 ["descriptionImages"]: [...prev.descriptionImages, reader.result]
+            //             }
+            //         })
+            //     }
+            // }
             console.log(event.target.files);
-            for (let i = 0; i < event.target.files.length; i++) {
-                const reader = new FileReader();
-                reader.readAsDataURL(event.target.files[i])
-                reader.onload = () => {
-                    setListing((prev) => {
-                        return {
-                            ...prev,
-                            ["descriptionImages"]: [...prev.descriptionImages, reader.result]
-                        }
-                    })
-                }
-            }
+            setListing((prev) => {
+                            return {
+                              ...prev, 
+                                ["descriptionImages"]: event.target.files
+                            }
+                        })
         } else {
             setListing(prev => {
                 return {
@@ -163,12 +177,107 @@ const CreateListing = () => {
         }) 
     }
 
-    const handleSubmit = e => {
-        instance.post("/listing", listing)
-            .then(res => {
-                console.log(res);
-                navigate("/");
+    const uploadImages = async () => {
+        let totalImages = 1;
+        
+
+        console.log(listing);
+    }
+
+    const handleSubmit = async (e) => {
+        let formData = new FormData();
+        formData.append("file", listing.displayImage);
+
+        // Upload display image
+        instance.post("/images", formData)
+        .then(res => {
+            listing.displayImage = res.data;
+
+            const descriptionImgPromises = [];
+            const menuImgPromises = [];
+
+            // Upload description images
+            for (let i = 0; i < listing.descriptionImages.length; i++) {
+                const formData2 = new FormData();
+                formData2.append("file", listing.descriptionImages[i]);
+                const descriptionImgPromise = instance.post("/images", formData2)
+                    .then(res => res.data);
+                descriptionImgPromises.push(descriptionImgPromise);
+            }
+
+            // Upload menu images
+            for (let i = 0; i < listing.menu.length; i++) {
+            if (listing.menu[i].image) {
+                const formData3 = new FormData();
+                formData3.append("file", listing.menu[i].image);
+                const menuImgPromise = instance.post("/images", formData3)
+                .then(res => res.data);
+                menuImgPromises.push(menuImgPromise);
+            }
+            }
+
+            // Wait for all image uploads to complete
+            return Promise.all([...descriptionImgPromises, ...menuImgPromises]);
         })
+        .then(results => {
+            const descriptionImgIDs = results.slice(0, listing.descriptionImages.length);
+            const menuImgIDs = results.slice(listing.descriptionImages.length);
+
+            listing.descriptionImages = descriptionImgIDs;
+
+            // Update menu image IDs
+            let menuImgIndex = 0;
+            for (let i = 0; i < listing.menu.length; i++) {
+            if (listing.menu[i].image) {
+                listing.menu[i].image = menuImgIDs[menuImgIndex];
+                menuImgIndex++;
+            }
+            }
+
+            // Send the `/listing` API request
+            return instance.post("/listing", listing);
+        })
+        .then(res => {
+            console.log(res);
+            navigate("/");
+        })
+        .catch(err => {
+            console.log(err);
+        });
+        // let formData = new FormData();
+        // formData.append("file", listing.displayImage);
+        // instance.post("/images", formData).then(res => {
+        //     listing.displayImage = res.data;
+        // })
+        // const descriptionImgIDs = [];
+        
+        // for (let i = 0; i < listing.descriptionImages.length; i++) {
+        //     totalImages++
+        //     const formData2 = new FormData();
+        //     formData2.append("file", listing.descriptionImages[i]);
+        //     instance.post("/images", formData2).then(res => {
+        //         descriptionImgIDs.push(res.data);
+        //     })
+        // }
+        // listing.descriptionImages = descriptionImgIDs;
+        // console.log(listing.menu);
+        // for (let i = 0; i < listing.menu.length; i++) {
+        //     if (listing.menu[i].image) {
+        //         totalImages++;
+        //         const formData3 = new FormData();
+        //         formData3.append("file", listing.menu[i].image);
+        //         instance.post("/images", formData3).then(res => {
+        //             listing.menu[i].image = res.data;
+        //         })
+        //     }
+        // }
+        // instance.post("/listing", listing)
+        //     .then(res => {
+        //         console.log(res);
+        //         navigate("/");
+        // }).catch(err => {
+        //     console.log(err);
+        // })
     }
 
     return <div>
@@ -186,7 +295,7 @@ const CreateListing = () => {
                             <FileUpload multiple={false} handleUpload={handleTitleImage} title={"Select your display picture"}/>
                         </div>
                         <div className="col-8">
-                            <img src={listing.displayImage} alt="" height={250} width={"auto"}/>
+                            <img src={displayImage} alt="" height={250} width={"auto"}/>
                         </div>
                     </div>
                     
@@ -195,7 +304,8 @@ const CreateListing = () => {
             </div>
             <div className="card p-3 col-5 mb-3">
                 <FileUpload multiple={true} handleUpload={handleDescImages} title={"Select other photos to show users your product or service"}/>
-                <Carousel images={listing.descriptionImages}></Carousel>
+                {/* <Carousel images={listing.descriptionImages}></Carousel> */}
+                
                 <Button style={{width: "50%"}} variant="contained" onClick={() => setShowMenu(true)}>Create menu</Button>
                 <Contact listing={listing} handleNumber={handleNumber} handleMethod={handleMethod} handleEmail={handleEmail}/>
                 <Button style={{width: "50%"}} variant="contained" onClick={handleSubmit}>Submit listing</Button>

@@ -136,8 +136,10 @@ app.get('/test', (req, res) => {
 
 const listingRouter = require("./routes/listings")
 const reviewRouter = require("./routes/review");
+const uploadRouter = require("./routes/googledrive");
 app.use("/listing", listingRouter);
 app.use("/review", reviewRouter);
+app.use("/images", uploadRouter);
 
 app.listen(8000, () => {
     console.log("Listening on port 8000")

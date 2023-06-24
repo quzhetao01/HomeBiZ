@@ -30,21 +30,22 @@ const CreateMenu = (props) => {
             })
             setName("");
             setPrice("");
-            setImage("");
+            setImage();
             
         }
         }
 
     const handleUpload = (event) => {
-        if (event.target.files && event.target.files.length > 0 ) {
-            const reader = new FileReader();
-            reader.readAsDataURL(event.target.files[0])
-            reader.onload = () => {
-                setImage(reader.result);
-            }
-        } else {
-            setImage("");
-        }
+        setImage(event.target.files[0]);
+        // if (event.target.files && event.target.files.length > 0 ) {
+        //     const reader = new FileReader();
+        //     reader.readAsDataURL(event.target.files[0])
+        //     reader.onload = () => {
+        //         setImage(reader.result);
+        //     }
+        // } else {
+        //     setImage("");
+        // }
     }
 
     const handleConfirm = () => {
@@ -59,7 +60,12 @@ const CreateMenu = (props) => {
 
     return <Modal
         isOpen={props.isOpen}
-        onRequestClose={props.onRequestClose}
+        onRequestClose={() => {
+            setName("");
+            setPrice("");
+            setImage();
+            props.onRequestClose()
+        }}
         style={{
             overlay: {
               zIndex: 1,

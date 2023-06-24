@@ -4,11 +4,11 @@ import instance from "../axios.config";
 import { AiFillStar } from "react-icons/ai";
 import Modal from "react-modal";
 import Gallery from "react-photo-gallery";
+import ContactDetails from "../components/viewListing/ContactDetails";
 import Menu from "../components/viewListing/Menu";
 import ServiceModal from "../components/viewListing/ServiceModal";
 import Review from "../components/viewListing/Review";
 import ImageGallery from 'react-image-gallery';
-import {FaWhatsappSquare, FaTelegram} from "react-icons/fa"
 import viewListingCSS from "../styles/viewListing.module.css"
 
 const images = [
@@ -57,7 +57,7 @@ const ViewListing = () => {
         category: "",
         menu: [],
         reviews: [],
-        user: ""
+        user: {}
     });
     const [reviews, setReviews] = useState([]);
     const [submittingReview, setSubmittingReview] = useState(false);
@@ -101,27 +101,27 @@ const ViewListing = () => {
 
     useEffect(() => {
         setImages([listing.displayImage, ...listing.descriptionImages].map(img => {
-            // return {
-            //     original: img,
-            //     thumbnail: img,
-            //     originalHeight: 500,
-            //     originalWidth: 500,
-            //     thumbnailClass: viewListingCSS.thumbnail
-            // };
-            const image = new Image();
-            image.src = img;
-            let width = 0;
-            let height = 0;
-            image.onload = () => {
-                width = Math.floor(image.width / 1000);
-                height = Math.floor(image.height / 1000);
+            return {
+                original: img,
+                thumbnail: img,
+                // originalHeight: 500,
+                // originalWidth: 500,
+                // thumbnailClass: viewListingCSS.thumbnail
+            };
+            // const image = new Image();
+            // image.src = img;
+            // let width = 0;
+            // let height = 0;
+            // image.onload = () => {
+            //     width = Math.floor(image.width / 1000);
+            //     height = Math.floor(image.height / 1000);
 
-            }
-            return ({
-                src: img,
-                width: 1.5,
-                height: 3.5
-            })
+            // }
+            // return ({
+            //     src: img,
+            //     width: 1.5,
+            //     height: 3.5
+            // })
         }))
     }, [listing])
 
@@ -139,11 +139,11 @@ const ViewListing = () => {
                 </div>
             </div>
         </div>
-        <div className="row d-flex justify-content-between">
-            <div className="col-7">
-                <div className={`mb-4 ${viewListingCSS.imageContainer}`}>
-                    {/* <ImageGallery items={images} /> */}
-                    <Gallery photos={images}/>
+        <div className="row d-flex justify-content-center mt-5">
+            <div className="">
+                <div className={`mb-4 `}>
+                    <ImageGallery items={images} />
+                    {/* <Gallery photos={images}/> */}
                 </div>
                 {/* <hr /> */}
                 <div className="mt-5">
@@ -151,25 +151,10 @@ const ViewListing = () => {
 
                 </div>
             </div>
-            <div className="col-4">
-                
-                <div className="card p-4 mb-5">
-                    <h3 className="mb-3">Contact Us!</h3>
-                    <p>{"Business Owner(s): "} Zhetao and Stephen</p>
-                    <div className="d-flex justify-content-between pe-5">
-                        <span>Mobile Number: </span><span>{listing.contact} via {listing.contactMethod == 1 
-                                    ? <FaWhatsappSquare onClick={() => window.location.href = "https://google.com"} color="green" />  
-                                    : 2 ? <FaTelegram onClick={() => window.location.href = "https://google.com"} color="blue" />
-                                    : ""}</span>
-                    </div>
-                    <div className="d-flex justify-content-between pe-5">
-                        <span>Email: </span><span>{listing.email}</span>
-                    </div>
-                </div>
+            {/* <div className="col-4">
+                <ContactDetails listing={listing}/>
                 <Menu menu={listing.menu} setServiceImage={setServiceImage}/>
-                
-                
-            </div>
+            </div> */}
         </div> 
         {serviceImage && <ServiceModal isOpen={!!serviceImage} onRequestClose={() => setServiceImage("")} image={serviceImage}/>}
     </div>

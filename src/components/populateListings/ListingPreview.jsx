@@ -31,7 +31,7 @@ const ListingPreview = ({ title, reviews, location, images, link }) => {
         <div className={`card border-light mx-3 ${PopulateListingsCSS.listing}`} onClick={handleClick}>
             
             <img src={ images[0] } className={`${PopulateListingsCSS.image}`} alt="thumbnail"/>
-            <div className='d-flex mt-2'>
+            <div className='d-flex mt-2 px-2'>
                 <div className='mt-2 flex-grow-1'>
                     <h6>{title}</h6>
                 </div>
@@ -39,7 +39,7 @@ const ListingPreview = ({ title, reviews, location, images, link }) => {
                     <AiFillStar></AiFillStar>{averageRating()}  
                 </div>   
             </div>
-            <div className={PopulateListingsCSS.location}>
+            <div className={`{PopulateListingsCSS.location} px-2 mb-2`}>
                 {location}
             </div>
         </div>

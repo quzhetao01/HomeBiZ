@@ -91,9 +91,9 @@ const Login = () => {
             <div className={`col-lg-6 d-flex align-items-center gradient-custom-2 ${RegisterCSS.right}`}>
               <div className="text-white px-3 py-4 p-md-5 mx-md-4">
                 <h4 className="mb-4">We are more than just a company</h4>
-                <p className="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p className="small mb-0">We believe in being more than just a company – we strive to create a community where individuals can thrive, grow, and find fulfillment in their home businesses.
+Our mission goes beyond profit-making; we are committed to being a catalyst for change, empowering home businesses and bringing awareness to their incredible contributions.
+At our core, we embrace the notion that we are not merely a company but a movement dedicated to shining a light on the ingenuity and passion of home businesses worldwide.</p>
               </div>
             </div>
           </div>

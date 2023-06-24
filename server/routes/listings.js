@@ -17,6 +17,7 @@ const createListing = async (req, res, next) => {
     try {
 
         for (let service in listing.menu) {
+            console.log(listing.menu[service]);
             const newService = new Service(listing.menu[service]);
             const saved = await newService.save();
             menu.push(saved._id)
