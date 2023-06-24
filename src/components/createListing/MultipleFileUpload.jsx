@@ -64,7 +64,7 @@ function MultipleFileUpload(props) {
 
   return (
     <section className="mb-3">
-        <h5 className="mb-3">Add more images to showcase your business!</h5>
+        <label className="mb-3">Add more images to showcase your business!</label>
         <div style={{
             flex: 1,
             display: 'flex',

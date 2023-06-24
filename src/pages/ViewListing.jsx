@@ -59,7 +59,6 @@ const ViewListing = () => {
         reviews: [],
         user: {}
     });
-    const [reviews, setReviews] = useState([]);
     const [submittingReview, setSubmittingReview] = useState(false);
     const [serviceImage, setServiceImage] = useState("");
 
@@ -84,6 +83,16 @@ const ViewListing = () => {
             
         }
     }, [location, submittingReview]);
+
+    const averageRating = () => {
+        let avg = 0;
+        for (let i = 0; i < listing.reviews.length; i++) {
+            avg += listing.reviews[i].rating;
+        }
+        avg = avg / listing.reviews.length;
+
+        return (typeof avg === 'number' && isFinite(avg)) ? avg : '--';
+    }
 
     // useEffect(() => {
     //     const id = location.state ? location.state.id : null;
@@ -110,42 +119,32 @@ const ViewListing = () => {
             }
         }
         Promise.all(imgPromises).then(results => setImages(results.map(img => {
-            // return {
-            //     original: img,
-            //     thumbnail: img
-            // }
-            const image = new Image();
-            image.src = img;
-            let ratio = 0;
-            image.onload = () => {
-                ratio = Math.floor(image.width * 10 / image.height)
-
+            return {
+                original: img,
+                thumbnail: img
             }
-            return ({
-                src: img,
-                width: ratio,
-                height: 10
-            })
+            // const image = new Image();
+            // image.src = img;
+            // let ratio = 0;
+            // image.onload = () => {
+            //     ratio = Math.floor(image.width * 10 / image.height)
+
+            // }
+            // return ({
+            //     src: img,
+            //     width: ratio,
+            //     height: 10
+            // })
         })));
-        // setImages([listing.displayImage, ...listing.descriptionImages].map(img => {
-        //     instance.get(`/images/${img}`)
-        //     return {
-        //         original: img,
-        //         thumbnail: img,
-                // originalHeight: 500,
-                // originalWidth: 500,
-                // thumbnailClass: viewListingCSS.thumbnail
-            // };
-            
-
     }, [listing])
+    
 
-    return <div className="container p-1">
+    return <div className="container" style={{paddingTop: "10rem"}}>
         <div className="mb-4">
             <h1 className="mb-3">{listing.title}</h1> 
             <div style={{display: "flex", fontSize: 20}}>
                 <div>
-                <AiFillStar></AiFillStar> 5.00 - 20 reviews -   
+                <AiFillStar></AiFillStar> {`${averageRating()} - ${listing.reviews.length} reviews -`}   
                 <span style={{textDecoration: "underline"}}>{listing.township}</span>, <span style={{textDecoration: "underline"}}> {listing.location}</span>
                 </div>
                 <div className="ms-auto">
@@ -157,8 +156,19 @@ const ViewListing = () => {
         <div className="row d-flex justify-content-center mt-5">
             <div className="">
                 <div className={`mb-4 `}>
-                    {/* <ImageGallery items={images} /> */}
-                    <Gallery photos={images}/>
+                    <ImageGallery items={images} />
+                    {/* <Gallery photos={images}/> */}
+                </div>
+                <div className="row">
+
+                    <div className="col-7">
+                    <Menu menu={listing.menu} setServiceImage={setServiceImage}/>
+                    </div>
+                    <div className="col-5">
+                        {listing.description }
+                        <ContactDetails listing={listing}/>
+
+                    </div>
                 </div>
                 {/* <hr /> */}
                 <div className="mt-5">
@@ -166,10 +176,7 @@ const ViewListing = () => {
 
                 </div>
             </div>
-            {/* <div className="col-4">
-                <ContactDetails listing={listing}/>
-                <Menu menu={listing.menu} setServiceImage={setServiceImage}/>
-            </div> */}
+            
         </div> 
         {serviceImage && <ServiceModal isOpen={!!serviceImage} onRequestClose={() => setServiceImage("")} image={serviceImage}/>}
     </div>

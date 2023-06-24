@@ -1,10 +1,12 @@
 import React from "react";
 import viewListingCSS from "../../styles/viewListing.module.css"
+import instance from "../../axios.config";
 
 const Services = ({service, setServiceImage}) => {
 
     const handleClick = () => {
-        setServiceImage(service.image);
+        instance.get(`/images/${service.image}`).then(res => setServiceImage(res.data));
+        // setServiceImage(service.image);
     }
 
     return <div className="d-flex justify-content-between mb-5">

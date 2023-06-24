@@ -18,9 +18,9 @@ const Navbar = () => {
     }
     return (
         <div className={NavbarCSS.navbar}>  
-            <div className={NavbarCSS.logo}>
+            <div className="ms-5">
                 <NavLink to='/'>
-                    <img src='http://localhost:3000/logo.png' alt="HomeBiZ logo" className='homebiz-logo'/>
+                    <img src='http://localhost:3000/homebiz-logo.png' alt="HomeBiZ logo" width={100} height={90}/>
                 </NavLink>
             </div>
             <div className={NavbarCSS.links}>
