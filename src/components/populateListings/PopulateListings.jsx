@@ -10,7 +10,7 @@ const PopulateListings = (props) => {
     
     return ( 
         <div>
-            <div className='mb-3'>
+            <div className={`mb-3 ${PopulateListingsCSS.title}`}>
                 <h1>Explore These Businesses</h1>
             </div>
             <div className={PopulateListingsCSS.listingContainer}>

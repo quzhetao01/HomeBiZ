@@ -11,11 +11,14 @@ import {
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import CreateListing from './pages/CreateListing';
+import CreateListing from './pages/createListing';
 import ViewListing from './pages/ViewListing';
+import CategoryListings from './pages/CategoryListings';
 
 //layouts
 import RootLayout from './layouts/RootLayout';
+
+
 
 
 const router = createBrowserRouter(
@@ -26,12 +29,14 @@ const router = createBrowserRouter(
       <Route path='register' element={<Register />}/>
       <Route path='createListing' element={<CreateListing/>}/>
       <Route path="viewListing" element={<ViewListing />}/>
+      <Route path="categoryListings" element={<CategoryListings />}/>
     </Route>
   )
 
 );
 
 const App = () => {
+  
   return ( 
     <RouterProvider router={router} />
   )
