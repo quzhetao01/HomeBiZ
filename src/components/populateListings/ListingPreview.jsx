@@ -4,6 +4,7 @@ import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import PopulateListingsCSS from '../../styles/PopulateListings.module.css'
 
+
 //import ImageGallery from 'react-image-gallery';
 
 
@@ -18,7 +19,6 @@ const ListingPreview = ({ title, reviews, location, images, link }) => {
     const averageRating = () => {
         let avg = 0;
         for (let i = 0; i < reviews.length; i++) {
-            console.log(reviews[i])
             avg += reviews[i].rating;
         }
         avg = avg / reviews.length;
@@ -28,7 +28,7 @@ const ListingPreview = ({ title, reviews, location, images, link }) => {
     
 
     return (
-        <div className={`card border-light mx-3 ${PopulateListingsCSS.listing}`} onClick={handleClick}>
+        <div className={`card border-light me-4 ${PopulateListingsCSS.listing}`} onClick={handleClick}>
             
             <img src={ images[0] } className={`${PopulateListingsCSS.image}`} alt="thumbnail"/>
             <div className='d-flex mt-2'>

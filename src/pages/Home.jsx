@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate } from "react-router";
 import instance from "../axios.config";
 import PopulateListings from "../components/populateListings/PopulateListings";
-import ListingPreview from "../components/populateListings/ListingPreview";
 import getUser from "../helper/user";
+import HomeCSS from "../styles/Home.module.css";
+import Categories from "../components/categoryListings/Categories";
+
 
 
 const Home = () => {
@@ -27,11 +29,14 @@ const Home = () => {
         }).catch(err => console.log(err));
     }, []);
 
-    return <div>
-        <div className='default-listings p-5'>
-            {listings && <PopulateListings listings={listings}/>}
+    return (
+        <div className={HomeCSS.main}>
+            <Categories />
+            <div className='default-listings pt-5'>
+                {listings && <PopulateListings listings={listings} />}
+            </div>
         </div>
-    </div>
+    )
 }
 
 export default Home;
