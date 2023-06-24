@@ -5,12 +5,12 @@ export default function RootLayout() {
     return (
         
         <div className="root-layout">
-            <header>
+            {/* <header> */}
                 <Navbar />
-            </header>
-            <main>
+            {/* </header> */}
+            {/* <main> */}
                 <Outlet />
-            </main>
+            {/* </main> */}
         </div>
        
         

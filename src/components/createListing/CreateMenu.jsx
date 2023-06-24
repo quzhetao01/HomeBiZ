@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Modal from "react-modal";
-import createListingCSS from "../../styles/createListing.module.css"
+import createListingCSS from "../../styles/CreateListing.module.css"
 import FileUpload from "./FileUpload";
 import MenuListing from "./MenuListing";
 import MissingFields from "./MissingFields";

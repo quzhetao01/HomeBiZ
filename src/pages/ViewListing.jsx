@@ -100,29 +100,44 @@ const ViewListing = () => {
     // }, [submittingReview])
 
     useEffect(() => {
-        setImages([listing.displayImage, ...listing.descriptionImages].map(img => {
-            return {
-                original: img,
-                thumbnail: img,
+        const images = [listing.displayImage, ...listing.descriptionImages];
+        const imgPromises = [];
+        for (let i = 0; i < images.length; i++) {
+            if (images[i]) {
+
+                const imgPromise = instance.get(`/images/${images[i]}`).then(res => res.data);
+                imgPromises.push(imgPromise);
+            }
+        }
+        Promise.all(imgPromises).then(results => setImages(results.map(img => {
+            // return {
+            //     original: img,
+            //     thumbnail: img
+            // }
+            const image = new Image();
+            image.src = img;
+            let ratio = 0;
+            image.onload = () => {
+                ratio = Math.floor(image.width * 10 / image.height)
+
+            }
+            return ({
+                src: img,
+                width: ratio,
+                height: 10
+            })
+        })));
+        // setImages([listing.displayImage, ...listing.descriptionImages].map(img => {
+        //     instance.get(`/images/${img}`)
+        //     return {
+        //         original: img,
+        //         thumbnail: img,
                 // originalHeight: 500,
                 // originalWidth: 500,
                 // thumbnailClass: viewListingCSS.thumbnail
-            };
-            // const image = new Image();
-            // image.src = img;
-            // let width = 0;
-            // let height = 0;
-            // image.onload = () => {
-            //     width = Math.floor(image.width / 1000);
-            //     height = Math.floor(image.height / 1000);
+            // };
+            
 
-            // }
-            // return ({
-            //     src: img,
-            //     width: 1.5,
-            //     height: 3.5
-            // })
-        }))
     }, [listing])
 
     return <div className="container p-1">
@@ -142,8 +157,8 @@ const ViewListing = () => {
         <div className="row d-flex justify-content-center mt-5">
             <div className="">
                 <div className={`mb-4 `}>
-                    <ImageGallery items={images} />
-                    {/* <Gallery photos={images}/> */}
+                    {/* <ImageGallery items={images} /> */}
+                    <Gallery photos={images}/>
                 </div>
                 {/* <hr /> */}
                 <div className="mt-5">

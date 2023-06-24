@@ -38,3 +38,16 @@ nav {
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
+
+.navbar {
+    background-color: #FC4F4F;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: space-between;
+    /* border: 1px black solid; */
+    z-index: 999;
+    box-shadow: 0 20px 60px 0 rgba(0, 0, 0, .2);
+    height: 5rem;
+    width: 100%
+}

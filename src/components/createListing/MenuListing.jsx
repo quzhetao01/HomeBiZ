@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import createListingCSS from "../../styles/createListing.module.css"
+import createListingCSS from "../../styles/CreateListing.module.css"
 
 const MenuListing = (props) => {
     const [image, setImage] = useState();

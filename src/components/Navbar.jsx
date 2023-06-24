@@ -17,7 +17,7 @@ const Navbar = () => {
             .catch(err => console.log(err));
     }
     return (
-        <nav>
+        <div className={NavbarCSS.navbar}>  
             <div className={NavbarCSS.logo}>
                 <NavLink to='/'>
                     <img src='http://localhost:3000/logo.png' alt="HomeBiZ logo" className='homebiz-logo'/>
@@ -28,7 +28,7 @@ const Navbar = () => {
                 <NavLink to='/'>View My Business</NavLink>
                 <NavLink to='/login' onClick={handleLogout}>Logout</NavLink>
             </div>
-        </nav>
+        </div>
       );
 }
 

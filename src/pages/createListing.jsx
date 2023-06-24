@@ -11,10 +11,12 @@ import Carousel from '../components/createListing/Carousel';
 import SelectCategory from '../components/createListing/SelectCategory';
 import CreateMenu from '../components/createListing/CreateMenu';
 import Contact from '../components/createListing/Contact';
+import MultipleFileUpload from '../components/createListing/MultipleFileUpload';
 
 //others
 import categories from "../helper/category";
 import { useNavigate } from 'react-router-dom';
+import styles from "../styles/CreateListing.module.css"
 
 const CreateListing = () => {
 
@@ -83,7 +85,7 @@ const CreateListing = () => {
     }
 
     const handleTitleImage = (event) => {
-        console.log(event.target);
+        console.log(event.target.files);
         setListing((prev) => {
                     return {
                        ...prev, 
@@ -107,8 +109,9 @@ const CreateListing = () => {
         }
     }
 
-    const handleDescImages = (event) => {
-        if (event.target.files && event.target.files.length > 0 ) {
+    const handleDescImages = (files) => {
+        // console.log(event);
+        if (files && files.length > 0 ) {
             // console.log(event.target.files);
             // for (let i = 0; i < event.target.files.length; i++) {
             //     const reader = new FileReader();
@@ -122,11 +125,10 @@ const CreateListing = () => {
             //         })
             //     }
             // }
-            console.log(event.target.files);
             setListing((prev) => {
                             return {
                               ...prev, 
-                                ["descriptionImages"]: event.target.files
+                                ["descriptionImages"]: files
                             }
                         })
         } else {
@@ -185,6 +187,7 @@ const CreateListing = () => {
     }
 
     const handleSubmit = async (e) => {
+        // console.log(listing.descriptionImages);
         let formData = new FormData();
         formData.append("file", listing.displayImage);
 
@@ -280,9 +283,10 @@ const CreateListing = () => {
         // })
     }
 
-    return <div>
-        <div className="row justify-content-evenly mt-5">
-            <div className="card col-5 p-3" >
+    return <div style={{ minHeight: "100vh", paddingTop: "5rem", backgroundColor: "#FFBC80"}}>
+        <div>
+        <div className="row justify-content-evenly pt-5" >
+            <div className={`card col-5 p-3 ${styles.card}`} style={{}}>
                 <h3>Create your listing here</h3>
                     <Title handleChange={handleTitle} value={listing.title}/>
                     <Description handleChange={handleDescription} value={listing.description}/>
@@ -302,9 +306,9 @@ const CreateListing = () => {
                     <SelectCategory handleCategory={handleCategory} categories={categories}></SelectCategory>
                 
             </div>
-            <div className="card p-3 col-5 mb-3">
-                <FileUpload multiple={true} handleUpload={handleDescImages} title={"Select other photos to show users your product or service"}/>
-                {/* <Carousel images={listing.descriptionImages}></Carousel> */}
+            <div className={`card p-3 col-5 mb-3 ${styles.card}` }>
+                {/* <FileUpload multiple={true} handleUpload={handleDescImages} title={"Select other photos to show users your product or service"}/> */}
+                <MultipleFileUpload handleUpload={handleDescImages}/>
                 
                 <Button style={{width: "50%"}} variant="contained" onClick={() => setShowMenu(true)}>Create menu</Button>
                 <Contact listing={listing} handleNumber={handleNumber} handleMethod={handleMethod} handleEmail={handleEmail}/>
@@ -318,6 +322,7 @@ const CreateListing = () => {
             setListing={setListing}
             setIsOpen={setShowMenu}
         />
+        </div>
     </div>
 }
 

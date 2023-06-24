@@ -11,7 +11,7 @@ import {
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import CreateListing from './pages/createListing';
+import CreateListing from './pages/CreateListing';
 import ViewListing from './pages/ViewListing';
 import CategoryListings from './pages/CategoryListings';
 
