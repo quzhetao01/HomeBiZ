@@ -45,7 +45,7 @@ const getListingById = async (req, res, next) => {
 }
 
 const getListingByCategory = async (req, res, next) => {
-    const listing = await Listing.find({category: req.params.category});
+    const listing = await Listing.find({category: req.params.category}).populate("reviews");
     res.send(listing);
 }
 

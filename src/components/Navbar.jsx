@@ -31,7 +31,7 @@ const Navbar = () => {
             </div>
             <div className={`${NavbarCSS.links} pe-5`}>
                 {/* <NavLink to='/createListing'>Create Listing</NavLink> */}
-                <a className={`${NavbarCSS.btn}`} onClick={handleMyBiz}>Create Listing</a>
+                <a className={`${NavbarCSS.btn}`} onClick={() => navigate('/createListing')}>Create Listing</a>
                 <a className={`${NavbarCSS.btn}`} onClick={handleMyBiz}>View My Business</a>
                 <a className={`${NavbarCSS.btn}`} onClick={handleLogout}>Logout</a>
                 {/* <NavLink onClick={handleMyBiz}>View My Business</NavLink> */}

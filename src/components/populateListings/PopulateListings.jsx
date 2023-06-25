@@ -6,15 +6,13 @@ import PopulateListingsCSS from '../../styles/PopulateListings.module.css'
 
 const PopulateListings = (props) => {
 
-    const [listings, setListings] = useState(props.listings);
-    
     return ( 
         <div>
-            <div className={`mb-3 ${PopulateListingsCSS.title}`}>
+            <div className={`mb-4 ${PopulateListingsCSS.title}`}>
                 <h1>Explore These Businesses</h1>
             </div>
             <div className={PopulateListingsCSS.listingContainer}>
-                {listings.map((item, index) => {
+                {props.listings.map((item, index) => {
                         return <ListingPreview key={index} title={item.title} reviews={item.reviews} 
                                 location={item.township} image={item.displayImage} link={item._id} /> }
                 )}

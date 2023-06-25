@@ -13,35 +13,36 @@ const CategoryListings = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [listings, setListings] = useState(null);
+    const [listings, setListings] = useState([]);
     
     useEffect(() => {
-        console.log(location);
-        setSelectedCategory(location.state.category);
+        setSelectedCategory(location.state ? location.state.category : null);
     }, [location]);
 
     useEffect(() => {
-        console.log(location);
+        if (selectedCategory == null) {
+            navigate('/');
+        }
 
-        const category = location.state ? location.state.category : null;
-        if (category == null) {
-            navigate('/CategoryListings');
-        } else {
-            instance.get(`/listing/category/${category}`)
+        if (selectedCategory) {
+            instance.get(`/listing/category/${selectedCategory}`)
                 .then(res => {
                     console.log(res);
                     setListings(res.data);
+                    console.log("set")
+                    // setListings([]);
             })
             .catch(err => console.log(err));
         }
-    }, [location]);
+    }, [selectedCategory]);
     
     return (
-        <div className={CategoryListingsCSS.main}>
-            <Categories />
+        <div className={`${CategoryListingsCSS.main} mb-5`}>
+            <Categories setSelectedCategory={setSelectedCategory}/>
             <Searchbar />
             <Title category={selectedCategory} />
             <Banner category={selectedCategory} />
+            <hr className="my-5" />
             <div> 
                 {listings && <PopulateListings listings={listings}/>}
             </div>
