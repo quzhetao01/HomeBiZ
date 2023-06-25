@@ -1,9 +1,15 @@
 .main {
     margin: 0 auto;
     max-width: 1800px;
+    padding-top: 6.5rem;
 }
 
 .header {
     line-height: 17px;
     text-align: left;
+}
+
+.image {
+    width: 100% ;
+    height: auto;
 }

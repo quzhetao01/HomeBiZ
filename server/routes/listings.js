@@ -44,6 +44,11 @@ const getListingById = async (req, res, next) => {
     }
 }
 
+const getListingByCategory = async (req, res, next) => {
+    const listing = await Listing.find({category: req.params.category});
+    res.send(listing);
+}
+
 const editListing = async (req, res, next) => {
 
     console.log("hi", req.query)
@@ -68,4 +73,8 @@ router.route('/')
 router.route('/:id')
     .get(getListingById)
     .patch(editListing);
+
+router.route('/category/:category')
+    .get(getListingByCategory);
+
 module.exports = router;

@@ -1,8 +1,9 @@
 import React from 'react';
+import CategoryListingsCSS from '../../styles/CategoryListings.module.css'
 
 const Banner = () => {
     return (
-        <img src="http://localhost:3000/banner.png" alt="banner" height='300px' width='1800px' />
+        <img src="http://localhost:3000/1865.jpg" alt="banner" className={CategoryListingsCSS.image}/>
       );
 }
  
