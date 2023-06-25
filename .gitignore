@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-/server/routes/credentials.json
+credentials.json
 
 # testing
 /coverage
