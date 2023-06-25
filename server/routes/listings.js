@@ -35,8 +35,13 @@ const createListing = async (req, res, next) => {
 }
 
 const getListingById = async (req, res, next) => {
-    const listing = await Listing.findById(req.params.id).populate("menu").populate("reviews").populate("user");
-    res.send(listing);
+    if (req.params.id === "self") {
+        const listing = await Listing.find({ user: req.user.id}).populate("menu").populate("reviews").populate("user");
+        res.send(listing[0]);
+    } else {
+        const listing = await Listing.findById(req.params.id).populate("menu").populate("reviews").populate("user");
+        res.send(listing);
+    }
 }
 
 const editListing = async (req, res, next) => {
@@ -54,6 +59,7 @@ const editListing = async (req, res, next) => {
         res.send(ans);
     }
 }
+
 
 router.route('/')
     .get(getAllListings)

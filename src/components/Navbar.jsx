@@ -6,13 +6,19 @@ import instance from '../axios.config';
 import { ListItemSecondaryAction } from '@mui/material';
 
 const Navbar = () => {
+    const navigate = useNavigate();
 
+    const handleMyBiz = () => {
+        console.log("pressed");
+        navigate("/viewListing", {state: {ownListing: true}})
+    }
 
     const handleLogout = () => {
         console.log('logout');
         instance.post("/logout")
             .then(res => {
                 console.log(res.data);
+                navigate("/login");
             })
             .catch(err => console.log(err));
     }
@@ -24,9 +30,12 @@ const Navbar = () => {
                 </NavLink>
             </div>
             <div className={`${NavbarCSS.links} pe-5`}>
-                <NavLink to='/createListing'>Create Listing</NavLink>
-                <NavLink to='/'>View My Business</NavLink>
-                <NavLink to='/login' onClick={handleLogout}>Logout</NavLink>
+                {/* <NavLink to='/createListing'>Create Listing</NavLink> */}
+                <a className={`${NavbarCSS.btn}`} onClick={handleMyBiz}>Create Listing</a>
+                <a className={`${NavbarCSS.btn}`} onClick={handleMyBiz}>View My Business</a>
+                <a className={`${NavbarCSS.btn}`} onClick={handleLogout}>Logout</a>
+                {/* <NavLink onClick={handleMyBiz}>View My Business</NavLink> */}
+                {/* <NavLink to='/login' onClick={handleLogout}>Logout</NavLink> */}
             </div>
         </div>
       );

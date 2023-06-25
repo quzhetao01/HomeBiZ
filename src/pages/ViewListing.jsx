@@ -67,20 +67,17 @@ const ViewListing = () => {
 
     useEffect(() => {
         console.log(location);
-        
-        const id = location.state ? location.state.id : null;
-        if (id == null) {
-            navigate('/');
-        } else {
-
+        if (location.state) {
+            const id = location.state.id ? location.state.id : "self"
             instance.get(`/listing/${id}`)
-                .then(res => {
-                    console.log(res);
-                    setListing(res.data)
-                })
-                .catch(err => console.log(err));
-
+            .then(res => {
+                console.log(res);
+                setListing(res.data)
+            })
+            .catch(err => console.log(err));
             
+        } else {
+            navigate('/');
         }
     }, [location, submittingReview]);
 
@@ -164,15 +161,19 @@ const ViewListing = () => {
                     <div className="col-7">
                     <Menu menu={listing.menu} setServiceImage={setServiceImage}/>
                     </div>
-                    <div className="col-5">
-                        {listing.description }
+                    <div className="col-5 d-flex justify-content-center" style={{flexDirection: "column"}}>
+                        <div className="mb-5 text-center">
+                            <h3 style={{fontWeight: 700}}>Know more about our business!</h3>
+                            {listing.description }
+                        </div>
                         <ContactDetails listing={listing}/>
 
                     </div>
                 </div>
                 {/* <hr /> */}
                 <div className="mt-5">
-                <Review id={listing._id} reviews={listing.reviews} setSubmittingReview={setSubmittingReview}/>
+                <Review id={listing._id} reviews={listing.reviews} 
+                setSubmittingReview={setSubmittingReview} averageRating={averageRating()}/>
 
                 </div>
             </div>

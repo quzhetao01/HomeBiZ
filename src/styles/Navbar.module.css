@@ -17,17 +17,18 @@ nav {
     display: flex;
 }
   
-.links a {
+.btn {
     margin-right: 2.5rem;
     color: white;
     text-decoration: none;
 }
   
-.links a:hover {
+.btn:hover {
     color: #AAA;
+    cursor: pointer;
   }
   
-.links a::after {
+.btn:after {
     content: "";
     position: absolute;
     left: 0;
@@ -51,3 +52,4 @@ nav {
     height: 6.5rem;
     width: 100%
 }
+
