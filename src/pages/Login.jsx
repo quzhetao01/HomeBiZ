@@ -44,6 +44,8 @@ const Login = () => {
             .catch(err => {
               if(err.response.status === 401) {
                 setIsNewUser(false);
+                setUsername("");
+                setPassword("");
                 setError("Wrong username or password");
               };
             });

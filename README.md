@@ -1,3 +1,21 @@
+# Setting up the web application
+
+1. Open a new terminal at the project's root directory
+2. Run the following command "npm run server" to initialize the server
+3. Open another new terminal
+4. Run the following command "npm run start" to start the react app
+5. The web application should show up automatically on your default browser.
+6. If the web application does not show up, you can enter this URL manually "http://localhost:3000"
+7. Proceed with using the application!
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
