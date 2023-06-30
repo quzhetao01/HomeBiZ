@@ -30,26 +30,31 @@ const Login = () => {
     }, [])
 
     const handleLogin = () => {
+      if (!username || !password) {
+        setError("Please enter a username and password");
+      } else {
+
         instance.post("/login", {"username": username, "password": password})
-            .then(res => {
-                console.log(res);
-                // user is present
-                // if (res.data.user) {
-                    navigate("/");
-                // } else {
+        .then(res => {
+              console.log(res);
+              // user is present
+              // if (res.data.user) {
+                  navigate("/");
+              // } else {
                 //     setIsNewUser(false);
                 //     setError(res.data.error);
                 // }
-            })
-            .catch(err => {
-              if(err.response.status === 401) {
-                setIsNewUser(false);
-                setUsername("");
-                setPassword("");
-                setError("Wrong username or password");
-              };
-            });
-    }
+              })
+              .catch(err => {
+                if(err.response.status === 401) {
+                  setIsNewUser(false);
+                  setUsername("");
+                  setPassword("");
+                  setError("Wrong username or password");
+                };
+          });
+        }
+      }
     
     const handleUsername = (event) => {
         setUsername(event.target.value);

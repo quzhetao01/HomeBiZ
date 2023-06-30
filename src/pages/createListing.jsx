@@ -7,7 +7,6 @@ import Title from '../components/createListing/Title';
 import Description from '../components/createListing/Description';
 import Location from '../components/createListing/Location';
 import FileUpload from '../components/createListing/FileUpload';
-import Carousel from '../components/createListing/Carousel';
 import SelectCategory from '../components/createListing/SelectCategory';
 import CreateMenu from '../components/createListing/CreateMenu';
 import Contact from '../components/createListing/Contact';
@@ -38,15 +37,13 @@ const CreateListing = () => {
         displayImage: null,
         descriptionImages: [],
         contact: "",
-        contactMethod: "",
+        whatsapp: false,
+        telegram: false,
         email: "",
         category: "",
         menu: []
     });
-    const [totalImages, setTotalImages] = useState(1);
-    const [processedImages, setProcessedImages] = useState(0);
     const [displayImage, setDisplayImage] = useState("");
-    const [descriptionImages, setDescriptionImages] = useState([]);
     const [showMenu, setShowMenu] = useState(false);
     const navigate = useNavigate();
     const handleTitle = (title) => {
@@ -149,6 +146,7 @@ const CreateListing = () => {
                 ["category"]: category
             };
         })
+        console.log(listing);
     }
 
     const handleNumber = (num) => {
@@ -161,10 +159,17 @@ const CreateListing = () => {
     }
 
     const handleMethod = (method) => {
+        console.log(method);
+        let contactMethod = '';
+        if (method == 1) {
+            contactMethod = 'whatsapp';
+        } else {
+            contactMethod = 'telegram';
+        }
         setListing((prev) => {
             return {
                 ...prev,
-                ["contactMethod"]: method
+                [contactMethod]: !prev[contactMethod]
             };
         }) 
     }
@@ -283,7 +288,7 @@ const CreateListing = () => {
         // })
     }
 
-    return <div style={{ minHeight: "100vh", paddingTop: "6.5rem", backgroundColor: "white"}}>
+    return <div className='mb-5' style={{ minHeight: "100vh", paddingTop: "6.5rem", backgroundColor: "white"}}>
         <div>
         <div className="row justify-content-evenly pt-5" >
             <div className={`card col-5 p-5 ${styles.card}`}>
@@ -292,6 +297,7 @@ const CreateListing = () => {
                     <Description handleChange={handleDescription} value={listing.description}/>
                     <Location handleChange={handleTownship} value={listing.township} label="Township" placeholder="Input your township here if applicable. Eg. Bedok"/>
                     <Location handleChange={handleLocation} value={listing.location} label="Address" placeholder="Address if applicable"/>
+                    <hr />
                     <div className="row my-5">
 
                         <div className="col-4">

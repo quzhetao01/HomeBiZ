@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
+import RequiredIcon from '../RequiredIcon';
 
 const thumbsContainer = {
   display: 'flex',
@@ -33,7 +34,7 @@ const img = {
 };
 
 
-function MultipleFileUpload(props) {
+const MultipleFileUpload = (props) => {
   const [files, setFiles] = useState([]);
   const {getRootProps, getInputProps} = useDropzone({
     accept: {
@@ -64,7 +65,7 @@ function MultipleFileUpload(props) {
 
   return (
     <section className="mb-3">
-        <label className="mb-3">Add more images to showcase your business!</label>
+        <label className="mb-3"> <RequiredIcon /> Add more images to showcase your business!</label>
         <div style={{
             flex: 1,
             display: 'flex',
