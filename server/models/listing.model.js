@@ -10,7 +10,8 @@ const listingSchema = Schema({
     displayImage: String,
     descriptionImages: Array,
     contact: String,
-    contactMethod: String,
+    whatsapp: Boolean,
+    telegram: Boolean,
     email: String,
     category: String,
     menu: [{

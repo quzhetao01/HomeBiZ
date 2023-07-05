@@ -7,16 +7,17 @@ import Title from '../components/createListing/Title';
 import Description from '../components/createListing/Description';
 import Location from '../components/createListing/Location';
 import FileUpload from '../components/createListing/FileUpload';
-import Carousel from '../components/createListing/Carousel';
 import SelectCategory from '../components/createListing/SelectCategory';
 import CreateMenu from '../components/createListing/CreateMenu';
 import Contact from '../components/createListing/Contact';
 import MultipleFileUpload from '../components/createListing/MultipleFileUpload';
+import Modal from "react-modal";
 
 //others
 import categories from "../helper/category";
 import { useNavigate } from 'react-router-dom';
 import styles from "../styles/CreateListing.module.css"
+import { TbAlertCircleFilled } from "react-icons/tb";
 
 const CreateListing = () => {
 
@@ -38,16 +39,17 @@ const CreateListing = () => {
         displayImage: null,
         descriptionImages: [],
         contact: "",
-        contactMethod: "",
+        whatsapp: false,
+        telegram: false,
         email: "",
         category: "",
         menu: []
     });
-    const [totalImages, setTotalImages] = useState(1);
-    const [processedImages, setProcessedImages] = useState(0);
+    
     const [displayImage, setDisplayImage] = useState("");
-    const [descriptionImages, setDescriptionImages] = useState([]);
     const [showMenu, setShowMenu] = useState(false);
+    const [error, setError] = useState("");
+
     const navigate = useNavigate();
     const handleTitle = (title) => {
         setListing((prev) => {
@@ -149,6 +151,7 @@ const CreateListing = () => {
                 ["category"]: category
             };
         })
+        console.log(listing);
     }
 
     const handleNumber = (num) => {
@@ -161,10 +164,17 @@ const CreateListing = () => {
     }
 
     const handleMethod = (method) => {
+        console.log(method);
+        let contactMethod = '';
+        if (method == 1) {
+            contactMethod = 'whatsapp';
+        } else {
+            contactMethod = 'telegram';
+        }
         setListing((prev) => {
             return {
                 ...prev,
-                ["contactMethod"]: method
+                [contactMethod]: !prev[contactMethod]
             };
         }) 
     }
@@ -187,6 +197,16 @@ const CreateListing = () => {
     }
 
     const handleSubmit = async (e) => {
+        if (!listing.title || !listing.description || !listing.township || !listing.location 
+            || !listing.displayImage || listing.descriptionImages.length == 0 
+            || !listing.contact || !listing.whatsapp && !listing.telegram
+            || !listing.email || !listing.category) {
+                setError("Please fill in all the missing fields");
+                return;
+        } else if (listing.descriptionImages.length < 4) {
+            setError("Please add more images for your future customers to refer to");
+            return;
+        }
         // console.log(listing.descriptionImages);
         let formData = new FormData();
         formData.append("file", listing.displayImage);
@@ -283,7 +303,7 @@ const CreateListing = () => {
         // })
     }
 
-    return <div style={{ minHeight: "100vh", paddingTop: "6.5rem", backgroundColor: "white"}}>
+    return <div className='mb-5' style={{ minHeight: "100vh", paddingTop: "6.5rem", backgroundColor: "white"}}>
         <div>
         <div className="row justify-content-evenly pt-5" >
             <div className={`card col-5 p-5 ${styles.card}`}>
@@ -292,6 +312,7 @@ const CreateListing = () => {
                     <Description handleChange={handleDescription} value={listing.description}/>
                     <Location handleChange={handleTownship} value={listing.township} label="Township" placeholder="Input your township here if applicable. Eg. Bedok"/>
                     <Location handleChange={handleLocation} value={listing.location} label="Address" placeholder="Address if applicable"/>
+                    <hr />
                     <div className="row my-5">
 
                         <div className="col-4">
@@ -327,6 +348,35 @@ const CreateListing = () => {
             setListing={setListing}
             setIsOpen={setShowMenu}
         />
+        <Modal isOpen={!!error}
+        onRequestClose={() => {
+            setError("");
+        }}
+        style={{
+            overlay: {
+              zIndex: 1,
+              margin: "auto",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0,0,0,0.4)",
+              
+            },
+            content: {
+              backgroundColor: "#white",
+              height: "40%",
+              width: "30%",
+              margin: "auto",
+              border: "2px solid #393E46",
+              borderRadius: "10px",
+
+            },
+          }}>
+            <div className='d-flex flex-column justify-content-center align-items-center w-100 h-100'>
+                <TbAlertCircleFilled color="#c70f2b" size={40} className="mb-3"/>
+                <p>{error}</p>
+            </div>
+
+        </Modal>
         </div>
     </div>
 }

@@ -18,6 +18,8 @@ const Home = () => {
             if (!user) {
                 navigate("/login");
             }
+        }).catch(err => {
+            navigate("/login");
         })
     }, []);
 
@@ -30,7 +32,7 @@ const Home = () => {
     }, []);
 
     return (
-        <div className={HomeCSS.main}>
+        <div className={`${HomeCSS.main}`}>
             <Categories />
             <div className='default-listings pt-5'>
                 {listings && <PopulateListings listings={listings} />}
