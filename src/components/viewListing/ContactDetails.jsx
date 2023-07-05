@@ -6,7 +6,7 @@ const ContactDetails = ({listing}) => {
                 <h3 className="mb-3">Contact Us!</h3>
                 <div className="d-flex justify-content-between pe-5">
                     <span>Business Owner(s): </span>
-                    <span>{`${listing.user.username}`}</span>
+                    <span>{`${listing.user.firstName} ${listing.user.lastName}`}</span>
                 </div>
                 <div className="d-flex justify-content-between pe-5">
                     <span>Mobile Number: </span>

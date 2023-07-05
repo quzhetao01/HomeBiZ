@@ -3,6 +3,7 @@ const router = express.Router();
 const Listing = require("../models/listing.model.js").Listing;
 const Service = require("../models/service.model.js").Service;
 const Review = require("../models/review.model.js").Review;
+const User = require("../app.js").User;
 
 const getAllListings = async (req, res, next) => {
     const found = await Listing.find({}).populate("reviews");
@@ -13,6 +14,7 @@ const createListing = async (req, res, next) => {
     // console.log(req.body);
     const listing = req.body;
     listing.user = req.user.id;
+    const creator = await User.findById(req.user.id);
     const menu = [];
     try {
 
@@ -23,11 +25,14 @@ const createListing = async (req, res, next) => {
             menu.push(saved._id)
         }
         listing.menu = menu;
+        listing.created_on = new Date();
 
         // const newService = new Service(listing.menu[0]);
         // const ans = await newService.save();
         const newListing = new Listing(listing);
         const ans = await newListing.save();
+        creator.listing = ans.id;
+        await creator.save();
         res.send(ans);
     } catch (err) {
         console.log(err);
@@ -36,10 +41,22 @@ const createListing = async (req, res, next) => {
 
 const getListingById = async (req, res, next) => {
     if (req.params.id === "self") {
-        const listing = await Listing.find({ user: req.user.id}).populate("menu").populate("reviews").populate("user");
+        const listing = await Listing.find({ user: req.user.id}).populate("menu").populate("user").populate({
+            path: "reviews",
+            populate: {
+                path: "created_by_id",
+                model: "User",
+            }
+        });;
         res.send(listing[0]);
     } else {
-        const listing = await Listing.findById(req.params.id).populate("menu").populate("reviews").populate("user");
+        const listing = await Listing.findById(req.params.id).populate("menu").populate("user").populate({
+            path: "reviews",
+            populate: {
+                path: "created_by_id",
+                model: "User",
+            }
+        });
         res.send(listing);
     }
 }
@@ -56,7 +73,7 @@ const editListing = async (req, res, next) => {
         console.log("here")
         const listing = await Listing.findById(req.params.id);
         const review = req.body;
-        review.user = req.user.id;
+        review.created_by_id = req.user.id;
         const newReview = new Review(review);
         const saved = await newReview.save();
         listing.reviews.push(saved._id);

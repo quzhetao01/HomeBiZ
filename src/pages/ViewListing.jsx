@@ -141,7 +141,7 @@ const ViewListing = () => {
             <h1 className="mb-3">{listing.title}</h1> 
             <div style={{display: "flex", fontSize: 20}}>
                 <div>
-                <AiFillStar></AiFillStar> {`${averageRating()} - ${listing.reviews.length} reviews -`}   
+                <AiFillStar></AiFillStar> {`${averageRating()} . ${listing.reviews.length} reviews .` + " "}   
                 <span style={{textDecoration: "underline"}}>{listing.township}</span>, <span style={{textDecoration: "underline"}}> {listing.location}</span>
                 </div>
                 <div className="ms-auto">
@@ -149,6 +149,7 @@ const ViewListing = () => {
 
                 </div>
             </div>
+            <hr />
         </div>
         <div className="row d-flex justify-content-center mt-5">
             <div className="">
@@ -170,7 +171,7 @@ const ViewListing = () => {
 
                     </div>
                 </div>
-                {/* <hr /> */}
+                <hr />
                 <div className="mt-5">
                 <Review id={listing._id} reviews={listing.reviews} 
                 setSubmittingReview={setSubmittingReview} averageRating={averageRating()}/>
