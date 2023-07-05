@@ -11,11 +11,13 @@ import SelectCategory from '../components/createListing/SelectCategory';
 import CreateMenu from '../components/createListing/CreateMenu';
 import Contact from '../components/createListing/Contact';
 import MultipleFileUpload from '../components/createListing/MultipleFileUpload';
+import Modal from "react-modal";
 
 //others
 import categories from "../helper/category";
 import { useNavigate } from 'react-router-dom';
 import styles from "../styles/CreateListing.module.css"
+import { TbAlertCircleFilled } from "react-icons/tb";
 
 const CreateListing = () => {
 
@@ -43,8 +45,11 @@ const CreateListing = () => {
         category: "",
         menu: []
     });
+    
     const [displayImage, setDisplayImage] = useState("");
     const [showMenu, setShowMenu] = useState(false);
+    const [error, setError] = useState("");
+
     const navigate = useNavigate();
     const handleTitle = (title) => {
         setListing((prev) => {
@@ -192,6 +197,16 @@ const CreateListing = () => {
     }
 
     const handleSubmit = async (e) => {
+        if (!listing.title || !listing.description || !listing.township || !listing.location 
+            || !listing.displayImage || listing.descriptionImages.length == 0 
+            || !listing.contact || !listing.whatsapp && !listing.telegram
+            || !listing.email || !listing.category) {
+                setError("Please fill in all the missing fields");
+                return;
+        } else if (listing.descriptionImages.length < 4) {
+            setError("Please add more images for your future customers to refer to");
+            return;
+        }
         // console.log(listing.descriptionImages);
         let formData = new FormData();
         formData.append("file", listing.displayImage);
@@ -333,6 +348,35 @@ const CreateListing = () => {
             setListing={setListing}
             setIsOpen={setShowMenu}
         />
+        <Modal isOpen={!!error}
+        onRequestClose={() => {
+            setError("");
+        }}
+        style={{
+            overlay: {
+              zIndex: 1,
+              margin: "auto",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0,0,0,0.4)",
+              
+            },
+            content: {
+              backgroundColor: "#white",
+              height: "40%",
+              width: "30%",
+              margin: "auto",
+              border: "2px solid #393E46",
+              borderRadius: "10px",
+
+            },
+          }}>
+            <div className='d-flex flex-column justify-content-center align-items-center w-100 h-100'>
+                <TbAlertCircleFilled color="#c70f2b" size={40} className="mb-3"/>
+                <p>{error}</p>
+            </div>
+
+        </Modal>
         </div>
     </div>
 }
