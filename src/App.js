@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import {
   Route,
@@ -19,8 +19,6 @@ import CategoryListings from './pages/CategoryListings';
 import RootLayout from './layouts/RootLayout';
 
 
-
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
@@ -37,6 +35,14 @@ const router = createBrowserRouter(
 
 const App = () => {
   
+
+
+  // useEffect(() => {
+  //   fetch("https://homebiz-backend.onrender.com")
+  //   .then(res => console.log(res))
+  // }, []);
+
+
   return ( 
     <RouterProvider router={router} />
   )

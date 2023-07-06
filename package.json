@@ -47,7 +47,10 @@
     "eject": "react-scripts eject",
     "server": "nodemon server/app.js",
     "install-server": "cd server && npm install",
-    "start-server": "cd server && node app.js"
+    "start-server": "cd server && node app.js",
+    "install-client": "npm install",
+    "build-client": "npm run build",
+    "start-client": "npm run start"
   },
   "eslintConfig": {
     "extends": [
