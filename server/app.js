@@ -49,10 +49,6 @@ const userSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "Listing"
   }
-  // password: {
-  //   type: String,
-  //   required: true,
-  // },
 });
 
 
@@ -127,9 +123,10 @@ app.post('/logout', function(req, res, next){
   });
 });
 
-app.get("/user", (req, res) => {
+app.get("/user", async (req, res) => {
   if(req.isAuthenticated()) {
-    res.send(req.user);
+    const user = await User.findById(req.user.id)
+    res.send(user);
   } else {
     res.send(null);
   }

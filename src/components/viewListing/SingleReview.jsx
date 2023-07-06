@@ -2,6 +2,8 @@ import React from "react";
 import StarRatings from "react-star-ratings";
 
 const SingleReview = ({review}) => {
+    console.log(review);
+    console.log(review.created_by_id)
     const name = review.created_by_id.firstName + " " + review.created_by_id.lastName;
     return <div className="card p-3 mb-3">
         <div className="mb-3" style={{display: "flex", justifyContent: "space-between"}}>

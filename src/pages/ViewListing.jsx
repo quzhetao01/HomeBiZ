@@ -61,18 +61,20 @@ const ViewListing = () => {
     });
     const [submittingReview, setSubmittingReview] = useState(false);
     const [serviceImage, setServiceImage] = useState("");
+    const [ownListing, setOwnListing] = useState(false);
 
 
     
 
     useEffect(() => {
-        console.log(location);
+        // console.log(location);
         if (location.state) {
             const id = location.state.id ? location.state.id : "self"
             instance.get(`/listing/${id}`)
             .then(res => {
                 console.log(res);
-                setListing(res.data)
+                setListing(res.data.listing);
+                setOwnListing(res.data.self);
             })
             .catch(err => console.log(err));
             
@@ -106,37 +108,31 @@ const ViewListing = () => {
     // }, [submittingReview])
 
     useEffect(() => {
-        const images = [listing.displayImage, ...listing.descriptionImages];
-        const imgPromises = [];
-        for (let i = 0; i < images.length; i++) {
-            if (images[i]) {
+        if (listing) {
+            const images = [listing.displayImage, ...listing.descriptionImages];
+            const imgPromises = [];
+            for (let i = 0; i < images.length; i++) {
+                if (images[i]) {
 
-                const imgPromise = instance.get(`/images/${images[i]}`).then(res => res.data);
-                imgPromises.push(imgPromise);
+                    const imgPromise = instance.get(`/images/${images[i]}`).then(res => res.data);
+                    imgPromises.push(imgPromise);
+                }
             }
+            Promise.all(imgPromises).then(results => setImages(results.map(img => {
+                return {
+                    original: img,
+                    thumbnail: img
+                }
+            })));
+        
         }
-        Promise.all(imgPromises).then(results => setImages(results.map(img => {
-            return {
-                original: img,
-                thumbnail: img
-            }
-            // const image = new Image();
-            // image.src = img;
-            // let ratio = 0;
-            // image.onload = () => {
-            //     ratio = Math.floor(image.width * 10 / image.height)
-
-            // }
-            // return ({
-            //     src: img,
-            //     width: ratio,
-            //     height: 10
-            // })
-        })));
     }, [listing])
     
 
     return <div className="container" style={{paddingTop: "10rem"}}>
+
+
+        {listing ? <div>
         <div className="mb-4">
             <h1 className="mb-3">{listing.title}</h1> 
             <div style={{display: "flex", fontSize: 20}}>
@@ -174,13 +170,29 @@ const ViewListing = () => {
                 <hr />
                 <div className="mt-5">
                 <Review id={listing._id} reviews={listing.reviews} 
-                setSubmittingReview={setSubmittingReview} averageRating={averageRating()}/>
+                setSubmittingReview={setSubmittingReview} averageRating={averageRating()}
+                enableAddReview={!ownListing}/>
 
                 </div>
             </div>
             
         </div> 
         {serviceImage && <ServiceModal isOpen={!!serviceImage} onRequestClose={() => setServiceImage("")} image={serviceImage}/>}
+        </div> :
+        <div className="d-flex flex-column align-items-center">
+            <p>
+                You have no listing of your own! Start your home business journey now by creating your own business listing now!
+            </p>
+            <div>
+
+            <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn px-3 me-3">
+                See other listings
+            </button>
+            <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn px-3 ms-3">
+                Create a new listing
+            </button>
+            </div>
+        </div>}
     </div>
 }
 

@@ -48,7 +48,7 @@ const getListingById = async (req, res, next) => {
                 model: "User",
             }
         });;
-        res.send(listing[0]);
+        res.send({listing: listing[0], self: true});
     } else {
         const listing = await Listing.findById(req.params.id).populate("menu").populate("user").populate({
             path: "reviews",
@@ -57,7 +57,7 @@ const getListingById = async (req, res, next) => {
                 model: "User",
             }
         });
-        res.send(listing);
+        res.send({listing: listing, self: listing.user === req.user.id});
     }
 }
 
