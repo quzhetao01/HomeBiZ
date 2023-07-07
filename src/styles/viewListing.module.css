@@ -33,3 +33,7 @@
     overflow-x: auto;
     /* height: "150px" */
 }
+
+.contactIcon:hover {
+    cursor: pointer;
+}

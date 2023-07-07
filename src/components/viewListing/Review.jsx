@@ -22,13 +22,16 @@ const Review = (props) => {
     },[])
 
     return <div className="card p-4 mb-5">
-                <AddReview listing_id={props.id} typing={typing} setTyping={setTyping} reviewRef={reviewRef} setSubmittingReview={props.setSubmittingReview}/>
-            <div className="">
+                {props.enableAddReview && <AddReview listing_id={props.id} typing={typing} setTyping={setTyping} reviewRef={reviewRef} setSubmittingReview={props.setSubmittingReview}/>}
+            <div className="mt-3">
+                <h4 className="text-center" style={{fontWeight: 700}}>See what other customers reviewed!</h4>
                 <p style={{fontSize: 20, fontWeight: 700}}>
 
-                    <AiFillStar></AiFillStar> {`${props.averageRating} - ${props.reviews.length} reviews`} 
+                    <AiFillStar></AiFillStar> {`${props.averageRating} | ${props.reviews.length} reviews`} 
                 </p>
-                {props.reviews.map((review) => <SingleReview review={review}/>)}
+                {props.reviews.map((review, index) => {
+                console.log(review);
+                return <SingleReview key={index} review={review}/>})}
             </div>
         </div>
 }

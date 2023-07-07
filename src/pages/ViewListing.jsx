@@ -10,6 +10,7 @@ import ServiceModal from "../components/viewListing/ServiceModal";
 import Review from "../components/viewListing/Review";
 import ImageGallery from 'react-image-gallery';
 import viewListingCSS from "../styles/viewListing.module.css"
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const images = [
   {
@@ -61,18 +62,20 @@ const ViewListing = () => {
     });
     const [submittingReview, setSubmittingReview] = useState(false);
     const [serviceImage, setServiceImage] = useState("");
+    const [ownListing, setOwnListing] = useState(false);
 
 
     
 
     useEffect(() => {
-        console.log(location);
+        // console.log(location);
         if (location.state) {
             const id = location.state.id ? location.state.id : "self"
             instance.get(`/listing/${id}`)
             .then(res => {
                 console.log(res);
-                setListing(res.data)
+                setListing(res.data.listing);
+                setOwnListing(res.data.self);
             })
             .catch(err => console.log(err));
             
@@ -106,49 +109,53 @@ const ViewListing = () => {
     // }, [submittingReview])
 
     useEffect(() => {
-        const images = [listing.displayImage, ...listing.descriptionImages];
-        const imgPromises = [];
-        for (let i = 0; i < images.length; i++) {
-            if (images[i]) {
+        if (listing) {
+            const images = [listing.displayImage, ...listing.descriptionImages];
+            const imgPromises = [];
+            for (let i = 0; i < images.length; i++) {
+                if (images[i]) {
 
-                const imgPromise = instance.get(`/images/${images[i]}`).then(res => res.data);
-                imgPromises.push(imgPromise);
+                    const imgPromise = instance.get(`/images/${images[i]}`).then(res => res.data);
+                    imgPromises.push(imgPromise);
+                }
             }
+            Promise.all(imgPromises).then(results => setImages(results.map(img => {
+                return {
+                    original: img,
+                    thumbnail: img
+                }
+            })));
+        
         }
-        Promise.all(imgPromises).then(results => setImages(results.map(img => {
-            return {
-                original: img,
-                thumbnail: img
-            }
-            // const image = new Image();
-            // image.src = img;
-            // let ratio = 0;
-            // image.onload = () => {
-            //     ratio = Math.floor(image.width * 10 / image.height)
-
-            // }
-            // return ({
-            //     src: img,
-            //     width: ratio,
-            //     height: 10
-            // })
-        })));
     }, [listing])
     
 
     return <div className="container" style={{paddingTop: "10rem"}}>
-        <div className="mb-4">
-            <h1 className="mb-3">{listing.title}</h1> 
-            <div style={{display: "flex", fontSize: 20}}>
-                <div>
-                <AiFillStar></AiFillStar> {`${averageRating()} - ${listing.reviews.length} reviews -`}   
-                <span style={{textDecoration: "underline"}}>{listing.township}</span>, <span style={{textDecoration: "underline"}}> {listing.location}</span>
-                </div>
-                <div className="ms-auto">
-                <h3>{listing.category}</h3>
 
+
+        {listing ? <div>
+        <div className="mb-4">
+            <div className="d-flex justify-content-between">
+                <h1 className="mb-3">{listing.title}</h1> 
+                <div>
+                    <button className='btn me-3' style={{backgroundColor: "#FF9F45"}}>
+                        <AiFillEdit size={30} color="white" title="edit listing"/>
+                    </button>
+                    <button className='btn' style={{backgroundColor: "#FF9F45"}}>
+                        <AiFillDelete size={30} color="white" title="delete listing"/>
+                    </button>
                 </div>
             </div>
+            <div style={{display: "flex", fontSize: 20}}>
+                <div>
+                    <AiFillStar/> {`${averageRating()} . ${listing.reviews.length} reviews .` + " "}   
+                    <span style={{textDecoration: "underline"}}>{listing.township}</span>, <span style={{textDecoration: "underline"}}> {listing.location}</span>
+                </div>
+                <div className="ms-auto">
+                    <h3>{listing.category}</h3>
+                </div>
+            </div>
+            <hr />
         </div>
         <div className="row d-flex justify-content-center mt-5">
             <div className="">
@@ -163,23 +170,41 @@ const ViewListing = () => {
                     </div>
                     <div className="col-5 d-flex justify-content-center" style={{flexDirection: "column"}}>
                         <div className="mb-5 text-center">
-                            <h3 style={{fontWeight: 700}}>Know more about our business!</h3>
+                            <h3 className='mb-3' style={{fontWeight: 700}}>Know more about our business!</h3>
                             {listing.description }
                         </div>
                         <ContactDetails listing={listing}/>
 
                     </div>
                 </div>
-                {/* <hr /> */}
+                <hr />
                 <div className="mt-5">
                 <Review id={listing._id} reviews={listing.reviews} 
-                setSubmittingReview={setSubmittingReview} averageRating={averageRating()}/>
+                setSubmittingReview={setSubmittingReview} averageRating={averageRating()}
+                enableAddReview={!ownListing}/>
 
                 </div>
             </div>
             
         </div> 
         {serviceImage && <ServiceModal isOpen={!!serviceImage} onRequestClose={() => setServiceImage("")} image={serviceImage}/>}
+        </div> :
+        <div className="d-flex flex-column align-items-center">
+            <p>
+                You have no listing of your own! Start your home business journey now by creating your own business listing now!
+            </p>
+            <div>
+
+            <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn px-3 me-3"
+                onClick={() => navigate('/')}>
+                See other listings
+            </button>
+            <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn px-3 ms-3"
+                onClick={() => navigate('/CreateListing')}>
+                Create a new listing
+            </button>
+            </div>
+        </div>}
     </div>
 }
 
