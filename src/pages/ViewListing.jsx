@@ -10,6 +10,7 @@ import ServiceModal from "../components/viewListing/ServiceModal";
 import Review from "../components/viewListing/Review";
 import ImageGallery from 'react-image-gallery';
 import viewListingCSS from "../styles/viewListing.module.css"
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const images = [
   {
@@ -134,15 +135,24 @@ const ViewListing = () => {
 
         {listing ? <div>
         <div className="mb-4">
-            <h1 className="mb-3">{listing.title}</h1> 
+            <div className="d-flex justify-content-between">
+                <h1 className="mb-3">{listing.title}</h1> 
+                <div>
+                    <button className='btn me-3' style={{backgroundColor: "#FF9F45"}}>
+                        <AiFillEdit size={30} color="white" title="edit listing"/>
+                    </button>
+                    <button className='btn' style={{backgroundColor: "#FF9F45"}}>
+                        <AiFillDelete size={30} color="white" title="delete listing"/>
+                    </button>
+                </div>
+            </div>
             <div style={{display: "flex", fontSize: 20}}>
                 <div>
-                <AiFillStar></AiFillStar> {`${averageRating()} . ${listing.reviews.length} reviews .` + " "}   
-                <span style={{textDecoration: "underline"}}>{listing.township}</span>, <span style={{textDecoration: "underline"}}> {listing.location}</span>
+                    <AiFillStar/> {`${averageRating()} . ${listing.reviews.length} reviews .` + " "}   
+                    <span style={{textDecoration: "underline"}}>{listing.township}</span>, <span style={{textDecoration: "underline"}}> {listing.location}</span>
                 </div>
                 <div className="ms-auto">
-                <h3>{listing.category}</h3>
-
+                    <h3>{listing.category}</h3>
                 </div>
             </div>
             <hr />
@@ -160,7 +170,7 @@ const ViewListing = () => {
                     </div>
                     <div className="col-5 d-flex justify-content-center" style={{flexDirection: "column"}}>
                         <div className="mb-5 text-center">
-                            <h3 style={{fontWeight: 700}}>Know more about our business!</h3>
+                            <h3 className='mb-3' style={{fontWeight: 700}}>Know more about our business!</h3>
                             {listing.description }
                         </div>
                         <ContactDetails listing={listing}/>
@@ -185,10 +195,12 @@ const ViewListing = () => {
             </p>
             <div>
 
-            <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn px-3 me-3">
+            <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn px-3 me-3"
+                onClick={() => navigate('/')}>
                 See other listings
             </button>
-            <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn px-3 ms-3">
+            <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn px-3 ms-3"
+                onClick={() => navigate('/CreateListing')}>
                 Create a new listing
             </button>
             </div>

@@ -343,12 +343,25 @@ const CreateListing = () => {
                 <p>{error}</p>
             </div>
         </Modal>
-        </div> : <div className="d-flex justify-content-center">
+        </div> : <div className="d-flex flex-column align-items-center m-5 p-5">
             <p>
 
-            You have already created your own listing! If you want to create a new listing,
+            You have already created your own listing! 
+            </p>
+            <p>
+            If you want to create a new listing,
             please delete your existing listing or you can make changes to your current listing under "View My Business"
             </p>
+            <div>
+                <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn px-3 me-3"
+                    onClick={() => navigate('/')}>
+                    See other listings
+                </button>
+                <button style={{backgroundColor: "#FF9F45", color: "white"}} className="btn px-3 ms-3"
+                    onClick={() => navigate("/viewListing", {state: {ownListing: true}})}>
+                    View My Business
+                </button>
+            </div>
         </div>}
     </div>
 }
