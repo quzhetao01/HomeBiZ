@@ -49,6 +49,19 @@ const getListingByCategory = async (req, res, next) => {
     res.send(listing);
 }
 
+const getListingBySearch = async (req, res, next) => {
+    const listing = await Listing.find({
+        $or: [
+            { title: new RegExp(req.params.searchQuery, 'i') },
+            { township: new RegExp(req.params.searchQuery, 'i') },
+            { location: new RegExp(req.params.searchQuery, 'i') },
+            { description: new RegExp(req.params.searchQuery, 'i') },
+            { category: new RegExp(req.params.searchQuery, 'i') },
+        ]
+    });
+    res.send(listing);
+}
+
 const editListing = async (req, res, next) => {
 
     console.log("hi", req.query)
@@ -76,5 +89,8 @@ router.route('/:id')
 
 router.route('/category/:category')
     .get(getListingByCategory);
+
+router.route('/search/:searchQuery')
+    .get(getListingBySearch);
 
 module.exports = router;
