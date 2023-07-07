@@ -37,7 +37,7 @@ const CategoryListings = () => {
     return (
         <div className={`${CategoryListingsCSS.main} mb-5`}>
             <Categories setSelectedCategory={setSelectedCategory}/>
-            <Title category={selectedCategory} />
+            <Title category={selectedCategory} numResults={listings.length}/>
             <Banner category={selectedCategory} />
             <hr className="my-5" />
             <div> 

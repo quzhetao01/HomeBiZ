@@ -40,7 +40,7 @@ const SearchListings = () => {
     return (
         <div className={`${CategoryListingsCSS.main} mb-5`}>
             <Categories />
-            <SearchTitle searchName={search} />
+            <SearchTitle searchName={search} numResults={listings.length}/>
             <SearchBanner />
             <hr className="my-5" />
             <div> 
