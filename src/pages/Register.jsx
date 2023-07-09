@@ -35,7 +35,7 @@ const Register = () => {
                 // user is present
                 if (res.data.user) {
                     setError(""); //reset error message jic
-                    navigate("/login", {state: {justRegistered: true}});
+                    navigate("/selectInterests", {state: {justRegistered: true, id: res.data.user.id}});
                 } else {
                     setError(res.data.error);
                 }
