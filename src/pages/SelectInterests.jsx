@@ -40,17 +40,14 @@ const SelectInterests = () => {
         if (selected === "") {
             setError(true);
         } else {
-            instance.post("/register", userInfo)
-            .then(res => {
-                console.log(res);
-                // user is present
-                if (res.data.user) {
-                    navigate("/login", {state: {justRegistered: true}});
-                } else {
-                    setError(""); //reset error message jic
-                    setError(res.data.error);
-                }
-            });
+            instance.patch(`/addInterest/${location.state.id}`, {category: selected})
+                .then(res => {
+                    console.log(res);
+                        navigate("/login", {state: {justRegistered: true, loggedIn: location.state.loggedIn}});
+                }).catch(err => {
+                    console.log(err);
+                })
+            
         }
     }
 
@@ -58,27 +55,15 @@ const SelectInterests = () => {
         <div className="d-flex flex-column align-items-center">
             <h2 className="my-3">Before we continue, pick an interest!</h2>
             <div className="container row d-flex flex-wrap">
-                {categoriesWithImage.map(c => <div className={`card col-5 m-5 p-0 ${RegisterCSS.category} ${selected === c.name ? RegisterCSS.selectedCategory : ""}`} 
-                    style={{overflow: "hidden"}} onClick={() => setSelected(c.name)}>
+                {categoriesWithImage.map((c, index) => <div className={`card col-5 m-5 p-0 ${RegisterCSS.category} ${selected === c.name ? RegisterCSS.selectedCategory : ""}`} 
+                    style={{overflow: "hidden"}} onClick={() => setSelected(c.name)} key={index}>
 
                     <img src={c.image} width="100%" height={500} alt="" />
                     <div className="text-center py-5">
                         <h5>{c.name}</h5>
                     </div>
                 </div>)}
-                
-                {/* <div className="card col-3 m-5">
-                    hello
-                </div>
-                <div className="card col-3 m-5">
-                    hello
-                </div>
-                <div className="card col-3 m-5">
-                    hello
-                </div>
-                <div className="card col-3 m-5">
-                    hello
-                </div> */}
+        
                 <div className="d-flex justify-content-end">
                     <button className='btn me-3 p-3 ' style={{backgroundColor: "#FF9F45"}} onClick={handleSubmit}>
                         <AiOutlineArrowRight size={30} color="white" title="Continue"/>

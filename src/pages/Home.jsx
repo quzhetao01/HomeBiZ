@@ -18,6 +18,10 @@ const Home = () => {
             if (!user) {
                 navigate("/login");
             }
+            console.log(user);
+            if (!user.category) {
+                navigate("/selectInterests", {state: {justRegistered: true, id: user._id, loggedIn: true}});
+            }
         }).catch(err => {
             navigate("/login");
         })
@@ -34,6 +38,9 @@ const Home = () => {
     return (
         <div className={`${HomeCSS.main}`}>
             <Categories />
+            <div className='default-listings pt-5'>
+                {listings && <PopulateListings listings={listings} />}
+            </div>
             <div className='default-listings pt-5'>
                 {listings && <PopulateListings listings={listings} />}
             </div>
