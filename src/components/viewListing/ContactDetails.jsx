@@ -1,6 +1,6 @@
 import React from "react";
 import {FaWhatsappSquare, FaTelegram} from "react-icons/fa";
-import ViewListingCSS from "../../styles/viewListing.module.css";
+import ViewListingCSS from "../../styles/ViewListing.module.css";
 
 const ContactDetails = ({listing}) => {
     console.log(listing);

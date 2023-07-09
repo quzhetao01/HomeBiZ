@@ -9,7 +9,7 @@ import Menu from "../components/viewListing/Menu";
 import ServiceModal from "../components/viewListing/ServiceModal";
 import Review from "../components/viewListing/Review";
 import ImageGallery from 'react-image-gallery';
-import viewListingCSS from "../styles/viewListing.module.css"
+import ViewListingCSS from "../styles/ViewListing.module.css"
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const images = [

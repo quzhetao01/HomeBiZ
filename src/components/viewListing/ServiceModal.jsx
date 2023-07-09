@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Modal from "react-modal";
-import viewListingCSS from "../../styles/viewListing.module.css"
+import ViewListingCSS from "../../styles/ViewListing.module.css"
 
 const ServiceModal = (props) => {
     // const i = new Image();
@@ -16,7 +16,7 @@ const ServiceModal = (props) => {
     return <Modal 
     isOpen={props.isOpen}
     onRequestClose={props.onRequestClose}
-    bodyOpenClassame={viewListingCSS.modal}
+    bodyOpenClassame={ViewListingCSS.modal}
     style={{
         overlay: {
           zIndex: 10,
@@ -32,8 +32,8 @@ const ServiceModal = (props) => {
           padding: 0,
         },
       }}>
-        <div className={viewListingCSS.imageContainer}>
-            <img className={viewListingCSS.image} ref={imgRef} src={props.image} alt="" />
+        <div className={ViewListingCSS.imageContainer}>
+            <img className={ViewListingCSS.image} ref={imgRef} src={props.image} alt="" />
             {/* {i} */}
         </div>
     </Modal>
