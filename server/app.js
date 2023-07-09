@@ -48,6 +48,9 @@ const userSchema = new mongoose.Schema({
   listing: {
     type: Schema.Types.ObjectId,
     ref: "Listing"
+  },
+  category: {
+    type: String,
   }
 });
 
@@ -98,6 +101,13 @@ app.post('/register', (req, res) => {
       });
   });
 });
+
+app.patch('/addInterest/:id', async (req, res) => {
+  const user = await User.findById(req.params.id);
+  user.category = req.body.category;
+  const ans = await user.save();
+  res.send(ans);
+})
 
 app.get('/failureLogin', (req, res) => {
   console.log("failureLogin");

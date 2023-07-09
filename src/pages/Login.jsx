@@ -17,6 +17,9 @@ const Login = () => {
 
     useEffect(() => {
       if (location.state) {
+        if (location.state.loggedIn) {
+          navigate("/");
+        }
         setIsNewUser(location.state.justRegistered);
       } else {
 
