@@ -82,6 +82,28 @@ const editListing = async (req, res, next) => {
     }
 }
 
+const getNewListings = async (req, res, next) => {
+    console.log(req.user);
+    const user = await User.findById(req.user.id);
+    const today = new Date();
+    const limit = new Date();
+    limit.setDate(today.getDate() - 7);
+    try {
+
+        const ans = await Listing.find({
+            created_on: {
+                $lt: today,
+                $gte: limit,
+            },
+            category: "Others"
+        });
+        res.send(ans);
+    } catch (err) {
+        console.log(err);
+    }
+    
+}
+
 
 router.route('/')
     .get(getAllListings)
@@ -93,5 +115,8 @@ router.route('/:id')
 
 router.route('/category/:category')
     .get(getListingByCategory);
+
+router.route('/explore/newListings')
+    .get(getNewListings)
 
 module.exports = router;

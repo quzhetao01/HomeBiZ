@@ -40,13 +40,9 @@ const Login = () => {
         instance.post("/login", {"username": username, "password": password})
         .then(res => {
               console.log(res);
-              // user is present
-              // if (res.data.user) {
+
                   navigate("/");
-              // } else {
-                //     setIsNewUser(false);
-                //     setError(res.data.error);
-                // }
+      
               })
               .catch(err => {
                 if(err.response.status === 401) {

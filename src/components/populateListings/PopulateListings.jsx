@@ -9,7 +9,7 @@ const PopulateListings = (props) => {
     return ( 
         <div>
             <div className={`mb-4 ${PopulateListingsCSS.title}`}>
-                <h1>Explore These Businesses</h1>
+                <h1>{props.title}</h1>
             </div>
             <div className={PopulateListingsCSS.listingContainer}>
                 {props.listings.map((item, index) => {
