@@ -1,3 +1,5 @@
+import { GiAmpleDress } from "react-icons/gi"
+
 const categories = ["Food", "Music", "Fashion", "Education", "Others"];
 const categoriesWithImage = [{
     name: "Food",
