@@ -20,6 +20,7 @@ const SelectInterests = () => {
 
     useEffect(() => {
         if (location.state) {
+            console.log(location.state);
             // setUserInfo(location.state.userInfo);
         } else {
             navigate("/")

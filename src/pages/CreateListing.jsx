@@ -12,28 +12,16 @@ import CreateMenu from '../components/createListing/CreateMenu';
 import Contact from '../components/createListing/Contact';
 import MultipleFileUpload from '../components/createListing/MultipleFileUpload';
 import Modal from "react-modal";
+import { TbAlertCircleFilled } from "react-icons/tb";
 
 //others
 import categories from "../helper/category";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from "../styles/CreateListing.module.css"
-import { TbAlertCircleFilled } from "react-icons/tb";
 
 const CreateListing = () => {
 
-    useEffect(() => {
-        getUser().then((user) => {
-            // TODO: Handle if user already has a listing
-            console.log(user);
-            if (!user) {
-              navigate("/login");
-            }
-            if (user.listing) {
-                setHasListing(true);
-            }
-          })
-    }, []);
-
+    
     const [listing, setListing] = useState({
         title: "",
         description: "",
@@ -52,8 +40,25 @@ const CreateListing = () => {
     const [displayImage, setDisplayImage] = useState("");
     const [showMenu, setShowMenu] = useState(false);
     const [error, setError] = useState("");
-
+    
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        getUser().then((user) => {
+            console.log(user);
+            if (!user) {
+              navigate("/login");
+            }
+            if (user.listing) {
+                setHasListing(true);
+            }
+          });
+        if (location.state) {
+
+        }
+    }, []);
+
     const handleTitle = (title) => {
         setListing((prev) => {
             return {
