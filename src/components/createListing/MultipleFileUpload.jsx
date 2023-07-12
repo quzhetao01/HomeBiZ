@@ -41,9 +41,12 @@ const MultipleFileUpload = (props) => {
       'image/*': []
     },
     onDrop: acceptedFiles => {
-      setFiles(acceptedFiles.map(file => Object.assign(file, {
-        preview: URL.createObjectURL(file)
-      })));
+      setFiles(prev => {
+        return acceptedFiles.map(file => Object.assign(file, {
+                      preview: URL.createObjectURL(file)
+                    })
+                  )
+                  });
       console.log(acceptedFiles);
       props.handleUpload(acceptedFiles);
     }
