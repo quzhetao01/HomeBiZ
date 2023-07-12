@@ -12,6 +12,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     const [listings, setListings] = useState(null);
+    const [newListings, setNewListings] = useState(null);
 
     useEffect(() => {
         getUser().then(user => {
@@ -29,20 +30,25 @@ const Home = () => {
 
     useEffect(() => {
         instance.get('/listing')
-        .then(res => {
-            console.log(res);
-            setListings(res.data);
-        }).catch(err => console.log(err));
+            .then(res => {
+                console.log(res);
+                setListings(res.data);
+            }).catch(err => console.log(err));
+        instance.get('/listing/explore/newListings')
+            .then(res => {
+                console.log(res);
+                setNewListings(res.data);
+            }).catch(err => console.log(err));
     }, []);
 
     return (
         <div className={`${HomeCSS.main}`}>
             <Categories />
             <div className='default-listings pt-5'>
-                {listings && <PopulateListings listings={listings} />}
+                {listings && <PopulateListings listings={listings} title="Explore these businesses" />}
             </div>
             <div className='default-listings pt-5'>
-                {listings && <PopulateListings listings={listings} />}
+                {newListings && <PopulateListings listings={newListings} title="Check out new listings according to your interest" />}
             </div>
         </div>
     )

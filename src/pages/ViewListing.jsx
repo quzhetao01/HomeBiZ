@@ -73,7 +73,7 @@ const ViewListing = () => {
             const id = location.state.id ? location.state.id : "self"
             instance.get(`/listing/${id}`)
             .then(res => {
-                console.log(res);
+                console.log(res.data.listing);
                 setListing(res.data.listing);
                 setOwnListing(res.data.self);
             })
@@ -128,6 +128,10 @@ const ViewListing = () => {
         
         }
     }, [listing])
+
+    const handleEdit = () => {
+        navigate('/createListing', {state: {listing: listing}});
+    }
     
 
     return <div className="container" style={{paddingTop: "10rem"}}>
@@ -139,10 +143,10 @@ const ViewListing = () => {
                 <h1 className="mb-3">{listing.title}</h1> 
                 <div>
                     <button className='btn me-3' style={{backgroundColor: "#FF9F45"}}>
-                        <AiFillEdit size={30} color="white" title="edit listing"/>
+                        <AiFillEdit size={30} color="white" title="Edit Listing" onClick={handleEdit}/>
                     </button>
                     <button className='btn' style={{backgroundColor: "#FF9F45"}}>
-                        <AiFillDelete size={30} color="white" title="delete listing"/>
+                        <AiFillDelete size={30} color="white" title="Delete Listing"/>
                     </button>
                 </div>
             </div>

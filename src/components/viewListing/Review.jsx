@@ -29,9 +29,7 @@ const Review = (props) => {
 
                     <AiFillStar></AiFillStar> {`${props.averageRating} | ${props.reviews.length} reviews`} 
                 </p>
-                {props.reviews.map((review, index) => {
-                console.log(review);
-                return <SingleReview key={index} review={review}/>})}
+                {props.reviews.map((review, index) => <SingleReview key={index} review={review}/>)}
             </div>
         </div>
 }

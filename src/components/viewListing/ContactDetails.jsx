@@ -3,7 +3,6 @@ import {FaWhatsappSquare, FaTelegram} from "react-icons/fa";
 import ViewListingCSS from "../../styles/ViewListing.module.css";
 
 const ContactDetails = ({listing}) => {
-    console.log(listing);
     return <div className="card p-4 mb-5">
                 <h3 className="mb-3">Contact Us!</h3>
                 <div className="d-flex justify-content-between pe-5">

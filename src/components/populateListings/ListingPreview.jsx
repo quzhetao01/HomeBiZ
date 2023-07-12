@@ -3,12 +3,13 @@ import instance from "../../axios.config";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import PopulateListingsCSS from '../../styles/PopulateListings.module.css'
+import { GiAmpleDress } from "react-icons/gi"
 
 
 //import ImageGallery from 'react-image-gallery';
 
 
-const ListingPreview = ({ title, reviews, location, image, link }) => {
+const ListingPreview = ({ title, reviews, location, image, link, category, created }) => {
     
     const navigate = useNavigate();
     const [img, setImg] = useState("");
@@ -30,7 +31,7 @@ const ListingPreview = ({ title, reviews, location, image, link }) => {
         }
         avg = avg / reviews.length;
 
-        return (typeof avg === 'number' && isFinite(avg)) ? avg : '--';
+        return (typeof avg === 'number' && isFinite(avg)) ? avg.toFixed(2) : '--';
     }
     
 
@@ -41,14 +42,21 @@ const ListingPreview = ({ title, reviews, location, image, link }) => {
             <div className='d-flex mt-2 px-2'>
                 <div className='mt-2 flex-grow-1'>
                     <h6>{title}</h6>
+                    <div className={`${PopulateListingsCSS.location} mb-2`}>
+                        {category}
+                    </div>
                 </div>
                 <div className="p-1">
-                    <AiFillStar></AiFillStar>{averageRating()}  
+                    <div className="d-flex justify-content-end mb-2">
+                        <AiFillStar className="mt-1"></AiFillStar>{averageRating()}  
+
+                    </div>
+                    <div className={`${PopulateListingsCSS.location} d-flex justify-content-end`}>
+                        {created.split("T")[0]}
+                    </div>
                 </div>   
             </div>
-            <div className={`{PopulateListingsCSS.location} px-2 mb-2`}>
-                {location}
-            </div>
+            
         </div>
         
     )
