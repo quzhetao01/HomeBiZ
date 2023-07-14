@@ -12,6 +12,7 @@ import CreateMenu from '../components/createListing/CreateMenu';
 import Contact from '../components/createListing/Contact';
 import MultipleFileUpload from '../components/createListing/MultipleFileUpload';
 import Modal from "react-modal";
+import LoadingModal from '../components/LoadingModal';
 
 //others
 import categories from "../helper/category";
@@ -52,6 +53,7 @@ const CreateListing = () => {
     const [displayImage, setDisplayImage] = useState("");
     const [showMenu, setShowMenu] = useState(false);
     const [error, setError] = useState("");
+    const [isSubmitting, setSubmitting] = useState(false);
 
     const navigate = useNavigate();
     const handleTitle = (title) => {
@@ -192,14 +194,15 @@ const CreateListing = () => {
         }) 
     }
 
-    const uploadImages = async () => {
-        let totalImages = 1;
+    // const uploadImages = async () => {
+    //     let totalImages = 1;
         
 
-        console.log(listing);
-    }
+    //     console.log(listing);
+    // }
 
     const handleSubmit = async (e) => {
+        setSubmitting(true);
         if (!listing.title || !listing.description || !listing.township || !listing.location 
             || !listing.displayImage || listing.descriptionImages.length == 0 
             || !listing.contact || !listing.whatsapp && !listing.telegram
@@ -265,6 +268,7 @@ const CreateListing = () => {
         })
         .then(res => {
             console.log(res);
+            setSubmitting(false);
             navigate("/");
         })
         .catch(err => {
@@ -343,6 +347,7 @@ const CreateListing = () => {
                 <p>{error}</p>
             </div>
         </Modal>
+        <LoadingModal isOpen={isSubmitting} onRequestClose={() => setSubmitting(false)}/>
         </div> : <div className="d-flex flex-column align-items-center m-5 p-5">
             <p>
 

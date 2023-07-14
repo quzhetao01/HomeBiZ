@@ -83,8 +83,8 @@ const editListing = async (req, res, next) => {
 }
 
 const getNewListings = async (req, res, next) => {
-    console.log(req.user);
     const user = await User.findById(req.user.id);
+    console.log(user);
     const today = new Date();
     const limit = new Date();
     limit.setDate(today.getDate() - 7);
@@ -95,7 +95,7 @@ const getNewListings = async (req, res, next) => {
                 $lt: today,
                 $gte: limit,
             },
-            category: "Others"
+            category: user.category,
         });
         res.send(ans);
     } catch (err) {
