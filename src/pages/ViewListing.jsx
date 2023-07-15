@@ -130,7 +130,7 @@ const ViewListing = () => {
     }, [listing])
 
     const handleEdit = () => {
-        navigate('/createListing', {state: {listing: listing}});
+        navigate('/editListing', {state: {listing: listing}});
     }
     
 

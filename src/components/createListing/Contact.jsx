@@ -4,7 +4,7 @@ import RequiredIcon from "../RequiredIcon";
 const Contact = (props) => {
 
     return <div>
-        <h4>Contact Details</h4>
+        {!props.edit && <h4>Contact Details</h4>}
             <div className="mb-3 p-2 row">
                 <label className="col-sm-2 col-form-label"><RequiredIcon /> Number</label>
                 <div className="col-sm-10">

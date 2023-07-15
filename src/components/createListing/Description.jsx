@@ -7,8 +7,8 @@ const Description = (props) => {
 
     return <div className="mb-3">
         <label htmlFor="description" className="form-label"> <RequiredIcon /> Business Description</label>
-        <textarea className="form-control" id="description" rows="3" placeholder="Introduce and Describe your business here"
-        value={props.value} onChange={e => props.handleChange(e.target.value)}>
+        <textarea className="form-control" id="description" rows="5" placeholder="Introduce and Describe your business here"
+        value={props.value} onChange={e => props.handleChange(e.target.value)} disabled={props.disabled}>
 
         </textarea>
     </div>

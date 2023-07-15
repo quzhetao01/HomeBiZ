@@ -163,6 +163,7 @@ const CreateListing = () => {
     }
 
     const handleNumber = (num) => {
+        console.log(listing);
         setListing((prev) => {
             return {
                 ...prev,
@@ -282,10 +283,10 @@ const CreateListing = () => {
             <div className="row justify-content-evenly pt-5" >
                 <div className={`card col-5 p-5 ${styles.card}`}>
                     <h3 className="mb-3">Create your listing here</h3>
-                        <Title handleChange={handleTitle} value={listing.title}/>
+                        <Title handleChange={handleTitle} title={listing.title}/>
                         <Description handleChange={handleDescription} value={listing.description}/>
-                        <Location handleChange={handleTownship} value={listing.township} label="Township" placeholder="Input your township here if applicable. Eg. Bedok"/>
-                        <Location handleChange={handleLocation} value={listing.location} label="Address" placeholder="Address if applicable"/>
+                        <Location handleChange={handleTownship} location={listing.township} label="Township" placeholder="Input your township here if applicable. Eg. Bedok"/>
+                        <Location handleChange={handleLocation} location={listing.location} label="Address" placeholder="Address if applicable"/>
                         <hr />
                         <div className="row my-5">
 

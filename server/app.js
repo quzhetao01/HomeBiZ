@@ -150,9 +150,11 @@ app.get('/test', (req, res) => {
 
 const listingRouter = require("./routes/listings")
 const reviewRouter = require("./routes/review");
+const serviceRouter = require("./routes/services");
 const uploadRouter = require("./routes/googledrive");
 app.use("/listing", listingRouter);
 app.use("/review", reviewRouter);
+app.use("/service", serviceRouter);
 app.use("/images", uploadRouter);
 
 app.listen(8000, () => {
