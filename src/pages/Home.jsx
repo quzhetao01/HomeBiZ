@@ -13,11 +13,16 @@ const Home = () => {
     const navigate = useNavigate();
 
     const [listings, setListings] = useState(null);
+    const [newListings, setNewListings] = useState(null);
 
     useEffect(() => {
         getUser().then(user => {
             if (!user) {
                 navigate("/login");
+            }
+            console.log(user);
+            if (!user.category) {
+                navigate("/selectInterests", {state: {justRegistered: true, id: user._id, loggedIn: true}});
             }
         }).catch(err => {
             navigate("/login");
@@ -26,10 +31,15 @@ const Home = () => {
 
     useEffect(() => {
         instance.get('/listing')
-        .then(res => {
-            console.log(res);
-            setListings(res.data);
-        }).catch(err => console.log(err));
+            .then(res => {
+                console.log(res);
+                setListings(res.data);
+            }).catch(err => console.log(err));
+        instance.get('/listing/explore/newListings')
+            .then(res => {
+                console.log(res);
+                setNewListings(res.data);
+            }).catch(err => console.log(err));
     }, []);
 
     return (
@@ -37,7 +47,10 @@ const Home = () => {
             <Categories />
             <Searchbar />
             <div className='default-listings pt-5'>
-                {listings && <PopulateListings listings={listings} />}
+                {listings && <PopulateListings listings={listings} title="Explore these businesses" />}
+            </div>
+            <div className='default-listings pt-5'>
+                {newListings && <PopulateListings listings={newListings} title="Check out new listings according to your interest" />}
             </div>
         </div>
     )

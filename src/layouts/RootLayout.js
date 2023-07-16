@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 export default function RootLayout() {
     // const location = useLocation();
     const { pathname } = useLocation();
-    const showNavbar = !['/login', '/register'].includes(pathname);
+    const showNavbar = !['/login', '/register', '/selectInterests'].includes(pathname);
     return (
         
         <div className="root-layout">

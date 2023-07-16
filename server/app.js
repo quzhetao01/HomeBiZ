@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const session = require("express-session");
@@ -43,11 +44,14 @@ const userSchema = new mongoose.Schema({
   },
   lastName: {
     type: String,
+  },
+  listing: {
+    type: Schema.Types.ObjectId,
+    ref: "Listing"
+  },
+  category: {
+    type: String,
   }
-  // password: {
-  //   type: String,
-  //   required: true,
-  // },
 });
 
 
@@ -57,6 +61,8 @@ userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
 const User = mongoose.model("User", userSchema);
+
+module.exports = {User: User};
 
 passport.use(User.createStrategy());
 
@@ -96,6 +102,13 @@ app.post('/register', (req, res) => {
   });
 });
 
+app.patch('/addInterest/:id', async (req, res) => {
+  const user = await User.findById(req.params.id);
+  user.category = req.body.category;
+  const ans = await user.save();
+  res.send(ans);
+})
+
 app.get('/failureLogin', (req, res) => {
   console.log("failureLogin");
   res.status(401).send({user: null, error: "Wrong username or password"});
@@ -120,9 +133,10 @@ app.post('/logout', function(req, res, next){
   });
 });
 
-app.get("/user", (req, res) => {
+app.get("/user", async (req, res) => {
   if(req.isAuthenticated()) {
-    res.send(req.user);
+    const user = await User.findById(req.user.id)
+    res.send(user);
   } else {
     res.send(null);
   }

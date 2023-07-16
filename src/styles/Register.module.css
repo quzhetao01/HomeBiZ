@@ -40,3 +40,20 @@
     color: lightblue;
     cursor: pointer;
 }
+
+.category {
+    border-radius: 50px !important;
+    overflow: hidden;
+    box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, .2);
+}
+
+.category:hover {
+    background-color: #FF9F45;
+    color: white;
+    cursor: pointer;
+}
+
+.selectedCategory {
+    background-color: #FF9F45;
+    color: white;
+}
