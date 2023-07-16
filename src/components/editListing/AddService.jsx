@@ -45,7 +45,7 @@ const AddService = (props) => {
         if (name === "" || price === "") {
             setError(true);
         } else {
-            const listing = {
+            const item = {
                 title: name,
                 price: price,
             };
@@ -55,8 +55,8 @@ const AddService = (props) => {
                 formData.append("file", imageFile);
                 instance.post('/images', formData)
                 .then(res => {
-                    listing.image = res.data;
-                    instance.post(`/service/${props.listingID}`, listing)
+                    item.image = res.data;
+                    instance.post(`/service/${props.listingID}`, item)
                     .then(res => {
                         console.log(res);
                         props.setListing(prev => {
@@ -64,13 +64,15 @@ const AddService = (props) => {
                                 ...prev,
                                 "menu": [
                                     ...prev.menu,
-                                    listing
+                                    item
                                 ]
                             }
                         })
                             props.setChangedFields(prev => {
-                                const arr = prev.menu ? prev.menu: [];
-                                arr.push(res.data);
+                                console.log("change1")
+
+                                const arr = prev["addedItems"] ? prev["addedItems"]: [];
+                                arr.push(res.data._id);
                                 return {
                                     ...prev,
                                     "addedItems": arr 
@@ -79,7 +81,7 @@ const AddService = (props) => {
                         })
                     })
                 } else {
-                    instance.post(`/service/${props.listingID}`, listing)
+                    instance.post(`/service/${props.listingID}`, item)
                     .then(res => {
                         console.log(res);
                         props.setListing(prev => {
@@ -87,19 +89,21 @@ const AddService = (props) => {
                                 ...prev,
                                 "menu": [
                                     ...prev.menu,
-                                    listing
+                                    res.data
                                 ]
                             }
                         })
-                            props.setChangedFields(prev => {
-                                const arr = prev.menu ? prev.menu: [];
-                                arr.push(res.data);
-                                return {
-                                    ...prev,
-                                    "addedItems": arr 
-                                }
-                            })
+                        props.setChangedFields(prev => {
+                            console.log("change2")
+                            const arr = prev["menu"] ? [...prev["menu"]]: [...props.menu].map(item => item._id);
+                            arr.push(res.data._id);
+                            console.log(arr);
+                            return {
+                                ...prev,
+                                "menu": arr 
+                            }
                         })
+                    })
             }
             setName("");
             setPrice("");
@@ -108,6 +112,10 @@ const AddService = (props) => {
             inputRef.current.value = null;
 
         }
+    }
+
+    const deleteItem = () => {
+
     }
 
     return <div>
@@ -137,7 +145,8 @@ const AddService = (props) => {
         </div>
         <hr/>
         <div className='p-4'>
-            {props.menu.map((service, index) => <MenuDetail key={index} service={service} setServiceImage={setServiceImage}/>)}
+            {props.menu.map((service, index) => <MenuDetail key={index} service={service} setServiceImage={setServiceImage}
+                setListing={props.setListing} setChangedFields={props.setChangedFields}/>)}
         </div>
         {serviceImage && <ServiceModal isOpen={!!serviceImage} onRequestClose={() => setServiceImage("")} image={serviceImage}/>}
     </div>
