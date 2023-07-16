@@ -71,11 +71,11 @@ const AddService = (props) => {
                             props.setChangedFields(prev => {
                                 console.log("change1")
 
-                                const arr = prev["addedItems"] ? prev["addedItems"]: [];
+                                const arr = prev["menu"] ? [...prev["menu"]]: [...props.menu].map(item => item._id);
                                 arr.push(res.data._id);
                                 return {
                                     ...prev,
-                                    "addedItems": arr 
+                                    "menu": arr 
                                 }
                             })
                         })

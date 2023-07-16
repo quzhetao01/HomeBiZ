@@ -60,6 +60,7 @@ uploadRouter.get("/:id", async (req, res) => {
         const imageUrl = response.data.webContentLink;
         res.status(200).send(imageUrl);
     } catch (err) {
+        console.log("hello" + req.params.id)
         console.log(err);
     }
 })

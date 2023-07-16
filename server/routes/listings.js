@@ -79,6 +79,11 @@ const editListing = async (req, res, next) => {
         listing.reviews.push(saved._id);
         const ans = await listing.save();
         res.send(ans);
+    } else {
+        console.log("Editing for reals")
+        console.log(req.body)
+        const listing = await Listing.findByIdAndUpdate(req.params.id, req.body);
+        res.send(listing);
     }
 }
 

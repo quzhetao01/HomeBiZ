@@ -7,6 +7,7 @@ import Title from '../components/createListing/Title';
 import Description from '../components/createListing/Description';
 import Location from '../components/createListing/Location';
 import DisplayImage from '../components/editListing/DisplayImage';
+import DescriptionImages from '../components/editListing/DescriptionImages';
 import FileUpload from '../components/createListing/FileUpload';
 import SelectCategory from '../components/createListing/SelectCategory';
 import CreateMenu from '../components/createListing/CreateMenu';
@@ -41,6 +42,7 @@ const EditListing = () => {
 
     const [changedFields, setChangedFields] = useState({});
 
+    const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
@@ -167,6 +169,12 @@ const EditListing = () => {
     const handleSubmit = () => {
         console.log(listing);
         console.log(changedFields);
+        instance.patch(`/listing/${listing._id}`, changedFields)
+            .then(res => {
+                console.log(res);
+                navigate("/");
+            })
+            .catch(err => console.log(err));
     }
 
     return <div className={`${styles.accordian}`} style={{padding: "15rem"}}>
@@ -181,10 +189,10 @@ const EditListing = () => {
                 <Location handleChange={handleLocation} location={listing.location} label="Address" placeholder="Address if applicable"/>
             </AccordionItem>
             <AccordionItem title='Display Image' id='Three'>
-                <DisplayImage setListing={setListing} setChangedFields={setChangedFields} imageID={listing.displayImage}/>
+                <DisplayImage setChangedFields={setChangedFields} imageID={listing.displayImage}/>
             </AccordionItem>
             <AccordionItem title='Description Images' id='Four'>
-                hello
+                <DescriptionImages setListing={setListing} setChangedFields={setChangedFields} imageList={listing.descriptionImages} listing={listing}/>
             </AccordionItem>
             <AccordionItem title='Menu' id='Five'>
                 <AddService menu={listing.menu} setListing={setListing} setChangedFields={setChangedFields} listingID={listing._id}/>

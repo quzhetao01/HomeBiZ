@@ -120,34 +120,20 @@ const CreateListing = () => {
     }
 
     const handleDescImages = (files) => {
-        // console.log(event);
         if (files && files.length > 0 ) {
-            // console.log(event.target.files);
-            // for (let i = 0; i < event.target.files.length; i++) {
-            //     const reader = new FileReader();
-            //     reader.readAsDataURL(event.target.files[i])
-            //     reader.onload = () => {
-            //         setListing((prev) => {
-            //             return {
-            //                 ...prev,
-            //                 ["descriptionImages"]: [...prev.descriptionImages, reader.result]
-            //             }
-            //         })
-            //     }
-            // }
             setListing((prev) => {
                             return {
                               ...prev, 
-                                ["descriptionImages"]: files
+                                "descriptionImages": [...prev.descriptionImages, ...files]
                             }
                         })
         } else {
-            setListing(prev => {
-                return {
-                    ...prev,
-                    ["descriptionImages"]: []
-                }
-            })
+            // setListing(prev => {
+            //     return {
+            //         ...prev,
+            //         ["descriptionImages"]: []
+            //     }
+            // })
         }
     }
     
@@ -198,12 +184,6 @@ const CreateListing = () => {
         }) 
     }
 
-    const uploadImages = async () => {
-        let totalImages = 1;
-        
-
-        console.log(listing);
-    }
 
     const handleSubmit = async (e) => {
         if (!listing.title || !listing.description || !listing.township || !listing.location 

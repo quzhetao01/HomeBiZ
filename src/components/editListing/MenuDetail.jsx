@@ -26,7 +26,7 @@ const MenuDetail = ({service, setServiceImage, setListing, setChangedFields}) =>
                 "menu": [...prev.menu].filter(item => item._id !== id)
             }
         })
-        instance.delete(`/images/${service.image}`).then(res => console.log(res));
+        // instance.delete(`/images/${service.image}`).then(res => console.log(res));
         
     }
 

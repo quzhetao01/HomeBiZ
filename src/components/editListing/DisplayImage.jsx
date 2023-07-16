@@ -14,8 +14,9 @@ const DisplayImage = (props) => {
     const [modal, setModal] = useState(false);
 
     useEffect(() => {
-        console.log(props.imageID)
-        instance.get(`/images/${props.imageID}`).then(res => setImage(res.data));
+        if (props.imageID) {
+            instance.get(`/images/${props.imageID}`).then(res => setImage(res.data));
+        }
     }, [props.imageID])
 
     const handleUpload = (event) => {
@@ -33,9 +34,12 @@ const DisplayImage = (props) => {
     }
 
     const handleConfirm = () => {
-        let formData = new FormData();
-        formData.append("file", imageFile);
-        instance.post('/images', formData)
+        setModal(true);
+        if (imageFile) {
+
+            let formData = new FormData();
+            formData.append("file", imageFile);
+            instance.post('/images', formData)
             .then(res => {
                 props.setChangedFields(prev => {
                     return {
@@ -43,8 +47,9 @@ const DisplayImage = (props) => {
                         "displayImage": res.data
                     }
                 })
-                setModal(true);
+                setModal(false);
             })
+        }
         
     }
 
@@ -107,10 +112,7 @@ const DisplayImage = (props) => {
                     {imageFile ? <div>
 
                         <p>
-                            Your image has been saved. 
-                        </p>
-                        <p>
-                        You can continue to edit other sections.
+                            Please wait for us to save the image 
                         </p>
                     </div> : <div>
                         No new image was selected
