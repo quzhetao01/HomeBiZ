@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import Title from '../components/createListing/Title';
 import Description from '../components/createListing/Description';
 import Location from '../components/createListing/Location';
+import DisplayImage from '../components/editListing/DisplayImage';
 import FileUpload from '../components/createListing/FileUpload';
 import SelectCategory from '../components/createListing/SelectCategory';
 import CreateMenu from '../components/createListing/CreateMenu';
@@ -180,7 +181,7 @@ const EditListing = () => {
                 <Location handleChange={handleLocation} location={listing.location} label="Address" placeholder="Address if applicable"/>
             </AccordionItem>
             <AccordionItem title='Display Image' id='Three'>
-                hello
+                <DisplayImage setListing={setListing} setChangedFields={setChangedFields} imageID={listing.displayImage}/>
             </AccordionItem>
             <AccordionItem title='Description Images' id='Four'>
                 hello

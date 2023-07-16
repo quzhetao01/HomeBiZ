@@ -64,4 +64,20 @@ uploadRouter.get("/:id", async (req, res) => {
     }
 })
 
+uploadRouter.delete("/:id", async (req, res, next) => {
+    console.log("deleting");
+    const drive = google.drive({version: 'v3', auth: auth})
+    try {
+        const response = await drive.files.delete({
+            fileId: req.params.id,
+        });
+        console.log(response.data);
+        console.log(response.status);
+        res.send("Deleted")
+    } catch (err) {
+        console.log(err);
+        next(err)
+    }
+})
+
 module.exports = uploadRouter;

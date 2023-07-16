@@ -64,7 +64,7 @@ const AddService = (props) => {
                                 ...prev,
                                 "menu": [
                                     ...prev.menu,
-                                    item
+                                    res.data
                                 ]
                             }
                         })
@@ -112,10 +112,6 @@ const AddService = (props) => {
             inputRef.current.value = null;
 
         }
-    }
-
-    const deleteItem = () => {
-
     }
 
     return <div>
