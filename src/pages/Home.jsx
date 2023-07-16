@@ -5,6 +5,7 @@ import PopulateListings from "../components/populateListings/PopulateListings";
 import getUser from "../helper/user";
 import HomeCSS from "../styles/Home.module.css";
 import Categories from "../components/categoryListings/Categories";
+import Searchbar from "../components/Searchbar";
 
 
 
@@ -44,6 +45,7 @@ const Home = () => {
     return (
         <div className={`${HomeCSS.main}`}>
             <Categories />
+            <Searchbar />
             <div className='default-listings pt-5'>
                 {listings && <PopulateListings listings={listings} title="Explore these businesses" />}
             </div>
