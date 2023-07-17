@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Listing = require("../models/listing.model.js").Listing;
 const Service = require("../models/service.model.js").Service;
 const Review = require("../models/review.model.js").Review;
@@ -59,6 +60,13 @@ const getListingById = async (req, res, next) => {
         });
         res.send({listing: listing, self: listing.user === req.user.id});
     }
+}
+
+const getMultipleListingsById = async (req, res, next) => {
+    console.log(req.query.favouritesArray);
+    const idArray = req.query.favouritesArray;
+    const found = await Listing.find({ _id: {$in: idArray}}).populate("reviews");
+    res.send(found);
 }
 
 const getListingByCategory = async (req, res, next) => {
@@ -126,9 +134,11 @@ router.route('/:id')
     .get(getListingById)
     .patch(editListing);
 
+router.route('/saved/savedListings')
+    .get(getMultipleListingsById);
+
 router.route('/category/:category')
     .get(getListingByCategory);
-
 
 router.route('/search/:searchQuery')
     .get(getListingBySearch);

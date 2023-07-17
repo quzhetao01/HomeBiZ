@@ -10,7 +10,7 @@ const AddReview = (props) => {
 
     const handleSubmit =  () => {
         console.log("clicked");
-        console.log(props.listing_id)
+        console.log(props.listing_id);
         const review = {
             rating: rating, 
             description: description, 
@@ -21,7 +21,6 @@ const AddReview = (props) => {
                 console.log(res.data);
                 setDescription("");
                 props.setSubmittingReview(prev => !prev);
-                        
             })
             .catch(err => console.log(err))
     }
