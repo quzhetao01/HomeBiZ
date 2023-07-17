@@ -6,10 +6,7 @@
 
 .header {
     line-height: 17px;
-}
-
-.number {
-    line-height: 17px;
+    text-align: left;
 }
 
 .image {

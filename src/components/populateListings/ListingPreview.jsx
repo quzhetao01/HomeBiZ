@@ -18,7 +18,7 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
 
     instance.get(`/images/${image}`).then(res => {
         setImg(res.data);
-    })
+    }).catch(err => console.log(err));
 
     const handleClick = () => {
         navigate("/viewListing", {state: {id: `${link}`}});
