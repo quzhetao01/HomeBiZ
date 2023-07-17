@@ -20,6 +20,7 @@ const SelectInterests = () => {
 
     useEffect(() => {
         if (location.state) {
+            console.log(location.state);
             // setUserInfo(location.state.userInfo);
         } else {
             navigate("/")
@@ -72,8 +73,9 @@ const SelectInterests = () => {
             </div>
             
         </div>
-        <WarningModal isOpen={error} onRequestClose={() => setError(false)}
-            message={"Please select a category"}/>
+        <WarningModal isOpen={error} onRequestClose={() => setError(false)}>
+            <p>Please select a category</p>
+        </WarningModal>
     </div>
 }
 

@@ -1,0 +1,39 @@
+.header[aria-expanded="false"] {
+    color: black;
+    background-color: white;
+}
+
+
+.header[aria-expanded="true"] {
+    color: white;
+    background-color: #FF9F45;
+}
+
+.previewContainer {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 1em;
+    border: 6px solid;
+    border-color: rgba(0,0,0,0.03);
+    border-radius: 8px;
+    background-color: lightgrey
+
+}
+
+.menuPrice {
+    margin-top: 3px;
+}
+
+.menuPrice:hover {
+    cursor: pointer;
+}
+
+.descImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.descImage:hover {
+    cursor: pointer;
+}

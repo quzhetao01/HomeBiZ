@@ -13,28 +13,16 @@ import Contact from '../components/createListing/Contact';
 import MultipleFileUpload from '../components/createListing/MultipleFileUpload';
 import Modal from "react-modal";
 import LoadingModal from '../components/LoadingModal';
+import { TbAlertCircleFilled } from "react-icons/tb";
 
 //others
 import categories from "../helper/category";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from "../styles/CreateListing.module.css"
-import { TbAlertCircleFilled } from "react-icons/tb";
 
 const CreateListing = () => {
 
-    useEffect(() => {
-        getUser().then((user) => {
-            // TODO: Handle if user already has a listing
-            console.log(user);
-            if (!user) {
-              navigate("/login");
-            }
-            if (user.listing) {
-                setHasListing(true);
-            }
-          })
-    }, []);
-
+    
     const [listing, setListing] = useState({
         title: "",
         description: "",
@@ -56,6 +44,23 @@ const CreateListing = () => {
     const [isSubmitting, setSubmitting] = useState(false);
 
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        getUser().then((user) => {
+            console.log(user);
+            if (!user) {
+              navigate("/login");
+            }
+            if (user.listing) {
+                setHasListing(true);
+            }
+          });
+        if (location.state) {
+
+        }
+    }, []);
+
     const handleTitle = (title) => {
         setListing((prev) => {
             return {
@@ -117,34 +122,20 @@ const CreateListing = () => {
     }
 
     const handleDescImages = (files) => {
-        // console.log(event);
         if (files && files.length > 0 ) {
-            // console.log(event.target.files);
-            // for (let i = 0; i < event.target.files.length; i++) {
-            //     const reader = new FileReader();
-            //     reader.readAsDataURL(event.target.files[i])
-            //     reader.onload = () => {
-            //         setListing((prev) => {
-            //             return {
-            //                 ...prev,
-            //                 ["descriptionImages"]: [...prev.descriptionImages, reader.result]
-            //             }
-            //         })
-            //     }
-            // }
             setListing((prev) => {
                             return {
                               ...prev, 
-                                ["descriptionImages"]: files
+                                "descriptionImages": [...prev.descriptionImages, ...files]
                             }
                         })
         } else {
-            setListing(prev => {
-                return {
-                    ...prev,
-                    ["descriptionImages"]: []
-                }
-            })
+            // setListing(prev => {
+            //     return {
+            //         ...prev,
+            //         ["descriptionImages"]: []
+            //     }
+            // })
         }
     }
     
@@ -160,6 +151,7 @@ const CreateListing = () => {
     }
 
     const handleNumber = (num) => {
+        console.log(listing);
         setListing((prev) => {
             return {
                 ...prev,
@@ -194,12 +186,6 @@ const CreateListing = () => {
         }) 
     }
 
-    // const uploadImages = async () => {
-    //     let totalImages = 1;
-        
-
-    //     console.log(listing);
-    // }
 
     const handleSubmit = async (e) => {
         setSubmitting(true);
@@ -281,10 +267,10 @@ const CreateListing = () => {
             <div className="row justify-content-evenly pt-5" >
                 <div className={`card col-5 p-5 ${styles.card}`}>
                     <h3 className="mb-3">Create your listing here</h3>
-                        <Title handleChange={handleTitle} value={listing.title}/>
+                        <Title handleChange={handleTitle} title={listing.title}/>
                         <Description handleChange={handleDescription} value={listing.description}/>
-                        <Location handleChange={handleTownship} value={listing.township} label="Township" placeholder="Input your township here if applicable. Eg. Bedok"/>
-                        <Location handleChange={handleLocation} value={listing.location} label="Address" placeholder="Address if applicable"/>
+                        <Location handleChange={handleTownship} location={listing.township} label="Township" placeholder="Input your township here if applicable. Eg. Bedok"/>
+                        <Location handleChange={handleLocation} location={listing.location} label="Address" placeholder="Address if applicable"/>
                         <hr />
                         <div className="row my-5">
 
