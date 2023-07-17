@@ -92,29 +92,44 @@ const editListing = async (req, res, next) => {
         listing.reviews.push(saved._id);
         const ans = await listing.save();
         res.send(ans);
+    } else {
+        console.log("Editing for reals")
+        console.log(req.body)
+        const listing = await Listing.findByIdAndUpdate(req.params.id, req.body);
+        res.send(listing);
     }
 }
 
 const getNewListings = async (req, res, next) => {
-    const user = await User.findById(req.user.id);
-    console.log(user);
+    console.log(req.user);
     const today = new Date();
     const limit = new Date();
     limit.setDate(today.getDate() - 7);
     try {
-
+        
+        const user = await User.findById(req.user.id);
         const ans = await Listing.find({
             created_on: {
                 $lt: today,
                 $gte: limit,
             },
-            category: user.category,
+            category: user.category
         });
         res.send(ans);
     } catch (err) {
         console.log(err);
     }
     
+}
+
+const deleteListing = async (req, res) => {
+    try {
+        const result = await Listing.deleteOne({_id: req.params.id});
+        res.send(result);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Something wrong happened when deleting listing")
+    }
 }
 
 
@@ -124,7 +139,8 @@ router.route('/')
 
 router.route('/:id')
     .get(getListingById)
-    .patch(editListing);
+    .patch(editListing)
+    .delete(deleteListing);
 
 router.route('/category/:category')
     .get(getListingByCategory);

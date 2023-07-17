@@ -17,10 +17,10 @@ const Home = () => {
 
     useEffect(() => {
         getUser().then(user => {
-            if (!user) {
+            console.log(user);
+            if (user == null) {
                 navigate("/login");
             }
-            console.log(user);
             if (!user.category) {
                 navigate("/selectInterests", {state: {justRegistered: true, id: user._id, loggedIn: true}});
             }
@@ -39,7 +39,10 @@ const Home = () => {
             .then(res => {
                 console.log(res);
                 setNewListings(res.data);
-            }).catch(err => console.log(err));
+            }).catch(err => {
+                console.log(err)
+                navigate("/login");
+            });
     }, []);
 
     return (

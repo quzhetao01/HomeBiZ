@@ -16,7 +16,7 @@ import ViewListing from './pages/ViewListing';
 import CategoryListings from './pages/CategoryListings';
 import SearchListings from './pages/SearchListings';
 import SelectInterests from './pages/SelectInterests';
-
+import EditListing from './pages/EditListing';
 
 //layouts
 import RootLayout from './layouts/RootLayout';
@@ -35,6 +35,9 @@ const router = createBrowserRouter(
       <Route path="categoryListings" element={<CategoryListings />}/>
       <Route path='searchListings' element={<SearchListings />} />
       <Route path="selectInterests" element={<SelectInterests />}/>
+      <Route path="editListing" element={<EditListing />}/>
+
+
     </Route>
   )
 

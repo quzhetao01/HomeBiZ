@@ -41,22 +41,35 @@ const MultipleFileUpload = (props) => {
       'image/*': []
     },
     onDrop: acceptedFiles => {
-      setFiles(acceptedFiles.map(file => Object.assign(file, {
-        preview: URL.createObjectURL(file)
-      })));
+      setFiles(prev => {
+        return [...prev, ...acceptedFiles.map(file => Object.assign(file, {
+                      preview: URL.createObjectURL(file)
+                    })
+                  )]
+                  });
       console.log(acceptedFiles);
       props.handleUpload(acceptedFiles);
     }
   });
   
-  const thumbs = files.map(file => (
-    <div style={thumb} key={file.name}>
+  const deleteImage = (num) => {
+    setFiles(prev => {
+      return [
+        ...prev.filter((file, index) => index !== num)
+      ]
+    })
+    props.handleDelete(num);
+  }
+
+  const thumbs = files.map((file, index) => (
+    <div style={thumb} key={index} onDoubleClick={() => deleteImage(index)}>
       <div style={thumbInner}>
         <img
           src={file.preview}
           style={img}
           // Revoke data uri after image is loaded
-          onLoad={() => { URL.revokeObjectURL(file.preview) }}
+          onLoad={() => { URL.revokeObjectURL(file.preview)}}
+          alt=""
         />
       </div>
     </div>
@@ -65,7 +78,7 @@ const MultipleFileUpload = (props) => {
 
   return (
     <section className="mb-3">
-        <label className="mb-3"> <RequiredIcon /> Add more images to showcase your business!</label>
+        {!props.edit && <label className="mb-3"> <RequiredIcon /> Add more images to showcase your business!</label>}
         <div style={{
             flex: 1,
             display: 'flex',
@@ -81,8 +94,8 @@ const MultipleFileUpload = (props) => {
             outline: 'none',
             transition: 'border .24s ease-in-out'
             }} {...getRootProps({className: 'dropzone'})}>
-        <input onChange={props.handleUpload} {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <input onChange={props.handleUpload} {...getInputProps()} accept="image/*"/>
+        <p>Drag 'n' drop some images here, or click to select files. Delete images by double clicking on the</p>
       </div>
       <aside style={thumbsContainer}>
         {thumbs}
