@@ -8,18 +8,13 @@ import Description from '../components/createListing/Description';
 import Location from '../components/createListing/Location';
 import DisplayImage from '../components/editListing/DisplayImage';
 import DescriptionImages from '../components/editListing/DescriptionImages';
-import FileUpload from '../components/createListing/FileUpload';
-import SelectCategory from '../components/createListing/SelectCategory';
-import CreateMenu from '../components/createListing/CreateMenu';
 import Contact from '../components/createListing/Contact';
-import MultipleFileUpload from '../components/createListing/MultipleFileUpload';
-import Modal from "react-modal";
-import { TbAlertCircleFilled } from "react-icons/tb";
+import SuccessEdit from '../components/editListing/SuccessEdit';
 import AccordionItem from '../components/editListing/AccordionItem'
 import AddService from '../components/editListing/AddService';
+import SuccessModal from '../components/SuccessModal';
 
 //others
-import categories from "../helper/category";
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from "../styles/EditListing.module.css"
 
@@ -41,6 +36,7 @@ const EditListing = () => {
     });
 
     const [changedFields, setChangedFields] = useState({});
+    const [success, setSuccess] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -172,7 +168,11 @@ const EditListing = () => {
         instance.patch(`/listing/${listing._id}`, changedFields)
             .then(res => {
                 console.log(res);
-                navigate("/");
+                setSuccess(true);
+                setTimeout(() => {
+                    setSuccess(false);
+                    navigate("/");
+                }, 2000)
             })
             .catch(err => console.log(err));
     }
@@ -207,6 +207,12 @@ const EditListing = () => {
             <Button className="align-self-center py-3 px-1" style={{width: "20%", backgroundColor: "#FF9F45"}} variant="contained" onClick={handleSubmit}>Confirm Edits</Button>
 
         </div>
+        <SuccessModal isOpen={success} onRequestClose={() => setSuccess(false)}>
+            <div>
+                <p>Your business listing is successfully updated.</p>
+                <p>We will redirect you back to the home page shortly</p>
+            </div>
+        </SuccessModal>
     </div>
 }
 

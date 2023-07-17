@@ -1,8 +1,9 @@
 import React from "react";
 import Modal from "react-modal"
 import { TbAlertCircleFilled } from "react-icons/tb";
+import { AiOutlineCheck } from "react-icons/ai";
 
-const WarningModal = (props) => {
+const SuccessModal = (props) => {
 
     
     return <Modal isOpen={props.isOpen}
@@ -25,11 +26,11 @@ const WarningModal = (props) => {
                 borderRadius: "10px",
                 },
             }}>
-            <div className='d-flex flex-column justify-content-center align-items-center w-100 h-100'>
-                <TbAlertCircleFilled color="#c70f2b" size={40} className="mb-3"/>
+            <div className='d-flex flex-column justify-content-center align-items-center w-100 h-100 text-center'>
+                <AiOutlineCheck color="green" size={40} className="mb-3"/>
                 {props.children}
             </div>
         </Modal>
 }
 
-export default WarningModal;
+export default SuccessModal;

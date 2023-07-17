@@ -12,14 +12,14 @@ const MissingFields = (props) => {
                         overlay: {
                           zIndex: 2,
                           margin: "auto",
-                          width: "50%",
-                          height: "50%",
+                          width: "100%",
+                          height: "100%",
                           backgroundColor: "rgba(0,0,0,0.4)",
                         },
                         content: {
                           backgroundColor: "white",
-                          height: "50%",
-                          width: "50%",
+                          height: "25%",
+                          width: "25%",
                           margin: "auto",
                           border: "2px solid #393E46",
                         },

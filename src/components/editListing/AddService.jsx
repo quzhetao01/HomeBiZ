@@ -5,6 +5,7 @@ import MenuDetail from './MenuDetail';
 import ServiceModal from '../viewListing/ServiceModal';
 import { Button } from '@mui/material';
 import instance from '../../axios.config';
+import MissingFields from '../createListing/MissingFields';
 
 const AddService = (props) => {
     
@@ -145,6 +146,7 @@ const AddService = (props) => {
                 setListing={props.setListing} setChangedFields={props.setChangedFields}/>)}
         </div>
         {serviceImage && <ServiceModal isOpen={!!serviceImage} onRequestClose={() => setServiceImage("")} image={serviceImage}/>}
+        <MissingFields isOpen={error} isRequestClose={setError} message={"Please fill in the price and name to add menu item"}/>
     </div>
 }
 

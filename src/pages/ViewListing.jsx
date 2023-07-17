@@ -11,6 +11,8 @@ import Review from "../components/viewListing/Review";
 import ImageGallery from 'react-image-gallery';
 import ViewListingCSS from "../styles/ViewListing.module.css"
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import WarningModal from "../components/WarningModal";
+import SuccessModal from "../components/SuccessModal";
 
 const images = [
   {
@@ -63,6 +65,8 @@ const ViewListing = () => {
     const [submittingReview, setSubmittingReview] = useState(false);
     const [serviceImage, setServiceImage] = useState("");
     const [ownListing, setOwnListing] = useState(false);
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const [successDelete, setSuccessDelete] = useState(false);
 
 
     
@@ -132,6 +136,17 @@ const ViewListing = () => {
     const handleEdit = () => {
         navigate('/editListing', {state: {listing: listing}});
     }
+
+    const handleDelete = () => {
+        instance.delete(`/listing/${listing._id}`)
+            .then(res => {
+                setSuccessDelete(true);
+                setTimeout(() => {
+                    setSuccessDelete(false);
+                    navigate("/");
+                }, 2000)
+            })
+    }
     
 
     return <div className="container" style={{paddingTop: "10rem"}}>
@@ -142,11 +157,11 @@ const ViewListing = () => {
             <div className="d-flex justify-content-between">
                 <h1 className="mb-3">{listing.title}</h1> 
                 <div>
-                    <button className='btn me-3' style={{backgroundColor: "#FF9F45"}}>
-                        <AiFillEdit size={30} color="white" title="Edit Listing" onClick={handleEdit}/>
+                    <button className='btn me-3' style={{backgroundColor: "#FF9F45"}}  onClick={handleEdit}>
+                        <AiFillEdit size={30} color="white" title="Edit Listing"/>
                     </button>
-                    <button className='btn' style={{backgroundColor: "#FF9F45"}}>
-                        <AiFillDelete size={30} color="white" title="Delete Listing"/>
+                    <button className='btn' style={{backgroundColor: "#FF9F45"}} onClick={() => setConfirmDelete(true)}>
+                        <AiFillDelete size={30} color="white" title="Delete Listing" />
                     </button>
                 </div>
             </div>
@@ -209,6 +224,25 @@ const ViewListing = () => {
             </button>
             </div>
         </div>}
+        <WarningModal isOpen={confirmDelete} onRequestClose={() => setConfirmDelete(false)}>
+            <div>
+                <p>Are you sure you want to delete?</p>
+                <div className="d-flex justify-content-around mt-4">
+                    <button style={{backgroundColor: "green", color: "white"}} className="btn px-3 me-3"
+                        onClick={handleDelete}>
+                        Confirm
+                    </button>
+                    <button style={{backgroundColor: "red", color: "white"}} className="btn px-3 ms-3"
+                        onClick={() => setConfirmDelete(false)}>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </WarningModal>
+        <SuccessModal isOpen={successDelete} onRequestClose={() => setSuccessDelete(false)}>
+            <p>Your listing has been successfully deleted</p>
+            <p>We will redirect you back to the home page shortly</p>
+        </SuccessModal>
     </div>
 }
 

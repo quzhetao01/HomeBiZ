@@ -109,6 +109,16 @@ const getNewListings = async (req, res, next) => {
     
 }
 
+const deleteListing = async (req, res) => {
+    try {
+        const result = await Listing.deleteOne({_id: req.params.id});
+        res.send(result);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Something wrong happened when deleting listing")
+    }
+}
+
 
 router.route('/')
     .get(getAllListings)
@@ -116,7 +126,8 @@ router.route('/')
 
 router.route('/:id')
     .get(getListingById)
-    .patch(editListing);
+    .patch(editListing)
+    .delete(deleteListing);
 
 router.route('/category/:category')
     .get(getListingByCategory);
