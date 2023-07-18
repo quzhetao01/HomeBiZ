@@ -25,7 +25,7 @@ app.use(require('express-session')({
 app.use(passport.initialize()); // intialising passport
 app.use(passport.session()); // configuring passport to make use of session
 
-const uri = "mongodb+srv://quzhetao2001:qhtkYYpELIyB1H0A@homebiz.wu3cek0.mongodb.net/?retryWrites=true&w=majority";
+const uri = process.env.MONGODB_URI;
 try {
     mongoose.connect(uri);
     console.log("Connected to MongoDB Database");
