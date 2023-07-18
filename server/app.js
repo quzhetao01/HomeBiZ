@@ -11,7 +11,7 @@ const session = require("express-session");
 const findOrCreate = require("mongoose-findorcreate");
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
   credentials: true
 }))
 app.use(express.urlencoded({extended: true, limit:"500mb"}));
