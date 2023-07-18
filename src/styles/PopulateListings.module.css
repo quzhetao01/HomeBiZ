@@ -21,10 +21,18 @@
     cursor: pointer;
 }
 
+.heart {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-top: 15px;
+    padding-right: 10px;
+}
+
 .image {
     border-radius: 20px;
     width: auto;
-    height: 80%;
+    height: 75%;
 }
 
 .location {

@@ -47,6 +47,10 @@
     right: 0;
 }
 
-.category {
-    border-radius: 10px;
+.favs {
+    padding-top: 3rem;
 }
+
+/* .category {
+    border-radius: 10px;
+} */

@@ -35,8 +35,10 @@ const CategoryListings = () => {
     }, [selectedCategory]);
     
     return (
-        <div className={`${CategoryListingsCSS.main} mb-5`}>
-            <Categories setSelectedCategory={setSelectedCategory}/>
+        <div className={`${CategoryListingsCSS.main}`}>
+            <div className={`${CategoryListingsCSS.button}`}>
+                <Categories setSelectedCategory={setSelectedCategory} />
+            </div>
             <Title category={selectedCategory} numResults={listings.length}/>
             <Banner category={selectedCategory} />
             <hr className="my-5" />

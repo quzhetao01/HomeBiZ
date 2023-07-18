@@ -39,7 +39,9 @@ const SearchListings = () => {
 
     return (
         <div className={`${CategoryListingsCSS.main} mb-5`}>
-            <Categories />
+            <div className={`${CategoryListingsCSS.button}`}>
+                <Categories />
+            </div>
             <SearchTitle searchName={search} numResults={listings.length}/>
             <SearchBanner />
             <hr className="my-5" />

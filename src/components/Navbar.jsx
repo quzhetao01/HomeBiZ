@@ -33,6 +33,7 @@ const Navbar = () => {
                 {/* <NavLink to='/createListing'>Create Listing</NavLink> */}
                 <a className={`${NavbarCSS.btn}`} onClick={() => navigate('/createListing')}>Create Listing</a>
                 <a className={`${NavbarCSS.btn}`} onClick={handleMyBiz}>View My Business</a>
+                <a className={`${NavbarCSS.btn}`} onClick={() => navigate('/favouriteListings')}>View Favourites</a>
                 <a className={`${NavbarCSS.btn}`} onClick={handleLogout}>Logout</a>
                 {/* <NavLink onClick={handleMyBiz}>View My Business</NavLink> */}
                 {/* <NavLink to='/login' onClick={handleLogout}>Logout</NavLink> */}

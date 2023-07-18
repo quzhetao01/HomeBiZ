@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import instance from "../../axios.config";
+import axios from 'axios';
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import PopulateListingsCSS from '../../styles/PopulateListings.module.css'
-import { GiAmpleDress } from "react-icons/gi"
+import PopulateListingsCSS from '../../styles/PopulateListings.module.css';
+import getUser from '../../helper/user';
+import { GiAmpleDress, GiConsoleController } from "react-icons/gi";
+// import { IoHeart } from "react-icons/io5";
+import { FaHeart } from "react-icons/fa";
+
 
 
 //import ImageGallery from 'react-image-gallery';
@@ -13,6 +18,9 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
     
     const navigate = useNavigate();
     const [img, setImg] = useState("");
+    const [toggleHeart, setToggleHeart] = useState(false);
+
+    
 
     // let img = "";
 
@@ -22,6 +30,51 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
 
     const handleClick = () => {
         navigate("/viewListing", {state: {id: `${link}`}});
+    }
+    
+    // load favourites
+    useEffect(() => {
+        console.log('useEffect ran');
+        getUser().then(user => {
+            const saved = user.favourites;
+            saved.forEach(fav => {
+                if (fav == link) {
+                    setToggleHeart(!toggleHeart);
+                }
+            });
+            
+        })
+    }, [])
+
+    const handleHeartClick = (event) => {
+        event.stopPropagation();
+        setToggleHeart(!toggleHeart);
+        console.log(toggleHeart);
+
+        getUser().then(user => {
+            console.log("userID: " + user._id);
+            console.log("listingID: " + link);      
+            const data = {
+                id: link
+            };
+            if (!toggleHeart) {
+                console.log('adding to favourites');
+                instance.patch(`/favourites/${user._id}`, data)
+                .then(res => {
+                    console.log(res.data);
+                })
+                .catch(err => console.log(err));
+            } else {
+                console.log('removing from favourites');
+                instance.patch(`/removeFavourites/${user._id}`, data)
+                .then(res => {
+                    console.log(res.data);
+                })
+                .catch(err => console.log(err));
+            }
+            
+        })
+        
     }
 
     const averageRating = () => {
@@ -38,7 +91,10 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
     return (
         <div className={`card border-light me-4 ${PopulateListingsCSS.listing}`} onClick={handleClick}>
             
-            <img src={img} className={`${PopulateListingsCSS.image}`} alt="thumbnail"/>
+            <img src={img} className={`${PopulateListingsCSS.image}`} alt="loading..."/>
+            <div className="card-img-overlay">
+                <FaHeart className={`${PopulateListingsCSS.heart}`} color={toggleHeart ? 'red' : 'grey' } size={45} onClick={handleHeartClick}/> 
+            </div>
             <div className='d-flex mt-2 px-2'>
                 <div className='mt-2 flex-grow-1'>
                     <h6>{title}</h6>
@@ -48,8 +104,8 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
                 </div>
                 <div className="p-1">
                     <div className="d-flex justify-content-end mb-2">
-                        <AiFillStar className="mt-1"></AiFillStar>{averageRating()}  
-
+                        <AiFillStar className="mt-1"></AiFillStar>
+                        {averageRating()}  
                     </div>
                     <div className={`${PopulateListingsCSS.location} d-flex justify-content-end`}>
                         {created.split("T")[0]}
