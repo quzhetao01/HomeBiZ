@@ -30,9 +30,11 @@ const FavouriteListings = () => {
 
 
     return (
-        <div className={HomeCSS.main}>
-            <h2>Your Favourite Listings</h2>
-            <div>
+        <div className={`${HomeCSS.main}`}>
+            <div className={HomeCSS.favs}>
+                <h2>Your Favourite Listings</h2>
+            </div>
+            <div className='mt-4'>
                 {listings && <PopulateListings listings={listings}/>}
             </div>
         </div>
