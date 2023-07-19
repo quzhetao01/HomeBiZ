@@ -17,20 +17,13 @@ const Home = () => {
 
     useEffect(() => {
         getUser().then(user => {
-            console.log(user);
-            if (user == null) {
+
+            if (user === "No user found") {
                 navigate("/login");
-            }
-            if (!user.category) {
+            } else if (!user.category) {
                 navigate("/selectInterests", {state: {justRegistered: true, id: user._id, loggedIn: true}});
             }
-        }).catch(err => {
-            navigate("/login");
-        })
-    }, []);
-
-    useEffect(() => {
-        instance.get('/listing')
+            instance.get('/listing')
             .then(res => {
                 console.log(res);
                 setListings(res.data);
@@ -43,7 +36,14 @@ const Home = () => {
                 console.log(err)
                 navigate("/login");
             });
+        }).catch(err => {
+            navigate("/login");
+        })
     }, []);
+
+    // useEffect(() => {
+        
+    // }, []);
 
     return (
         <div className={`${HomeCSS.main}`}>

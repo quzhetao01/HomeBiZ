@@ -8,6 +8,7 @@ const PopulateListings = (props) => {
 
     return ( 
         <div>
+            <h3>{props.title}</h3>
             <div className={PopulateListingsCSS.listingContainer}>
                 {props.listings.map((item, index) => {
                         return <ListingPreview key={index} title={item.title} reviews={item.reviews} 

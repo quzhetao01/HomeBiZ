@@ -140,10 +140,12 @@ app.post('/logout', function(req, res, next){
 
 app.get("/user", async (req, res) => {
   if(req.isAuthenticated()) {
+    console.log(req.user);
     const user = await User.findById(req.user.id)
     res.send(user);
   } else {
-    res.send(null);
+    console.log(3);
+    res.send("No user found");
   }
 })
 
