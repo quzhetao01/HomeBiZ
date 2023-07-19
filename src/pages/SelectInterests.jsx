@@ -44,7 +44,7 @@ const SelectInterests = () => {
             instance.patch(`/addInterest/${location.state.id}`, {category: selected})
                 .then(res => {
                     console.log(res);
-                        navigate("/login", {state: {justRegistered: true, loggedIn: location.state.loggedIn}});
+                        navigate("/login", {state: {justRegistered: true, loggedIn: !!location.state.loggedIn}});
                 }).catch(err => {
                     console.log(err);
                 })

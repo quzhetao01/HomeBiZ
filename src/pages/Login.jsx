@@ -13,18 +13,19 @@ const Login = () => {
     const [isNewUser, setIsNewUser] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location.state)
 
     useEffect(() => {
       if (location.state) {
         if (location.state.loggedIn) {
+          console.log(1);
           navigate("/");
         }
         setIsNewUser(location.state.justRegistered);
       } else {
 
         getUser().then(user => {
-          if (user) {
+          console.log(user);
+          if (user !== "No user found") {
             navigate("/");
           }
         })

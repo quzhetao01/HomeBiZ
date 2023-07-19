@@ -22,7 +22,7 @@ const Register = () => {
       getUser().then((user) => {
         
         console.log(user);
-        if (user) {
+        if (user !== "No user found") {
           navigate("/");
         }
       })
