@@ -33,6 +33,24 @@ const Login = () => {
 
     }, [])
 
+    useEffect(() => {
+      const handleKeyDown = (event) => {
+
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          
+          handleLogin();
+        }
+      };
+
+      document.addEventListener('keydown', handleKeyDown);
+
+      // return () => {
+      //   document.removeEventListener('keydown', handleKeyDown);
+      // };
+
+    }, []);
+
     const handleLogin = () => {
       if (!username || !password) {
         setError("Please enter a username and password");
