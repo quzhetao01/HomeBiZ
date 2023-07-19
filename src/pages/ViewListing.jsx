@@ -10,7 +10,7 @@ import ServiceModal from "../components/viewListing/ServiceModal";
 import Review from "../components/viewListing/Review";
 import ImageGallery from 'react-image-gallery';
 import ViewListingCSS from "../styles/ViewListing.module.css"
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiFillHeart } from "react-icons/ai";
 import WarningModal from "../components/WarningModal";
 import SuccessModal from "../components/SuccessModal";
 
@@ -67,14 +67,16 @@ const ViewListing = () => {
     const [ownListing, setOwnListing] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [successDelete, setSuccessDelete] = useState(false);
+    const [isFavourite, setIsFavourite] = useState(false);
+    const [userID, setUserID] = useState("");
 
-
-    
 
     useEffect(() => {
         // console.log(location);
         if (location.state) {
-            const id = location.state.id ? location.state.id : "self"
+            const id = location.state.id ? location.state.id : "self";
+            setIsFavourite(location.state.saved);
+            setUserID(location.state.user);
             instance.get(`/listing/${id}`)
             .then(res => {
                 console.log(res.data.listing);
@@ -118,7 +120,6 @@ const ViewListing = () => {
             const imgPromises = [];
             for (let i = 0; i < images.length; i++) {
                 if (images[i]) {
-
                     const imgPromise = instance.get(`/images/${images[i]}`).then(res => res.data);
                     imgPromises.push(imgPromise);
                 }
@@ -132,6 +133,30 @@ const ViewListing = () => {
         
         }
     }, [listing])
+
+
+    const handleHeartClick = () => {
+        setIsFavourite(!isFavourite);
+
+        const data = {
+            id: location.state.id
+        };
+        if (!isFavourite) {
+            console.log('adding to favourites');
+            instance.patch(`/favourites/${userID}`, data)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err));
+        } else {
+            console.log('removing from favourites');
+            instance.patch(`/removeFavourites/${userID}`, data)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err));
+        }
+    }
 
     const handleEdit = () => {
         navigate('/editListing', {state: {listing: listing}});
@@ -157,6 +182,9 @@ const ViewListing = () => {
             <div className="d-flex justify-content-between">
                 <h1 className="mb-3">{listing.title}</h1> 
                 <div>
+                    <button className='btn me-3' style={{backgroundColor: "#FF9F45"}} onClick={handleHeartClick}>
+                        <AiFillHeart size={30} color={isFavourite ? "#E3242B" : "white"} title="Save Listing"/>
+                    </button>
                     <button className='btn me-3' style={{backgroundColor: "#FF9F45"}}  onClick={handleEdit}>
                         <AiFillEdit size={30} color="white" title="Edit Listing"/>
                     </button>
