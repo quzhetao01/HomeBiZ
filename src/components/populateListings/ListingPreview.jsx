@@ -8,6 +8,9 @@ import getUser from '../../helper/user';
 import { GiAmpleDress, GiConsoleController } from "react-icons/gi";
 // import { IoHeart } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
+import 'react-loading-skeleton/dist/skeleton.css';
+import CardSkeleton from '../CardSkeleton';
+
 
 
 
@@ -19,6 +22,7 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
     const navigate = useNavigate();
     const [img, setImg] = useState("");
     const [toggleHeart, setToggleHeart] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     
 
@@ -26,6 +30,7 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
 
     instance.get(`/images/${image}`).then(res => {
         setImg(res.data);
+        setIsLoading(false);
     }).catch(err => console.log(err));
 
     const handleClick = () => {
@@ -90,8 +95,8 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
 
     return (
         <div className={`card border-light me-4 ${PopulateListingsCSS.listing}`} onClick={handleClick}>
-            
-            <img src={img} className={`${PopulateListingsCSS.image}`} alt="loading..."/>
+            {isLoading && <CardSkeleton />}
+            {!isLoading && <img src={img} className={`${PopulateListingsCSS.image}`} alt="loading..."/>}
             <div className="card-img-overlay">
                 <FaHeart className={`${PopulateListingsCSS.heart}`} color={toggleHeart ? 'red' : 'grey' } size={45} onClick={handleHeartClick}/> 
             </div>
@@ -111,8 +116,8 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
                         {created.split("T")[0]}
                     </div>
                 </div>   
-            </div>
             
+            </div> 
         </div>
         
     )

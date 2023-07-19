@@ -40,4 +40,20 @@
     color: #6c757d;
 }
 
+.skeleton {
+    border-radius: 20px;
+    width: auto;
+    height: 75%;
+    
+}
 
+
+.top {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.bot {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
