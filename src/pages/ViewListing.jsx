@@ -13,6 +13,9 @@ import ViewListingCSS from "../styles/ViewListing.module.css"
 import { AiFillEdit, AiFillDelete, AiFillHeart } from "react-icons/ai";
 import WarningModal from "../components/WarningModal";
 import SuccessModal from "../components/SuccessModal";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 
 const images = [
   {
@@ -62,6 +65,7 @@ const ViewListing = () => {
         reviews: [],
         user: {}
     });
+    const [isLoading, setIsLoading] = useState(true);
     const [submittingReview, setSubmittingReview] = useState(false);
     const [serviceImage, setServiceImage] = useState("");
     const [ownListing, setOwnListing] = useState(false);
@@ -133,6 +137,15 @@ const ViewListing = () => {
         
         }
     }, [listing])
+
+    //tried to add timeout to give time for the images to load
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+
+        return () => clearTimeout(timeout);
+    }, []);
 
 
     const handleHeartClick = () => {
@@ -207,7 +220,8 @@ const ViewListing = () => {
         <div className="row d-flex justify-content-center mt-5">
             <div className="">
                 <div className={`mb-4 `}>
-                    <ImageGallery items={images} />
+                    {isLoading && <Skeleton width={1296} height={800} />}
+                    {!isLoading && <ImageGallery items={images} />}
                     {/* <Gallery photos={images}/> */}
                 </div>
                 <div className="row">
