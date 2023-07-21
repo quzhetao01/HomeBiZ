@@ -80,8 +80,8 @@ const getListingBySearch = async (req, res, next) => {
             { title: new RegExp(req.params.searchQuery, 'i') },
             { township: new RegExp(req.params.searchQuery, 'i') },
             { location: new RegExp(req.params.searchQuery, 'i') },
-            { description: new RegExp(req.params.searchQuery, 'i') },
-            { category: new RegExp(req.params.searchQuery, 'i') },
+            // { description: new RegExp(req.params.searchQuery, 'i') },
+            // { category: new RegExp(req.params.searchQuery, 'i') },
         ]
     });
     res.send(listing);

@@ -21,8 +21,9 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
     
     const navigate = useNavigate();
     const [img, setImg] = useState("");
-    const [toggleHeart, setToggleHeart] = useState(false);
+    const [isFavourite, setIsFavourite] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [userID, setUserID] = useState("");
 
     
 
@@ -34,17 +35,17 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
     }).catch(err => console.log(err));
 
     const handleClick = () => {
-        navigate("/viewListing", {state: {id: `${link}`}});
+        navigate("/viewListing", {state: {id: `${link}`, saved: isFavourite, user: userID}});
     }
     
     // load favourites
     useEffect(() => {
-        console.log('useEffect ran');
         getUser().then(user => {
+            setUserID(user._id);
             const saved = user.favourites;
             saved.forEach(fav => {
                 if (fav == link) {
-                    setToggleHeart(!toggleHeart);
+                    setIsFavourite(true);
                 }
             });
             
@@ -53,33 +54,30 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
 
     const handleHeartClick = (event) => {
         event.stopPropagation();
-        setToggleHeart(!toggleHeart);
-        console.log(toggleHeart);
+        setIsFavourite(!isFavourite);
 
-        getUser().then(user => {
-            console.log("userID: " + user._id);
-            console.log("listingID: " + link);      
-            const data = {
-                id: link
-            };
-            if (!toggleHeart) {
-                console.log('adding to favourites');
-                instance.patch(`/favourites/${user._id}`, data)
-                .then(res => {
-                    console.log(res.data);
-                })
-                .catch(err => console.log(err));
-            } else {
-                console.log('removing from favourites');
-                instance.patch(`/removeFavourites/${user._id}`, data)
-                .then(res => {
-                    console.log(res.data);
-                })
-                .catch(err => console.log(err));
-            }
-            
-        })
         
+        console.log("userID: " + userID);
+        console.log("listingID: " + link);   
+
+        const data = {
+            id: link
+        };
+        if (!isFavourite) {
+            console.log('adding to favourites');
+            instance.patch(`/favourites/${userID}`, data)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err));
+        } else {
+            console.log('removing from favourites');
+            instance.patch(`/removeFavourites/${userID}`, data)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err));
+        }
     }
 
     const averageRating = () => {
@@ -98,7 +96,7 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
             {isLoading && <CardSkeleton />}
             {!isLoading && <img src={img} className={`${PopulateListingsCSS.image}`} alt="loading..."/>}
             <div className="card-img-overlay">
-                <FaHeart className={`${PopulateListingsCSS.heart}`} color={toggleHeart ? 'red' : 'grey' } size={45} onClick={handleHeartClick}/> 
+                <FaHeart className={`${PopulateListingsCSS.heart}`} color={isFavourite ? '#E3242B' : 'grey' } size={45} onClick={handleHeartClick}/> 
             </div>
             <div className='d-flex mt-2 px-2'>
                 <div className='mt-2 flex-grow-1'>
