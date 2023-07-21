@@ -9,6 +9,16 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const session = require("express-session");
 const findOrCreate = require("mongoose-findorcreate");
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const storeSession = new MongoDBStore({
+  uri: process.env.MONGODB_URI,
+  collection: 'sessions'
+})
+
+storeSession.on('error', (err) => {
+  console.error('Session store error:', err);
+})
 
 app.use(cors({
   origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
@@ -20,7 +30,8 @@ app.use(express.json({limit: '500mb'}))
 app.use(require('express-session')({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: storeSession,
 }));
 app.use(passport.initialize()); // intialising passport
 app.use(passport.session()); // configuring passport to make use of session

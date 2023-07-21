@@ -19,31 +19,34 @@ const Home = () => {
         getUser().then(user => {
 
             if (user === "No user found") {
+                console.log("navigating you back login page because user is not found");
                 navigate("/login");
             } else if (!user.category) {
+                console.log("user has no selected category. redirecting to selectInterests page");
                 navigate("/selectInterests", {state: {justRegistered: true, id: user._id, loggedIn: true}});
+            } else {
+                console.log("hello this is the user: ");
+                console.log(user);
+                instance.get('/listing')
+                .then(res => {
+                    console.log(res);
+                    setListings(res.data);
+                }).catch(err => console.log(err));
+            // instance.get('/listing/explore/newListings')
+            //     .then(res => {
+            //         console.log(res);
+            //         setNewListings(res.data);
+            //     }).catch(err => {
+            //         console.log(err)
+            //         navigate("/login");
+            //     });
+            // }).catch(err => {
+            //     navigate("/login");
             }
-            instance.get('/listing')
-            .then(res => {
-                console.log(res);
-                setListings(res.data);
-            }).catch(err => console.log(err));
-        instance.get('/listing/explore/newListings')
-            .then(res => {
-                console.log(res);
-                setNewListings(res.data);
-            }).catch(err => {
-                console.log(err)
-                navigate("/login");
-            });
-        }).catch(err => {
-            navigate("/login");
+
+            
         })
     }, []);
-
-    // useEffect(() => {
-        
-    // }, []);
 
     return (
         <div className={`${HomeCSS.main}`}>
