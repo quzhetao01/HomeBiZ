@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation} from 'react-router-dom';
 import RegisterCSS from "../styles/Register.module.css";
 import LoginInput from '../components/LoginInput';
 import instance from '../axios.config';
@@ -60,8 +60,7 @@ const Login = () => {
         .then(res => {
               console.log(res);
 
-                  navigate("/");
-      
+              navigate("/");
               })
               .catch(err => {
                 console.log(err);
