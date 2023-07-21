@@ -46,6 +46,7 @@ const Login = () => {
       
               })
               .catch(err => {
+                console.log(err);
                 if(err.response.status === 401) {
                   setIsNewUser(false);
                   setUsername("");
