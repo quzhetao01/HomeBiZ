@@ -9,7 +9,7 @@ import { GiAmpleDress, GiConsoleController } from "react-icons/gi";
 // import { IoHeart } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import 'react-loading-skeleton/dist/skeleton.css';
-import CardSkeleton from '../CardSkeleton';
+import CardSkeleton from "../CardSkeleton";
 
 
 

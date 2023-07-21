@@ -1,5 +1,5 @@
 const express = require('express');
-const { google} = require('googleapis');
+const { google } = require('googleapis');
 const path = require('path');
 const multer = require('multer');
 const stream = require('stream');
