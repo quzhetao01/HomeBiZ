@@ -51,6 +51,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  password: String,
   firstName: {
     type: String,
   },
@@ -71,7 +72,7 @@ const userSchema = new mongoose.Schema({
 });
 
 
-userSchema.plugin(passportLocalMongoose); 
+userSchema.plugin(passportLocalMongoose, {usernameField: "username"}); 
 userSchema.plugin(findOrCreate);
 
 const User = mongoose.model("User", userSchema);
