@@ -22,7 +22,8 @@ const findOrCreate = require("mongoose-findorcreate");
 
 app.use(cors({
 
-  origin: "https://homebiz-server2.onrender.com/",
+  origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
+  headers: ["Content-Type"],
   credentials: true
 }))
 app.use(express.urlencoded({extended: true, limit:"500mb"}));
