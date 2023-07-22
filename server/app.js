@@ -9,6 +9,16 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const session = require("express-session");
 const findOrCreate = require("mongoose-findorcreate");
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const storeSession = new MongoDBStore({
+  uri: process.env.MONGODB_URI,
+  collection: 'sessions'
+})
+
+storeSession.on('error', (err) => {
+  console.error('Session store error:', err);
+})
 
 app.use(cors({
   origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
@@ -17,10 +27,11 @@ app.use(cors({
 app.use(express.urlencoded({extended: true, limit:"500mb"}));
 app.use(express.json({limit: '500mb'}))
 // configuring session middleware
-app.use(require('express-session')({
+app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: storeSession,
 }));
 app.use(passport.initialize()); // intialising passport
 app.use(passport.session()); // configuring passport to make use of session
@@ -95,6 +106,7 @@ passport.deserializeUser(async function(user, cb){
 
 app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 
 (req, res) => {
+  console.log('redirecting to /success route: ', res.isAuthenticated());
   res.redirect('/success');
 });
 
@@ -129,6 +141,7 @@ app.get('/failureLogin', (req, res) => {
 
 
 app.get('/success', (req, res) => {
+  console.log('we are at the success stage');
   console.log(req.isAuthenticated(), req.user);
   res.set('Cache-Control', 'no-store');
   if (req.isAuthenticated()) {
@@ -147,9 +160,10 @@ app.post('/logout', function(req, res, next){
 });
 
 app.get("/user", async (req, res) => {
+  console.log("is the request authenticated", req.isAuthenticated());
   if(req.isAuthenticated()) {
     console.log(req.user);
-    const user = await User.findById(req.user.id)
+    const user = await User.findById(req.user.id);
     res.send(user);
   } else {
     console.log(3);
