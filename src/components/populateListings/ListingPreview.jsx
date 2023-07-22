@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import instance from "../../axios.config";
-import axios from 'axios';
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import PopulateListingsCSS from '../../styles/PopulateListings.module.css';
-import getUser from '../../helper/user';
 import { GiAmpleDress, GiConsoleController } from "react-icons/gi";
 // import { IoHeart } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
@@ -17,13 +15,13 @@ import CardSkeleton from "../CardSkeleton";
 //import ImageGallery from 'react-image-gallery';
 
 
-const ListingPreview = ({ title, reviews, location, image, link, category, created }) => {
+const ListingPreview = ({ title, reviews, location, image, link, category, created, user }) => {
     
     const navigate = useNavigate();
     const [img, setImg] = useState("");
     const [isFavourite, setIsFavourite] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [userID, setUserID] = useState("");
+    const [userID, setUserID] = useState(user._id);
 
     
 
@@ -40,26 +38,17 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
     
     // load favourites
     useEffect(() => {
-        getUser().then(user => {
-            setUserID(user._id);
-            const saved = user.favourites;
-            saved.forEach(fav => {
-                if (fav == link) {
-                    setIsFavourite(true);
-                }
-            });
-            
-        })
-    }, [])
+        const saved = user.favourites;
+        saved.forEach(fav => {
+            if (fav == link) {
+                setIsFavourite(true);
+            }
+        });
+    }, []);
 
     const handleHeartClick = (event) => {
         event.stopPropagation();
-        setIsFavourite(!isFavourite);
-
-        
-        console.log("userID: " + userID);
-        console.log("listingID: " + link);   
-
+        setIsFavourite(!isFavourite); 
         const data = {
             id: link
         };
