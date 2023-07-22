@@ -30,12 +30,10 @@ app.use(express.json({limit: '500mb'}))
 // configuring session middleware
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
   // store: storeSession,
-  cookie: { secure: true },
 }));
-app.set('trust proxy', 1) // trust first proxy
 app.use(passport.initialize()); // intialising passport
 app.use(passport.session()); // configuring passport to make use of session
 
@@ -109,11 +107,34 @@ passport.deserializeUser(User.deserializeUser());
 // })
 
 
-app.post('/login', passport.authenticate('local', {successRedirect: "/success", failureRedirect: '/failureLogin'})); 
-// (req, res) => {
-  // console.log('redirecting to /success route: ', res);
-//   res.redirect('/success');
-// });
+// app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}))(req, res) {
+//   //console.log('redirecting to /success route: ', res);
+//   if (!req.user) {
+//     console.log('user not found at passport authentication phase');
+//   } else {
+//     res.redirect('/');
+//   }
+  
+
+// };
+
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    failureFlash: true,
+  }, (err, user, info) => {
+    if (err !== null || user === false) {
+      req.session.save(() => {
+        res.redirect('/login');
+      });
+    } else {
+      req.logIn(user, err => {
+        req.session.save(() => {
+          res.redirect("/success");
+        })
+      })
+    }
+  })(req, res, next);
+});
 
 
 app.post('/register', (req, res) => {
