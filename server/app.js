@@ -80,28 +80,29 @@ module.exports = {User: User};
 
 passport.use(User.createStrategy());
 
-
-passport.serializeUser(function(user, cb) {
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(function(user, cb) {
   
-  console.log("serailise" + user);
-  return cb(null, {id: user.id, username: user.username})
-});
+//   console.log("serailise" + user);
+//   return cb(null, {id: user.id, username: user.username})
+// });
 
 // passport.deserializeUser((user, cb) => {
 //   process.nextTick(function() {
 //     return cb(null, user);
 //   });
 // });
-passport.deserializeUser(async function(user, cb){
+// passport.deserializeUser(async function(user, cb){
 
-  try {
-    // Use Mongoose findById method with async/await to fetch the user by id from the database
-    const foundUser = await User.findById(user.id);
-    return cb(null, foundUser);
-  } catch (err) {
-    return cb(err);
-  }
-})
+//   try {
+//     Use Mongoose findById method with async/await to fetch the user by id from the database
+//     const foundUser = await User.findById(user.id);
+//     return cb(null, foundUser);
+//   } catch (err) {
+//     return cb(err);
+//   }
+// })
 
 
 app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 
@@ -142,8 +143,7 @@ app.get('/failureLogin', (req, res) => {
 
 app.get('/success', (req, res) => {
   console.log('we are at the success stage');
-  console.log(req.isAuthenticated(), req.user);
-  res.set('Cache-Control', 'no-store');
+  // res.set('Cache-Control', 'no-store');
   if (req.isAuthenticated()) {
       res.send({user: req.user, error: null});
   }

@@ -76,18 +76,19 @@ const ViewListing = () => {
 
 
     useEffect(() => {
-        // console.log(location);
+        console.log(location);
         if (location.state) {
             const id = location.state.id ? location.state.id : "self";
             setIsFavourite(location.state.saved);
             setUserID(location.state.user);
             instance.get(`/listing/${id}`)
             .then(res => {
+                console.log("okay")
                 console.log(res.data.listing);
                 setListing(res.data.listing);
                 setOwnListing(res.data.self);
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log("err"));
             
         } else {
             navigate('/');
