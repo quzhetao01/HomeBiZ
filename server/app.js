@@ -71,17 +71,19 @@ passport.use(User.createStrategy());
 
 
 passport.serializeUser(function(user, cb) {
-  process.nextTick(function() {
-    cb(null, { id: user._id, username: user.username });
-  });
+  // process.nextTick(function() {
+  //   cb(null, { id: user._id, username: user.username });
+  // });
+  return cb(null, user._id)
 });
 
-passport.deserializeUser((user, cb) => {
+// passport.deserializeUser((user, cb) => {
   // process.nextTick(function() {
   //   return cb(null, user);
   // });
-  passport.deserializeUser(function(id, done){return done(null, User.getUserById(id))})
-});
+  
+// });
+passport.deserializeUser(function(id, done){return done(null, User.getUserById(id))})
 
 
 app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 
