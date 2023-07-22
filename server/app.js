@@ -142,8 +142,9 @@ app.get('/failureLogin', (req, res) => {
 
 
 app.get('/success', (req, res) => {
-  console.log('we are at the success stage');
+  console.log('we are at the success stage', req.isAuthenticated(), req.user);
   // res.set('Cache-Control', 'no-store');
+  
   if (req.isAuthenticated()) {
       res.send({user: req.user, error: null});
   }
