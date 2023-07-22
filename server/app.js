@@ -22,7 +22,7 @@ const findOrCreate = require("mongoose-findorcreate");
 
 app.use(cors({
 
-  origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
+  origin: "https://homebiz-server2.onrender.com/",
   credentials: true
 }))
 app.use(express.urlencoded({extended: true, limit:"500mb"}));
@@ -169,7 +169,7 @@ app.get('/failureLogin', (req, res) => {
 app.get('/success', (req, res) => {
   console.log('we are at the success stage', req.isAuthenticated(), req.user);
   // res.set('Cache-Control', 'no-store');
-  
+  console.log(req);
   if (req.isAuthenticated()) {
       res.send({user: req.user, error: null});
   }
