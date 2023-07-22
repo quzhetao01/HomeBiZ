@@ -96,6 +96,7 @@ passport.deserializeUser((user, cb) => {
 
 app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 
 (req, res) => {
+  console.log('redirecting to /success route: ', res);
   res.redirect('/success');
 });
 
