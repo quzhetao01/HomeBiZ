@@ -27,7 +27,7 @@ app.use(cors({
 app.use(express.urlencoded({extended: true, limit:"500mb"}));
 app.use(express.json({limit: '500mb'}))
 // configuring session middleware
-app.use(require('express-session')({
+app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -130,6 +130,7 @@ app.get('/failureLogin', (req, res) => {
 
 
 app.get('/success', (req, res) => {
+  console.log('we are at the success stage');
   console.log(req.isAuthenticated(), req.user);
   res.set('Cache-Control', 'no-store');
   if (req.isAuthenticated()) {
@@ -151,7 +152,7 @@ app.get("/user", async (req, res) => {
   console.log("is the request authenticated", req.isAuthenticated());
   if(req.isAuthenticated()) {
     console.log(req.user);
-    const user = await User.findById(req.user.id)
+    const user = await User.findById(req.user.id);
     res.send(user);
   } else {
     console.log(3);
