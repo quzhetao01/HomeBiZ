@@ -175,7 +175,7 @@ app.get('/success', (req, res) => {
       res.send({user: req.user, error: null});
   }
   else {
-      res.send({user: null, error: "Something went wrong"});
+      res.status(500).send({user: null, error: "Something went wrong"});
   }
 })
 
