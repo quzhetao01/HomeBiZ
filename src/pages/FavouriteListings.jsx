@@ -9,11 +9,12 @@ import instance from '../axios.config';
 const FavouriteListings = () => {
 
     const [listings, setListings] = useState([]);
+    const [user, setUser] = useState({});
 
     useEffect(() => {
 
         getUser().then(user => {
-            
+            setUser(user);
             const params = {
                 favouritesArray: user.favourites
             };
@@ -35,7 +36,7 @@ const FavouriteListings = () => {
                 <h2>Your Favourite Listings</h2>
             </div>
             <div className='mt-4'>
-                {listings && <PopulateListings listings={listings}/>}
+                {listings && <PopulateListings listings={listings} user={user}/>}
             </div>
         </div>
         
