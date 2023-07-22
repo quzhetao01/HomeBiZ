@@ -71,18 +71,26 @@ passport.use(User.createStrategy());
 
 
 passport.serializeUser(function(user, cb) {
-  process.nextTick(function() {
-    cb(null, { id: user.id, username: user.username });
-  });
-  // return cb(null, user._id)
+  
+  console.log("serailise" + user);
+  return cb(null, {id: user.id, username: user.username})
 });
 
-passport.deserializeUser((user, cb) => {
-  process.nextTick(function() {
-    return cb(null, user);
-  });
-});
-// passport.deserializeUser(function(id, done){return done(null, User.findById(id))})
+// passport.deserializeUser((user, cb) => {
+//   process.nextTick(function() {
+//     return cb(null, user);
+//   });
+// });
+passport.deserializeUser(async function(user, cb){
+
+  try {
+    // Use Mongoose findById method with async/await to fetch the user by id from the database
+    const foundUser = await User.findById(user.id);
+    return cb(null, foundUser);
+  } catch (err) {
+    return cb(err);
+  }
+})
 
 
 app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 
