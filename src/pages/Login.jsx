@@ -102,12 +102,12 @@ const Login = () => {
                     <LoginInput type="password" value={password} onChange={handlePassword}/>
 
                   <div className="text-center pt-1 mb-3 pb-1 d-grid gap-1">
-                    <button onClick={handleLogin} className={`btn btn-primary ${RegisterCSS.loginBtn}`} type="button">
+                    <button onClick={handleLogin} className={`btn btn-primary ${RegisterCSS.loginBtn}`} type="button" data-testid="submit">
                         Login
                     </button>
                   </div>
                   {isNewUser && <p>Welcome to HomeBiZ! Please login with your newly registered account.</p>}
-                  {error !== "" && <p className="text-danger">{`${error}. Please try again.` }</p>}
+                  {error !== "" && <p className="text-danger" data-testid="error">{`${error}. Please try again.` }</p>}
                   <p>Don't have an account? <span className={RegisterCSS.registerRedirect} onClick={() => navigate("/register")}>Register here</span></p>
                 </form>
 

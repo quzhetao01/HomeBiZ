@@ -20,7 +20,7 @@ const Home = () => {
             console.log(user);
             if (user === "No user found") {
                 console.log("navigating you back login page because user is not found", user);
-                navigate("/login");
+                // navigate("/login");
             } else if (!user.category) {
                 console.log("user has no selected category. redirecting to selectInterests page");
                 navigate("/selectInterests", {state: {justRegistered: true, id: user._id, loggedIn: true}});
@@ -32,19 +32,18 @@ const Home = () => {
                     console.log(res);
                     setListings(res.data);
                 }).catch(err => console.log(err));
-            // instance.get('/listing/explore/newListings')
-            //     .then(res => {
-            //         console.log(res);
-            //         setNewListings(res.data);
-            //     }).catch(err => {
-            //         console.log(err)
-            //         navigate("/login");
-            //     });
-            // }).catch(err => {
-            //     navigate("/login");
-            }
 
-            
+            instance.get('/listing/explore/newListings')
+                .then(res => {
+                    console.log(res);
+                    setNewListings(res.data);
+                }).catch(err => {
+                    console.log(err)
+                    navigate("/login");
+                });
+            }
+        }).catch(err => {
+            console.log(err);
         })
     }, []);
 

@@ -4,7 +4,10 @@ import {
   Route,
   createBrowserRouter, 
   createRoutesFromElements, 
-  RouterProvider 
+  RouterProvider,
+  BrowserRouter,
+  Routes,
+  Router
 } from 'react-router-dom';
 
 // pages
@@ -40,12 +43,44 @@ const router = createBrowserRouter(
       <Route path="editListing" element={<EditListing />}/>
     </Route>
   )
-
 );
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <RootLayout />,
+//     children: [
+//       {
+//         path: "/",
+//         element: <Home />,
+//       },
+//       {
+//         path: "/Login",
+//         element: <Login />,
+//       }
+//     ],
+//   },
+// ]);
+
 
 const App = () => {
   
   return ( 
+    // <Router>
+    //   <Routes>
+    //   <Route path='/' element={<RootLayout />}>
+    //   <Route index element={<Home />} />
+    //   <Route path='login' element={<Login />} />
+    //   <Route path='register' element={<Register />}/>
+    //   <Route path='createListing' element={<CreateListing/>}/>
+    //   <Route path="viewListing" element={<ViewListing />}/>
+    //   <Route path="categoryListings" element={<CategoryListings />}/>
+    //   <Route path='searchListings' element={<SearchListings />} />
+    //   <Route path="selectInterests" element={<SelectInterests />}/>
+    //   <Route path='favouriteListings' element={<FavouriteListings />} />
+    //   <Route path="editListing" element={<EditListing />}/>
+    // </Route>
+    //   </Routes>
+    // </Router>
     <RouterProvider router={router} />
   )
 }

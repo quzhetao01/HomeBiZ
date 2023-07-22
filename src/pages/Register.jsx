@@ -7,8 +7,8 @@ import getUser from '../helper/user';
 
 
 const Register = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    // const [username, setUsername] = useState("");
+    // const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
@@ -29,6 +29,11 @@ const Register = () => {
     }, [])
 
     const handleRegister = () => {
+      if (!userInfo.username || !userInfo.password || !userInfo.firstName || !userInfo.lastName) {
+        setError("Please enter all the details");
+      } else {
+        
+      
         instance.post("/register", userInfo)
             .then(res => {
                 console.log(res);
@@ -40,6 +45,7 @@ const Register = () => {
                     setError(res.data.error);
                 }
             });
+      }
     }
     
     const handleUsername = (event) => {
@@ -97,23 +103,23 @@ const Register = () => {
                   <h5 className="mb-3"></h5>
                     <div className="d-flex mb-2">
                       <div className="form-floating" style={{flex: 2}}>
-                        <input className="form-control" value={userInfo.firstName} onChange={handleFirstName}/>
-                        <label>First name</label>
+                        <input id="firstName" className="form-control" value={userInfo.firstName} onChange={handleFirstName}/>
+                        <label htmlFor="firstName">First name</label>
                       </div>
                       <div className="form-floating" style={{flex: 1}}>
-                        <input className="form-control" value={userInfo.lastName} onChange={handleLastName}/>
-                        <label>Last name</label>
+                        <input id="lastName" className="form-control" value={userInfo.lastName} onChange={handleLastName}/>
+                        <label htmlFor="lastName">Last name</label>
                       </div>
                     </div>
                     <LoginInput type="username" value={userInfo.username} onChange={handleUsername}/>
                     <LoginInput type="password" value={userInfo.password} onChange={handlePassword}/>
 
                   <div className="text-center pt-1 mb-3 pb-1 d-grid gap-1">
-                    <button onClick={handleRegister} className={`btn btn-primary ${RegisterCSS.loginBtn}`} type="button">
+                    <button onClick={handleRegister} className={`btn btn-primary ${RegisterCSS.loginBtn}`} type="button" data-testid="submit">
                         Register
                         </button>
                   </div>
-                  {error !== "" && <p className="text-danger">{`${error}. Please try again.` }</p>}
+                  {error !== "" && <p className="text-danger" data-testid="error">{`${error}. Please try again.` }</p>}
 
                 </form>
 
