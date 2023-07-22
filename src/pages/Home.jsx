@@ -17,7 +17,7 @@ const Home = () => {
 
     useEffect(() => {
         getUser().then(user => {
-
+            console.log(user);
             if (user === "No user found") {
                 navigate("/login");
             } else if (!user.category) {
@@ -34,16 +34,12 @@ const Home = () => {
                 setNewListings(res.data);
             }).catch(err => {
                 console.log(err)
-                navigate("/login");
             });
         }).catch(err => {
-            navigate("/login");
+            console.log(err);
         })
     }, []);
 
-    // useEffect(() => {
-        
-    // }, []);
 
     return (
         <div className={`${HomeCSS.main}`}>
