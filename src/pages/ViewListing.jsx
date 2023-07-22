@@ -199,7 +199,7 @@ const ViewListing = () => {
                     <button className='btn me-3' style={{backgroundColor: "#FF9F45"}} onClick={handleHeartClick}>
                         <AiFillHeart size={30} color={isFavourite ? "#E3242B" : "white"} title="Save Listing"/>
                     </button>
-                    <button className='btn me-3' style={{backgroundColor: "#FF9F45"}}  onClick={handleEdit}>
+                    <button className='btn me-3' style={{backgroundColor: "#FF9F45"}} onClick={handleEdit} data-testid="edit">
                         <AiFillEdit size={30} color="white" title="Edit Listing"/>
                     </button>
                     <button className='btn' style={{backgroundColor: "#FF9F45"}} onClick={() => setConfirmDelete(true)}>
