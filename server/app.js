@@ -105,7 +105,7 @@ passport.deserializeUser(User.deserializeUser());
 // })
 
 
-app.post('/login', passport.authenticate('local', {successRedirect: "/ssuccess", failureRedirect: '/failureLogin'})); 
+app.post('/login', passport.authenticate('local', {successRedirect: "/success", failureRedirect: '/failureLogin'})); 
 // (req, res) => {
   // console.log('redirecting to /success route: ', res.isAuthenticated());
 //   res.redirect('/success');
