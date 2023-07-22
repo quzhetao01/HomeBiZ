@@ -206,7 +206,7 @@ const ViewListing = () => {
                     <button className='btn me-3' style={{backgroundColor: "#FF9F45"}} onClick={handleEdit} data-testid="edit">
                         <AiFillEdit size={30} color="white" title="Edit Listing"/>
                     </button>
-                    <button className='btn' style={{backgroundColor: "#FF9F45"}} onClick={() => setConfirmDelete(true)}>
+                    <button className='btn' style={{backgroundColor: "#FF9F45"}} onClick={() => setConfirmDelete(true)} data-testid="delete">
                         <AiFillDelete size={30} color="white" title="Delete Listing" />
                     </button>
                     </div>}
@@ -273,7 +273,7 @@ const ViewListing = () => {
             </div>
         </div>}
         <WarningModal isOpen={confirmDelete} onRequestClose={() => setConfirmDelete(false)}>
-            <div>
+            <div data-testid="confirmDelete">
                 <p>Are you sure you want to delete?</p>
                 <div className="d-flex justify-content-around mt-4">
                     <button style={{backgroundColor: "green", color: "white"}} className="btn px-3 me-3"

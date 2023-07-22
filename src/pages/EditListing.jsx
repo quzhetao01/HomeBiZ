@@ -208,7 +208,7 @@ const EditListing = () => {
 
         </div>
         <SuccessModal isOpen={success} onRequestClose={() => setSuccess(false)}>
-            <div>
+            <div data-testid="success">
                 <p>Your business listing is successfully updated.</p>
                 <p>We will redirect you back to the home page shortly</p>
             </div>

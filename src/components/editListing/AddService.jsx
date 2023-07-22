@@ -130,7 +130,7 @@ const AddService = (props) => {
                 <div className="mb-4" >
                 <FileUpload multiple={false} title={"An image that showcases your product or service"} handleUpload={handleUpload} inputRef={inputRef} edit />
                 </div>
-                <Button className="py-3 px-1" style={{width: "40%", backgroundColor: "#FF9F45"}} variant="contained" onClick={addItem}>Add New Item</Button>
+                <Button className="py-3 px-1" style={{width: "40%", backgroundColor: "#FF9F45"}} variant="contained" onClick={addItem} data-testid="submitMenu">Add New Item</Button>
 
             </div>
             <div className={`col-6 ${styles.previewContainer}`}>

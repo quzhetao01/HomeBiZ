@@ -24,7 +24,7 @@ const MissingFields = (props) => {
                           border: "2px solid #393E46",
                         },
                       }}>
-                        <div style={{display: "flex", flexDirection:"column", alignItems: "center"}}>
+                        <div style={{display: "flex", flexDirection:"column", alignItems: "center"}} data-testid="missing">
                         <span onClick={() => props.isRequestClose(false)} style={{alignSelf: "end"}}><RxCross1/></span>
                         <Icon path={mdiAlertCircle} size={1} />
                         <div className="mt-2 px-5" style={{textAlign: "center"}}>
