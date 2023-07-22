@@ -82,7 +82,7 @@ const CreateMenu = (props) => {
               border: "2px solid #393E46",
             },
           }}>
-            <div>
+            <div data-testid="menu">
                 <h3 className="mb-5">Add your products and services here</h3>
                 <div className={`p-3 ${createListingCSS.menuDiv}`}>
                     <div className={`me-5 ${createListingCSS.labels}`}>

@@ -291,12 +291,12 @@ const CreateListing = () => {
                     <MultipleFileUpload handleUpload={handleDescImages}/>
                     <hr />
                     
-                    <Button className="align-self-center" style={{width: "50%", backgroundColor: "#FF9F45"}} variant="contained" onClick={() => setShowMenu(true)}>
+                    <Button className="align-self-center" style={{width: "50%", backgroundColor: "#FF9F45"}} variant="contained" onClick={() => setShowMenu(true)} data-testid="menuButton">
                         Showcase your menu
                     </Button>
                     <hr />
                     <Contact listing={listing} handleNumber={handleNumber} handleMethod={handleMethod} handleEmail={handleEmail}/>
-                    <Button className="align-self-center" style={{width: "50%", backgroundColor: "#FF9F45"}} variant="contained" onClick={handleSubmit}>Submit listing</Button>
+                    <Button className="align-self-center" style={{width: "50%", backgroundColor: "#FF9F45"}} variant="contained" onClick={handleSubmit} data-testid="submit">Submit listing</Button>
 
                 </div>
             </div>
@@ -330,11 +330,11 @@ const CreateListing = () => {
             }}>
             <div className='d-flex flex-column justify-content-center align-items-center w-100 h-100'>
                 <TbAlertCircleFilled color="#c70f2b" size={40} className="mb-3"/>
-                <p>{error}</p>
+                <p data-testid="error">{error}</p>
             </div>
         </Modal>
         <LoadingModal isOpen={isSubmitting} onRequestClose={() => setSubmitting(false)}/>
-        </div> : <div className="d-flex flex-column align-items-center m-5 p-5">
+        </div> : <div className="d-flex flex-column align-items-center m-5 p-5" data-testid="hasListing">
             <p>
 
             You have already created your own listing! 
