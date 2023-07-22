@@ -73,12 +73,16 @@ const ViewListing = () => {
     const [successDelete, setSuccessDelete] = useState(false);
     const [isFavourite, setIsFavourite] = useState(false);
     const [userID, setUserID] = useState("");
+    const [self, setSelf] = useState(false);
 
 
     useEffect(() => {
         console.log(location);
         if (location.state) {
             const id = location.state.id ? location.state.id : "self";
+            if (id === "self") {
+                setSelf(true);
+            }
             setIsFavourite(location.state.saved);
             setUserID(location.state.user);
             instance.get(`/listing/${id}`)
@@ -196,15 +200,16 @@ const ViewListing = () => {
             <div className="d-flex justify-content-between">
                 <h1 className="mb-3">{listing.title}</h1> 
                 <div>
-                    <button className='btn me-3' style={{backgroundColor: "#FF9F45"}} onClick={handleHeartClick}>
+                {!self ? <button className='btn me-3' style={{backgroundColor: "#FF9F45"}} onClick={handleHeartClick}>
                         <AiFillHeart size={30} color={isFavourite ? "#E3242B" : "white"} title="Save Listing"/>
-                    </button>
+                    </button> : <div>
                     <button className='btn me-3' style={{backgroundColor: "#FF9F45"}} onClick={handleEdit} data-testid="edit">
                         <AiFillEdit size={30} color="white" title="Edit Listing"/>
                     </button>
                     <button className='btn' style={{backgroundColor: "#FF9F45"}} onClick={() => setConfirmDelete(true)}>
                         <AiFillDelete size={30} color="white" title="Delete Listing" />
                     </button>
+                    </div>}
                 </div>
             </div>
             <div style={{display: "flex", fontSize: 20}}>
