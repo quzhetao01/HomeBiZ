@@ -74,6 +74,7 @@ passport.serializeUser(function(user, cb) {
   process.nextTick(function() {
     cb(null, { id: user.id, username: user.username });
   });
+  // return cb(null, user._id)
 });
 
 passport.deserializeUser((user, cb) => {
@@ -81,6 +82,7 @@ passport.deserializeUser((user, cb) => {
     return cb(null, user);
   });
 });
+// passport.deserializeUser(function(id, done){return done(null, User.findById(id))})
 
 
 app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 

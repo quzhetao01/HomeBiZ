@@ -108,26 +108,26 @@ const editListing = async (req, res, next) => {
     }
 }
 
-// const getNewListings = async (req, res, next) => {
-//     console.log(req.user);
-//     const today = new Date();
-//     const limit = new Date();
-//     limit.setDate(today.getDate() - 7);
-//     try {
+const getNewListings = async (req, res, next) => {
+    console.log("new", req.user);
+    const today = new Date();
+    const limit = new Date();
+    limit.setDate(today.getDate() - 21);
+    try {
         
-//         const user = await User.findById(req.user.id);
-//         const ans = await Listing.find({
-//             created_on: {
-//                 $lt: today,
-//                 $gte: limit,
-//             },
-//             category: user.category
-//         });
-//         res.send(ans);
-//     } catch (err) {
-//         console.log(err);
-//     }
-// }
+        const user = await User.findById(req.user.id);
+        const ans = await Listing.find({
+            created_on: {
+                $lt: today,
+                $gte: limit,
+            },
+            category: user.category
+        });
+        res.send(ans);
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 const deleteListing = async (req, res) => {
     try {
@@ -158,8 +158,8 @@ router.route('/category/:category')
 router.route('/search/:searchQuery')
     .get(getListingBySearch);
 
-// router.route('/explore/newListings')
-//     .get(getNewListings)
+router.route('/explore/newListings')
+    .get(getNewListings)
 
 
 module.exports = router;
