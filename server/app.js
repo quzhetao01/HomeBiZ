@@ -9,16 +9,16 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const session = require("express-session");
 const findOrCreate = require("mongoose-findorcreate");
-const MongoDBStore = require('connect-mongodb-session')(session);
+// const MongoDBStore = require('connect-mongodb-session')(session);
 
-const storeSession = new MongoDBStore({
-  uri: process.env.MONGODB_URI,
-  collection: 'sessions'
-})
+// const storeSession = new MongoDBStore({
+//   uri: process.env.MONGODB_URI,
+//   collection: 'sessions'
+// })
 
-storeSession.on('error', (err) => {
-  console.error('Session store error:', err);
-})
+// storeSession.on('error', (err) => {
+//   console.error('Session store error:', err);
+// })
 
 app.use(cors({
 
@@ -32,7 +32,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
-  store: storeSession,
+  // store: storeSession,
   cookie: { secure: true },
 }));
 app.set('trust proxy', 1) // trust first proxy
@@ -54,6 +54,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  password: String,
   firstName: {
     type: String,
   },
@@ -74,7 +75,7 @@ const userSchema = new mongoose.Schema({
 });
 
 
-userSchema.plugin(passportLocalMongoose); 
+userSchema.plugin(passportLocalMongoose, {usernameField: "username"}); 
 userSchema.plugin(findOrCreate);
 
 const User = mongoose.model("User", userSchema);
@@ -83,25 +84,36 @@ module.exports = {User: User};
 
 passport.use(User.createStrategy());
 
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(function(user, cb) {
+  
+//   console.log("serailise" + user);
+//   return cb(null, {id: user.id, username: user.username})
+// });
 
-passport.serializeUser(function(user, cb) {
-  process.nextTick(function() {
-    cb(null, { id: user.id, username: user.username });
-  });
-});
+// passport.deserializeUser((user, cb) => {
+//   process.nextTick(function() {
+//     return cb(null, user);
+//   });
+// });
+// passport.deserializeUser(async function(user, cb){
 
-passport.deserializeUser((user, cb) => {
-  process.nextTick(function() {
-    return cb(null, user);
-  });
-});
+//   try {
+//     Use Mongoose findById method with async/await to fetch the user by id from the database
+//     const foundUser = await User.findById(user.id);
+//     return cb(null, foundUser);
+//   } catch (err) {
+//     return cb(err);
+//   }
+// })
 
 
-app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 
-(req, res) => {
-  console.log('redirecting to /success route: ', res);
-  res.redirect('/success');
-});
+app.post('/login', passport.authenticate('local', {successRedirect: "/success", failureRedirect: '/failureLogin'})); 
+// (req, res) => {
+  // console.log('redirecting to /success route: ', res);
+//   res.redirect('/success');
+// });
 
 
 app.post('/register', (req, res) => {
@@ -134,9 +146,9 @@ app.get('/failureLogin', (req, res) => {
 
 
 app.get('/success', (req, res) => {
-  console.log('we are at the success stage');
-  console.log(req.isAuthenticated(), req.user);
-  res.set('Cache-Control', 'no-store');
+  console.log('we are at the success stage', req.isAuthenticated(), req.user);
+  // res.set('Cache-Control', 'no-store');
+  
   if (req.isAuthenticated()) {
       res.send({user: req.user, error: null});
   }

@@ -17,7 +17,7 @@ const Home = () => {
 
     useEffect(() => {
         getUser().then(user => {
-
+            console.log(user);
             if (user === "No user found") {
                 console.log("navigating you back login page because user is not found", user);
                 navigate("/login");
@@ -47,6 +47,7 @@ const Home = () => {
             
         })
     }, []);
+
 
     return (
         <div className={`${HomeCSS.main}`}>
