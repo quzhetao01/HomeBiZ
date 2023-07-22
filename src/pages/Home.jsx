@@ -19,7 +19,7 @@ const Home = () => {
         getUser().then(user => {
             console.log(user);
             if (user === "No user found") {
-                navigate("/login");
+                // navigate("/login");
             } else if (!user.category) {
                 navigate("/selectInterests", {state: {justRegistered: true, id: user._id, loggedIn: true}});
             }
