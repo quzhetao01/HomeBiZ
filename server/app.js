@@ -72,14 +72,15 @@ passport.use(User.createStrategy());
 
 passport.serializeUser(function(user, cb) {
   process.nextTick(function() {
-    cb(null, { id: user.id, username: user.username });
+    cb(null, { id: user._id, username: user.username });
   });
 });
 
 passport.deserializeUser((user, cb) => {
-  process.nextTick(function() {
-    return cb(null, user);
-  });
+  // process.nextTick(function() {
+  //   return cb(null, user);
+  // });
+  passport.deserializeUser(function(id, done){return done(null, User.getUserById(id))})
 });
 
 

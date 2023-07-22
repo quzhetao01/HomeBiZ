@@ -52,6 +52,7 @@ const Login = () => {
     }, []);
 
     const handleLogin = () => {
+      console.log("login")
       if (!username || !password) {
         setError("Please enter a username and password");
       } else {
