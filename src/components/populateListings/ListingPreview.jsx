@@ -96,7 +96,7 @@ const ListingPreview = ({ title, reviews, location, image, link, category, creat
             {isLoading && <CardSkeleton />}
             {!isLoading && <img src={img} className={`${PopulateListingsCSS.image}`} alt="loading..."/>}
             <div className="card-img-overlay">
-                <FaHeart className={`${PopulateListingsCSS.heart}`} color={isFavourite ? '#E3242B' : 'grey' } size={45} onClick={handleHeartClick}/> 
+                <FaHeart data-testid="fav" className={`${PopulateListingsCSS.heart}`} color={isFavourite ? '#E3242B' : 'grey' } size={45} onClick={handleHeartClick}/> 
             </div>
             <div className='d-flex mt-2 px-2'>
                 <div className='mt-2 flex-grow-1'>

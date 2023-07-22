@@ -73,3 +73,21 @@ test("Test Missing Password", () => {
     expect(error).toBeInTheDocument();
     
 })
+
+test("Navigate to home page", () => {
+    const userMockResponse = {
+        data: "No user found",
+        status: 200
+    }
+    jest.spyOn(axios, 'get').mockResolvedValue(userMockResponse);
+    customRender(<Login/>)
+    const usernameInput = screen.getByLabelText("username");
+    fireEvent.change(usernameInput, { target: {value: "test"}});
+    const passwordInput = screen.getByLabelText("password");
+    fireEvent.change(passwordInput, { target: {value: "123"}});
+
+    const submit = screen.getByTestId("submit");
+    fireEvent.click(submit);
+    expect(window.location.pathname).toBe('/')
+
+})
