@@ -32,19 +32,15 @@ const Home = () => {
                     console.log(res);
                     setListings(res.data);
                 }).catch(err => console.log(err));
-            // instance.get('/listing/explore/newListings')
-            //     .then(res => {
-            //         console.log(res);
-            //         setNewListings(res.data);
-            //     }).catch(err => {
-            //         console.log(err)
-            //         navigate("/login");
-            //     });
-            // }).catch(err => {
-            //     navigate("/login");
+            instance.get('/listing/explore/newListings')
+                .then(res => {
+                    console.log(res);
+                    setNewListings(res.data);
+                }).catch(err => {
+                    console.log(err)
+                    navigate("/login");
+                });
             }
-
-            
         })
     }, []);
 
