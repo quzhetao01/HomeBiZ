@@ -22,6 +22,7 @@ const findOrCreate = require("mongoose-findorcreate");
 
 app.use(cors({
   origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
+  header: ["Content-Type"],
   credentials: true
 }))
 app.use(express.urlencoded({extended: true, limit:"500mb"}));
@@ -143,14 +144,13 @@ app.get('/failureLogin', (req, res) => {
 
 
 app.get('/success', (req, res) => {
-  console.log('we are at the success stage', req.isAuthenticated(), req.user);
+  console.log(req.isAuthenticated(), req.user);
   // res.set('Cache-Control', 'no-store');
-  
   if (req.isAuthenticated()) {
       res.send({user: req.user, error: null});
   }
   else {
-      res.send({user: null, error: "Something went wrong"});
+      res.status(500).send({user: null, error: "Something went wrong"});
   }
 })
 

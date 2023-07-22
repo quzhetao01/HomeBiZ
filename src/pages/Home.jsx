@@ -14,10 +14,12 @@ const Home = () => {
 
     const [listings, setListings] = useState(null);
     const [newListings, setNewListings] = useState(null);
+    const [user, setUser] = useState('');
 
     useEffect(() => {
         getUser().then(user => {
-            console.log(user);
+            console.log("user object", user);
+            setUser(user);
             if (user === "No user found") {
                 console.log("navigating you back login page because user is not found", user);
                 // navigate("/login");
@@ -53,10 +55,10 @@ const Home = () => {
             <Categories />
             <Searchbar />
             <div className='default-listings pt-5'>
-                {listings && <PopulateListings listings={listings} title="Explore these businesses" />}
+                {listings && <PopulateListings listings={listings} title="Explore these businesses" user={user} />}
             </div>
             <div className='default-listings pt-5'>
-                {newListings && <PopulateListings listings={newListings} title="Check out new listings according to your interest" />}
+                {newListings && <PopulateListings listings={newListings} title="Check out new listings according to your interest" user={user} />}
             </div>
         </div>
     )

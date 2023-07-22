@@ -51,6 +51,7 @@
     "react-scripts": "5.0.1",
     "react-star-ratings": "^2.3.0",
     "stream": "^0.0.2",
+    "supertest": "^6.3.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
