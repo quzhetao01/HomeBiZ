@@ -21,6 +21,7 @@ const findOrCreate = require("mongoose-findorcreate");
 // })
 
 app.use(cors({
+
   origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
   credentials: true
 }))
@@ -106,11 +107,34 @@ passport.deserializeUser(User.deserializeUser());
 // })
 
 
-app.post('/login', passport.authenticate('local', {successRedirect: "/success", failureRedirect: '/failureLogin'})); 
-// (req, res) => {
-  // console.log('redirecting to /success route: ', res.isAuthenticated());
-//   res.redirect('/success');
-// });
+// app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}))(req, res) {
+//   //console.log('redirecting to /success route: ', res);
+//   if (!req.user) {
+//     console.log('user not found at passport authentication phase');
+//   } else {
+//     res.redirect('/');
+//   }
+  
+
+// };
+
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    failureFlash: true,
+  }, (err, user, info) => {
+    if (err !== null || user === false) {
+      req.session.save(() => {
+        res.redirect('/login');
+      });
+    } else {
+      req.logIn(user, err => {
+        req.session.save(() => {
+          res.redirect("/success");
+        })
+      })
+    }
+  })(req, res, next);
+});
 
 
 app.post('/register', (req, res) => {
