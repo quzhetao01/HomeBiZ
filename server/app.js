@@ -10,6 +10,10 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const session = require("express-session");
 const findOrCreate = require("mongoose-findorcreate");
 
+//for testing
+const request = require('supertest');
+const assert = require('assert');
+
 app.use(cors({
   origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
   header: ["Content-Type"],
@@ -189,6 +193,8 @@ app.use("/listing", listingRouter);
 app.use("/review", reviewRouter);
 app.use("/service", serviceRouter);
 app.use("/images", uploadRouter);
+
+module.exports = app;
 
 app.listen(8000, () => {
     console.log("Listening on port 8000")
