@@ -21,6 +21,7 @@ storeSession.on('error', (err) => {
 })
 
 app.use(cors({
+
   origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
   credentials: true
 }))
@@ -29,10 +30,12 @@ app.use(express.json({limit: '500mb'}))
 // configuring session middleware
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   store: storeSession,
+  cookie: { secure: true },
 }));
+app.set('trust proxy', 1) // trust first proxy
 app.use(passport.initialize()); // intialising passport
 app.use(passport.session()); // configuring passport to make use of session
 
@@ -96,7 +99,7 @@ passport.deserializeUser((user, cb) => {
 
 app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 
 (req, res) => {
-  console.log('redirecting to /success route: ', res.isAuthenticated());
+  console.log('redirecting to /success route: ', res);
   res.redirect('/success');
 });
 
