@@ -148,7 +148,7 @@ app.post('/logout', function(req, res, next){
 });
 
 app.get("/user", async (req, res) => {
-  console.log(req);
+  console.log("is the request authenticated", req.isAuthenticated());
   if(req.isAuthenticated()) {
     console.log(req.user);
     const user = await User.findById(req.user.id)
