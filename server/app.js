@@ -9,16 +9,16 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const session = require("express-session");
 const findOrCreate = require("mongoose-findorcreate");
-const MongoDBStore = require('connect-mongodb-session')(session);
+// const MongoDBStore = require('connect-mongodb-session')(session);
 
-const storeSession = new MongoDBStore({
-  uri: process.env.MONGODB_URI,
-  collection: 'sessions'
-})
+// const storeSession = new MongoDBStore({
+//   uri: process.env.MONGODB_URI,
+//   collection: 'sessions'
+// })
 
-storeSession.on('error', (err) => {
-  console.error('Session store error:', err);
-})
+// storeSession.on('error', (err) => {
+//   console.error('Session store error:', err);
+// })
 
 app.use(cors({
   origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
@@ -31,7 +31,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: storeSession,
+  // store: storeSession,
 }));
 app.use(passport.initialize()); // intialising passport
 app.use(passport.session()); // configuring passport to make use of session
@@ -106,7 +106,7 @@ passport.deserializeUser(async function(user, cb){
 
 app.post('/login', passport.authenticate('local', {failureRedirect: '/failureLogin'}), 
 (req, res) => {
-  console.log('redirecting to /success route: ', res.isAuthenticated());
+  // console.log('redirecting to /success route: ', res.isAuthenticated());
   res.redirect('/success');
 });
 
