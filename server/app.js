@@ -5,14 +5,9 @@ const cors = require('cors');
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Listing = require("./models/listing.model.js").Listing;
+const User = require("./models/user.model.js").User;
 const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
 const session = require("express-session");
-const findOrCreate = require("mongoose-findorcreate");
-
-//for testing
-const request = require('supertest');
-const assert = require('assert');
 
 app.use(cors({
   origin: ["http://localhost:3000", "https://homebiz.onrender.com"],
@@ -38,39 +33,6 @@ try {
     console.log(error);
   }
 
-
-
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-  },
-  firstName: {
-    type: String,
-  },
-  lastName: {
-    type: String,
-  },
-  listing: {
-    type: Schema.Types.ObjectId,
-    ref: "Listing"
-  },
-  category: {
-    type: String,
-  },
-  favourites: [{
-    type: Schema.Types.ObjectId,
-    ref: "Listing"
-  }]
-});
-
-
-userSchema.plugin(passportLocalMongoose); 
-userSchema.plugin(findOrCreate);
-
-const User = mongoose.model("User", userSchema);
-
-module.exports = {User: User};
 
 passport.use(User.createStrategy());
 
@@ -144,11 +106,16 @@ app.get('/success', (req, res) => {
   }
 })
 
-app.post('/logout', function(req, res, next){
-  req.logout(function(err) {
-    if (err) { res.send("Error logging out") }
-      res.send("Sucessfully logged out")
-  });
+app.post('/logout', function(req, res, next) {
+
+  if (req.isAuthenticated()) {
+    req.logout(function(err) {
+      if (err) { res.send("Error logging out") }
+        res.send("Sucessfully logged out")
+    });
+  } else {
+    res.status(404).send({ error: "No user is currently logged in" });
+  }
 });
 
 app.get("/user", async (req, res) => {
@@ -171,6 +138,9 @@ app.get('/test', (req, res) => {
 app.patch('/favourites/:id', async (req, res) => {
   const user = await User.findById(req.params.id);
   const listing = await Listing.findById(req.body.id);
+  if (user.favourites.includes(listing.id)) {
+    return res.status(400).send({ error: "Listing already in favourites"});
+  }
   user.favourites.push(listing.id);
   const ans = await user.save();
   res.send(ans);
@@ -180,6 +150,9 @@ app.patch('/favourites/:id', async (req, res) => {
 app.patch('/removeFavourites/:id', async (req, res) => {
   const user = await User.findById(req.params.id);
   const listing = await Listing.findById(req.body.id);
+  if (!user.favourites.includes(listing.id)) {
+    return res.status(400).send({ error: "Listing not in favourites"});
+  }
   user.favourites.pull( {_id: listing.id} );
   const ans = await user.save();
   res.send(ans);
@@ -196,6 +169,6 @@ app.use("/images", uploadRouter);
 
 module.exports = app;
 
-app.listen(8000, () => {
-    console.log("Listening on port 8000")
-})
+// app.listen(8000, () => {
+//     console.log("Listening on port 8000")
+// })

@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const Listing = require("../models/listing.model.js").Listing;
 const Service = require("../models/service.model.js").Service;
 const Review = require("../models/review.model.js").Review;
-const User = require("../app.js").User;
 
 const getAllListings = async (req, res, next) => {
     const found = await Listing.find({}).populate("reviews");
