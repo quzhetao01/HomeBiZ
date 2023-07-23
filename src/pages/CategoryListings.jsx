@@ -7,6 +7,7 @@ import Banner from '../components/categoryListings/Banner';
 import Title from '../components/categoryListings/Title';
 import Searchbar from '../components/Searchbar';
 import PopulateListings from '../components/populateListings/PopulateListings';
+import getUser from '../helper/user';
 
 const CategoryListings = () => {
    
@@ -14,6 +15,7 @@ const CategoryListings = () => {
     const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] = useState('');
     const [listings, setListings] = useState([]);
+    const [user, setUser] = useState();
     
     useEffect(() => {
         setSelectedCategory(location.state ? location.state.category : null);
@@ -25,6 +27,15 @@ const CategoryListings = () => {
         }
 
         if (selectedCategory) {
+            getUser().then(user => {
+                console.log("user object", user);
+                setUser(user);
+                if (user === "No user found") {
+                    navigate("/login");
+                } else if (!user.category) {
+                    navigate("/selectInterests", {state: {justRegistered: true, id: user._id, loggedIn: true}});
+                }
+            })
             instance.get(`/listing/category/${selectedCategory}`)
                 .then(res => {
                     console.log(res);
@@ -43,7 +54,7 @@ const CategoryListings = () => {
             <Banner category={selectedCategory} />
             <hr className="my-5" />
             <div> 
-                {listings && <PopulateListings listings={listings}/>}
+                {listings && user && <PopulateListings listings={listings} user={user}/>}
             </div>
         </div>
       );

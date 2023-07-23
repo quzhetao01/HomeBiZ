@@ -6,6 +6,7 @@ import Categories from '../components/categoryListings/Categories';
 import SearchBanner from '../components/searchListings/SearchBanner';
 import SearchTitle from '../components/searchListings/SearchTitle';
 import PopulateListings from '../components/populateListings/PopulateListings';
+import getUser from '../helper/user';
 
 
 
@@ -15,6 +16,7 @@ const SearchListings = () => {
     const navigate = useNavigate();
     const [search, setSearch] = useState('')
     const [listings, setListings] =  useState([]);
+    const [user, setUser] = useState();
 
     useEffect(() => {
         console.log(location);
@@ -27,6 +29,15 @@ const SearchListings = () => {
         } 
         
         if (search) {
+            getUser().then(user => {
+                console.log("user object", user);
+                setUser(user);
+                if (user === "No user found") {
+                    navigate("/login");
+                } else if (!user.category) {
+                    navigate("/selectInterests", {state: {justRegistered: true, id: user._id, loggedIn: true}});
+                }
+            });
             instance.get(`/listing/search/${search}`)
             .then(res => {
                 console.log(res);
@@ -46,7 +57,7 @@ const SearchListings = () => {
             <SearchBanner />
             <hr className="my-5" />
             <div> 
-                {listings && <PopulateListings listings={listings}/>}
+                {listings && user && <PopulateListings listings={listings} user={user}/>}
             </div>
         </div>
       );
