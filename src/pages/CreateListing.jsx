@@ -138,6 +138,15 @@ const CreateListing = () => {
             // })
         }
     }
+
+    const handleDelete = (num) => {
+        setListing(prev => {
+            return {
+                ...prev,
+                "descriptionImages": [...prev.descriptionImages].filter((images, index) => index !== num)
+            }
+        })
+    }
     
     const handleCategory = (category) => {
         setListing((prev) => {
@@ -188,7 +197,7 @@ const CreateListing = () => {
 
 
     const handleSubmit = async (e) => {
-        setSubmitting(true);
+        console.log(listing);
         if (!listing.title || !listing.description || !listing.township || !listing.location 
             || !listing.displayImage || listing.descriptionImages.length == 0 
             || !listing.contact || !listing.whatsapp && !listing.telegram
@@ -199,7 +208,8 @@ const CreateListing = () => {
             setError("Please add more images for your future customers to refer to");
             return;
         }
-        // console.log(listing.descriptionImages);
+        setSubmitting(true);
+
         let formData = new FormData();
         formData.append("file", listing.displayImage);
 
@@ -288,7 +298,7 @@ const CreateListing = () => {
                 </div>
                 <div className={`card p-5 col-5 ${styles.card} d-flex justify-content-around`}>
                     <h3 className="">Further details</h3>
-                    <MultipleFileUpload handleUpload={handleDescImages}/>
+                    <MultipleFileUpload handleUpload={handleDescImages} handleDelete={handleDelete}/>
                     <hr />
                     
                     <Button className="align-self-center" style={{width: "50%", backgroundColor: "#FF9F45"}} variant="contained" onClick={() => setShowMenu(true)}>

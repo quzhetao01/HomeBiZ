@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import instance from "../axios.config";
 import { AiFillStar } from "react-icons/ai";
 import Modal from "react-modal";
-import Gallery from "react-photo-gallery";
 import ContactDetails from "../components/viewListing/ContactDetails";
 import Menu from "../components/viewListing/Menu";
 import ServiceModal from "../components/viewListing/ServiceModal";
